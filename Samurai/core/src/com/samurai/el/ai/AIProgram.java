@@ -5,5 +5,6 @@ public class AIProgram {
 void test()
 {
 	System.out.println("test");
+	System.out.println("test1222");
 }
 }
