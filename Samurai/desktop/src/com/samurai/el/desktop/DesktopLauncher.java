@@ -2,7 +2,7 @@ package com.samurai.el.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.samurai.el.Samurai;
+import com.samurai.el.mainmenu.Samurai;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {
