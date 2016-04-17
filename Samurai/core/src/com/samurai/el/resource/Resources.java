@@ -10,7 +10,7 @@ public class Resources {
 		return instance;
 	}
 	
-	public Resources() {
+	private Resources() {
 		
 	}
 }
