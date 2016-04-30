@@ -13,12 +13,25 @@ public abstract class Player extends Sprite{
 	public boolean isHidden;
 	public boolean isRecovering;
 	public double recoverLeftTime;
+	public boolean isMoving;
 	
 	
 	@Override
 	public void draw(Batch batch) {
 		//implements waited
 		super.draw(batch);
+	}
+
+
+	public void moveBegin(int direction) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	public void moveEnd() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

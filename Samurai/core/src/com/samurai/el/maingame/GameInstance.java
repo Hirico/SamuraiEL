@@ -70,23 +70,23 @@ public class GameInstance {
 			break;
 		case 1:
 			redSpear.isHuman = true;
-			human = redSpear;
+			human = redSword;
 			break;
 		case 2:
 			redSpear.isHuman = true;
-			human = redSpear;
+			human = redAxe;
 			break;
 		case 3:
 			redSpear.isHuman = true;
-			human = redSpear;
+			human = blueSpear;
 			break;
 		case 4:
 			redSpear.isHuman = true;
-			human = redSpear;
+			human = blueSword;
 			break;
 		case 5:
 			redSpear.isHuman = true;
-			human = redSpear;
+			human = blueAxe;
 			break;
 		}
 		for(Player p : players) {
@@ -111,11 +111,11 @@ public class GameInstance {
 		
 		field.render();
 				
-		playerBatch.begin();
+		/*playerBatch.begin();
 		for(Player p: players) {
 			p.draw(playerBatch);
 		}
-		playerBatch.end();
+		playerBatch.end();*/
 	}
 	
 	public void dispose() {

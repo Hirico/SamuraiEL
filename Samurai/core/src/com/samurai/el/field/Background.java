@@ -10,8 +10,8 @@ public abstract class Background {
 	protected Music music;
 		
 	public void render() {
-		backBatch.begin();
-		backBatch.end();
+		//backBatch.begin();
+		//backBatch.end();
 	}
 	
 	public void dispose() {
