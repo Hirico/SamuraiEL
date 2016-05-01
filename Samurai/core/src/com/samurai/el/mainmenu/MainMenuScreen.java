@@ -7,7 +7,7 @@ public class MainMenuScreen implements Screen{
 	private Game game;
 	
 	public MainMenuScreen(Game game) {
-		this.game = game;
+		this.game = game;//return game;
 	}
 	
 	@Override
