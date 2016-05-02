@@ -92,10 +92,15 @@ public class GameInstance {
 		for(Player p : players) {
 			if(p.isHuman == false) {
 				AIProgram.setAI(p);
+				if(p.side == human.side) {
+					p.isAllied = true;
+				}
 			}
 		}
 		
+		playerBatch = new SpriteBatch();
 		AIProgram.setDifficulty(difficulty);
+		
 		
 	}
 	
@@ -111,11 +116,12 @@ public class GameInstance {
 		
 		field.render();
 				
-		/*playerBatch.begin();
-		for(Player p: players) {
+		playerBatch.begin();
+		/*for(Player p: players) {
 			p.draw(playerBatch);
-		}
-		playerBatch.end();*/
+		}*/
+		human.draw(playerBatch);
+		playerBatch.end();
 	}
 	
 	public void dispose() {

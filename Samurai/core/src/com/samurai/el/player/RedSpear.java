@@ -1,5 +1,18 @@
 package com.samurai.el.player;
 
-public class RedSpear extends Player {
+import com.samurai.el.field.Field;
+import com.samurai.el.maingame.GameInstance;
 
+public class RedSpear extends Player {
+	public RedSpear() {
+		super();
+		side = 0;
+	}
+	
+	@Override
+	public void occupy() {
+		Field field = GameInstance.getInstance().field;
+		field.executeOccupation(0, position, direction);
+		super.occupy();
+	}
 }

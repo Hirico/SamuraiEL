@@ -8,11 +8,17 @@ import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Timer;
+import com.samurai.el.player.Player;
 
 public class GameScreen implements Screen, InputProcessor {
 	private Game game;
 	private GameInstance gameInstance;
 	private SpriteBatch uiBatch;
+	private Timer upTimer;
+	private Timer downTimer;
+	private Timer leftTimer;
+	private Timer rightTimer;
 
 	public GameScreen(Game game) {
 		this.game = game;
@@ -65,28 +71,41 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		if(keycode == Input.Keys.UP || keycode == Input.Keys.W) {
-			gameInstance.getInstance().human.moveBegin(0);
+		Player human = gameInstance.getInstance().human;
+		if(keycode == Input.Keys.W) {
+			upTimer = human.moveBegin(0);
 		}
-		if(keycode == Input.Keys.DOWN || keycode == Input.Keys.S) {
-			gameInstance.getInstance().human.moveBegin(1);
+		if(keycode == Input.Keys.S) {
+			downTimer = human.moveBegin(1);
 		}
-		if(keycode == Input.Keys.LEFT || keycode == Input.Keys.A) {
-			gameInstance.getInstance().human.moveBegin(2);
+		if(keycode == Input.Keys.A) {
+			leftTimer = human.moveBegin(2);
 		}
-		if(keycode == Input.Keys.RIGHT || keycode == Input.Keys.D) {
-			gameInstance.getInstance().human.moveBegin(3);
+		if(keycode == Input.Keys.D) {
+			rightTimer = human.moveBegin(3);
+		}
+		if(keycode == Input.Keys.J) {
+			if(human.occupiable()) {
+				human.occupy();
+			}
 		}
 		return false;
 	}
 
 	@Override
 	public boolean keyUp(int keycode) {
-		if(keycode == Input.Keys.UP || keycode == Input.Keys.W
-			|| keycode == Input.Keys.DOWN || keycode == Input.Keys.S
-			|| keycode == Input.Keys.LEFT || keycode == Input.Keys.A
-			|| keycode == Input.Keys.RIGHT || keycode == Input.Keys.D) {
-			gameInstance.getInstance().human.moveEnd();
+		Player human = gameInstance.getInstance().human;
+		if(keycode == Input.Keys.W) {
+			human.moveEnd(upTimer);
+		}
+		if(keycode == Input.Keys.S) {
+			human.moveEnd(downTimer);
+		}
+		if(keycode == Input.Keys.A) {
+			human.moveEnd(leftTimer);
+		}
+		if(keycode == Input.Keys.D) {
+			human.moveEnd(rightTimer);
 		}
 		return false;
 	}
