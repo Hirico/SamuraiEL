@@ -10,12 +10,11 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.samurai.el.achievement.AchievementScreen;
 import com.samurai.el.gamesetting.GameSetScreen;
 import com.samurai.el.setting.SettingScreen;
 
@@ -109,7 +108,7 @@ public class MainMenuScreen implements Screen{
 		button3.addListener(new InputListener(){
 	           @Override
 	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-	        	  // game.setScreen(new GameSetScreen(game));
+	        	   game.setScreen(new AchievementScreen(game));
 	           }
 	           @Override
 	           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) {

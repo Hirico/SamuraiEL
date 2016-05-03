@@ -1,4 +1,4 @@
-package com.samurai.el.setting;
+package com.samurai.el.achievement;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -14,11 +14,11 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.samurai.el.mainmenu.MainMenuScreen;
 
-public class SettingScreen implements Screen{
+public class AchievementScreen implements Screen{
 	Game game;
 	Stage stage;
 	ImageButton returnbutton;
-	public SettingScreen(Game game) {
+	public AchievementScreen(Game game) {
 		this.game = game;//return game;
 		
 	}
