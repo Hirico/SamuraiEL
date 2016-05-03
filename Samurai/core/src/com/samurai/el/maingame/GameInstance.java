@@ -31,7 +31,7 @@ public class GameInstance {
 	public Field field;
 	public SpriteBatch playerBatch;
 	
-	private GameInstance(int mapid, int humanid, int time, int difficulty) {
+	private GameInstance(int mapid, int time, int difficulty) {
 		totalTime = time;
 		
 		//setMap
@@ -53,14 +53,22 @@ public class GameInstance {
 			break;
 		}
 		
-		//initial players
+		
+		
+		playerBatch = new SpriteBatch();
+		AIProgram.setDifficulty(difficulty);
+				
+	}
+	
+	public void initializePlayer(int humanid) {
+		//initialize players
 		players = new Array<Player>();		
-		players.add(redSpear = new RedSpear());
-		players.add(redSword = new RedSword());
-		players.add(redAxe = new RedAxe());
-		players.add(blueSpear = new BlueSpear());
-		players.add(blueSword = new BlueSword());
-		players.add(blueAxe = new BlueAxe());
+		players.add(redSpear = new RedSpear(field.homePositions[0]));
+		players.add(redSword = new RedSword(field.homePositions[1]));
+		players.add(redAxe = new RedAxe(field.homePositions[2]));
+		players.add(blueSpear = new BlueSpear(field.homePositions[3]));
+		players.add(blueSword = new BlueSword(field.homePositions[4]));
+		players.add(blueAxe = new BlueAxe(field.homePositions[5]));
 		
 		//setAI
 		switch(humanid) {
@@ -69,23 +77,23 @@ public class GameInstance {
 			human = redSpear;
 			break;
 		case 1:
-			redSpear.isHuman = true;
+			redSword.isHuman = true;
 			human = redSword;
 			break;
 		case 2:
-			redSpear.isHuman = true;
+			redAxe.isHuman = true;
 			human = redAxe;
 			break;
 		case 3:
-			redSpear.isHuman = true;
+			blueSpear.isHuman = true;
 			human = blueSpear;
 			break;
 		case 4:
-			redSpear.isHuman = true;
+			blueSword.isHuman = true;
 			human = blueSword;
 			break;
 		case 5:
-			redSpear.isHuman = true;
+			blueAxe.isHuman = true;
 			human = blueAxe;
 			break;
 		}
@@ -94,14 +102,10 @@ public class GameInstance {
 				AIProgram.setAI(p);
 				if(p.side == human.side) {
 					p.isAllied = true;
+					field.openVision(p.position);
 				}
 			}
 		}
-		
-		playerBatch = new SpriteBatch();
-		AIProgram.setDifficulty(difficulty);
-		
-		
 	}
 	
 	public static GameInstance getInstance() {
@@ -109,7 +113,8 @@ public class GameInstance {
 	}
 	
 	public static void setInstance(int mapid, int human, int time, int difficulty) {
-		instance = new GameInstance(mapid, human, time, difficulty);
+		instance = new GameInstance(mapid, time, difficulty);
+		instance.initializePlayer(human);
 	}
 	
 	public void render() {
@@ -120,7 +125,7 @@ public class GameInstance {
 		/*for(Player p: players) {
 			p.draw(playerBatch);
 		}*/
-		human.draw(playerBatch);
+		//human.draw(playerBatch);
 		playerBatch.end();
 	}
 	

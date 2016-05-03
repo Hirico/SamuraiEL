@@ -13,6 +13,7 @@ public abstract class Field{
 	public Vector2 size;
 	public Block[][] blocks;
 	public int blockSize;
+	public Vector2[] homePositions;
 	
 	public Field() {
 		fieldBatch = new SpriteBatch();
@@ -38,6 +39,40 @@ public abstract class Field{
 	public void dispose() {
 		background.dispose();
 		fieldBatch.dispose();
+	}
+	
+	public boolean isOwnSide(Player samurai, Vector2 blockPosition) {
+		if(blocks[(int)blockPosition.x][(int)blockPosition.y].side == samurai.side) {
+			return true;
+		} else {
+			return false;
+		}
+			
+	}
+	
+	public void closeVision(Vector2 position) {
+		Vector2 targetPosition = new Vector2();
+		for(int i = 1; i <= 11; i++) {
+			for(int j = 1; j <= (2*i-1); j++) {
+				targetPosition.set(position.x+i-6, position.y+j-i);
+				if(targetPosition.x >= 0 && targetPosition.x <= size.x
+						&& targetPosition.y >= 0 && targetPosition.y <= size.y)
+					blocks[(int)targetPosition.x][(int)targetPosition.y].hide();
+			}
+		}
+	}
+	
+	public void openVision(Vector2 position) {
+		Vector2 targetPosition = new Vector2();
+		for(int i = 1; i <= 11; i++) {
+			for(int j = 1; j <= (2*i-1); j++) {
+				targetPosition.set(position.x+i-6, position.y+j-i);
+				if(targetPosition.x >= 0 && targetPosition.x <= size.x
+						&& targetPosition.y >= 0 && targetPosition.y <= size.y)
+					blocks[(int)targetPosition.x][(int)targetPosition.y].show();
+			}
+		}
+		
 	}
 
 	public void executeOccupation(int owner, Vector2 position, int direction) {
@@ -87,11 +122,14 @@ public abstract class Field{
 				Vector2 targetPosition = new Vector2();
 				targetPosition.x =  (position.x+ox[weapon][i]);
 				targetPosition.y =  (position.y+oy[weapon][i]);
-				blocks[(int) targetPosition.x][(int) targetPosition.y].owner = owner;
-				Array<Player> players = GameInstance.getInstance().players;
-				for(Player p: players) {
-					if(p.position.equals(targetPosition)) {
-						p.attacked();
+				if(targetPosition.x <= blocks.length-1 && targetPosition.x >= 0 
+						&&targetPosition.y <= blocks[0].length-1 && targetPosition.y >= 0) {
+					blocks[(int) targetPosition.x][(int) targetPosition.y].owner = owner;
+					Array<Player> players = GameInstance.getInstance().players;
+					for(Player p: players) {
+						if(p.position.equals(targetPosition)) {
+							p.attacked();
+						}
 					}
 				}
 			}

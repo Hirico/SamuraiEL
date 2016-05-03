@@ -1,18 +1,14 @@
 package com.samurai.el.player;
 
+import com.badlogic.gdx.math.Vector2;
 import com.samurai.el.field.Field;
 import com.samurai.el.maingame.GameInstance;
 
 public class BlueAxe extends Player {
-	public BlueAxe() {
-		super();
+	public BlueAxe(Vector2 homePosition) {
+		super(homePosition);
 		side = 1;
+		id = 5;
 	}
 	
-	@Override
-	public void occupy() {
-		Field field = GameInstance.getInstance().field;
-		field.executeOccupation(5, position, direction);
-		super.occupy();
-	}
 }
