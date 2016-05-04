@@ -1,6 +1,7 @@
 package com.samurai.el.player;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
@@ -24,6 +25,14 @@ public abstract class Player extends Sprite{
 	public boolean isRecovering;
 	public double recoverLeftTime;
 	public boolean isMoving;
+	public Sprite stand0;
+	public Sprite stand1;
+	public Sprite stand2;
+	public Sprite stand3;
+	public Sprite move0;
+	public Sprite move1;
+	public Sprite move2;
+	public Sprite move3;
 	
 	public Player(Vector2 homePosition) {
 		
@@ -41,12 +50,24 @@ public abstract class Player extends Sprite{
 		drawPosition.set(position);
 		cooldownTime = 0;
 		score = 0;
+		direction = 1;
 		
+		stand0 = new Sprite(new Texture(Gdx.files.internal("stand0.jpg")));
+		stand1 = new Sprite(new Texture(Gdx.files.internal("stand1.jpg")));
+		stand2 = new Sprite(new Texture(Gdx.files.internal("stand2.jpg")));
+		stand3 = new Sprite(new Texture(Gdx.files.internal("stand3.jpg")));
+		move0 = new Sprite(new Texture(Gdx.files.internal("move0.jpg")));
+		move1 = new Sprite(new Texture(Gdx.files.internal("move1.jpg")));
+		move2 = new Sprite(new Texture(Gdx.files.internal("move2.jpg")));
+		move3 = new Sprite(new Texture(Gdx.files.internal("move3.jpg")));
+		this.set(stand1);
 	}
 	
 	
 	@Override
 	public void draw(Batch batch) {
+		// determine assets
+		
 		//implements waited
 		if(cooldownTime > 0) {
 			cooldownTime -= 60*Gdx.graphics.getDeltaTime();
@@ -62,13 +83,46 @@ public abstract class Player extends Sprite{
 			}
 		}
 		Field field = GameInstance.getInstance().field;
-		//this.set(new Sprite(new Texture(Gdx.files.internal("deletethis.png"))));
+		
+		if(isMoving) {
+			switch(direction) {
+			case 0:
+				this.set(move0);
+				break;
+			case 1:
+				this.set(move1);
+				break;
+			case 2:
+				this.set(move2);
+				break;
+			case 3:
+				this.set(move3);
+				break;
+			}
+		} else {
+			switch(direction) {
+			case 0:
+				this.set(stand0);
+				break;
+			case 1:
+				this.set(stand1);
+				break;
+			case 2:
+				this.set(stand2);
+				break;
+			case 3:
+				this.set(stand3);
+				break;
+			}
+		}
+		if(isHidden) {
+			this.setColor(this.getColor().r, this.getColor().g, this.getColor().b, 0.5f);
+		}
+		
 		this.setPosition(field.getBottomLeftCorner().x + drawPosition.x*field.blockSize, 
 				field.getBottomLeftCorner().y + drawPosition.y*field.blockSize);
-		if(isMoving) {
-			//this.set()
-		}
-		if(isVisible) {
+		
+		if(isAllied || (isVisible && !isHidden)) {
 			super.draw(batch);
 		}
 	}
@@ -90,7 +144,7 @@ public abstract class Player extends Sprite{
 	public void attacked() {
 		if(isAllied) {
 			Field field = GameInstance.getInstance().field;
-			field.closeVision(position);			
+			field.closeVision(position, this);			
 			field.openVision(homePosition);
 		}
 		position.set(homePosition);	
@@ -104,7 +158,7 @@ public abstract class Player extends Sprite{
 		Field field = GameInstance.getInstance().field;
 		if(field.isOwnSide(this, position)) {
 			isHidden = true;
-			
+			field.blocks[(int) position.x][(int) position.y].playerLeave();
 			//setTheHideSprite 
 			
 		}
@@ -112,9 +166,10 @@ public abstract class Player extends Sprite{
 	
 	public void show() {
 		Field field = GameInstance.getInstance().field;
-		if(field.blocks[(int) position.x][(int) position.y].playerOn == -1) {
+		if(field.blocks[(int) position.x][(int) position.y].playerIdOn == -1) {
 			isHidden = false;
-			
+			field.blocks[(int) position.x][(int) position.y].playerArrive(this);
+			this.setColor(this.getColor().r, this.getColor().g, this.getColor().b, 1);
 		}
 	}
 
@@ -123,7 +178,7 @@ public abstract class Player extends Sprite{
 		float delay = 0;
 		if(direction != this.direction) {
 			this.direction = direction;
-			delay = 0.1f;
+			delay = 0.2f;
 		}
 		
 		Timer moveTimer = new Timer();
@@ -134,7 +189,7 @@ public abstract class Player extends Sprite{
 				move(direction);
 			}
 		}
-		, delay, 0.3f);//run,turnDelay,interval/moveSpeed(seconds)
+		, delay, 0.2f);//run,turnDelay,interval/moveSpeed(seconds)
 		
 		return moveTimer;
 		
@@ -145,7 +200,22 @@ public abstract class Player extends Sprite{
 		if(!isRecovering) {
 			Field field = GameInstance.getInstance().field;
 			this.direction = direction;
+			switch(direction) {
+			case 0:
+				this.set(stand0);
+				break;
+			case 1:
+				this.set(stand1);
+				break;
+			case 2:
+				this.set(stand2);
+				break;
+			case 3:
+				this.set(stand3);
+				break;
+			}
 			Vector2 targetPosition = new Vector2();
+			targetPosition.set(position);
 			
 			//store targetPosition if not out of field border
 			if(position.y < field.getSize().y && direction == 0) {
@@ -164,17 +234,18 @@ public abstract class Player extends Sprite{
 				targetPosition.set(position.x+1, position.y);
 			}
 			
+			
 			//execute move if the move follows regulation
-			if(((!isHidden && field.blocks[(int) targetPosition.x][(int) targetPosition.y].playerOn == -1) 
+			if(((!isHidden && field.blocks[(int) targetPosition.x][(int) targetPosition.y].playerIdOn == -1) 
 					|| (isHidden && field.isOwnSide(this, targetPosition))) 
 					&& !field.isOthersHome(this,targetPosition)) {
 				isMoving = true;
 				
 				if(!isHidden) {
-					field.blocks[(int) position.x][(int) position.y].playerOn = -1;
-					field.blocks[(int) targetPosition.x][(int) targetPosition.y].playerOn = this.id;
+					field.blocks[(int) position.x][(int) position.y].playerLeave();
+					field.blocks[(int) targetPosition.x][(int) targetPosition.y].playerArrive(this);
 				}
-				position.set(targetPosition);
+				
 				
 				//set new vision
 				if(!isAllied) {
@@ -184,7 +255,7 @@ public abstract class Player extends Sprite{
 						this.isVisible = false;
 					}
 				} else {
-					field.closeVision(position);
+					field.closeVision(position, this);
 					if(position.y < field.getSize().y && direction == 0) {
 						field.openVision(targetPosition);
 					}
@@ -205,41 +276,34 @@ public abstract class Player extends Sprite{
 				
 				// isolate the move and slowMove timers to ensure each move complete
 				// the below is not actual move
-				// it's to slow the pace (only slow down the visual action, actual position already set)
-				Timer slowMoveTimer = new Timer(); 				
+				// it's to slow the pace (only slow down the visual action, actual position set elsewhere)
+				Timer slowMoveTimer = new Timer(); 
+				final Vector2 currentPosition = new Vector2();
+				currentPosition.set(position);
 				slowMoveTimer.scheduleTask(new Timer.Task() {
 					
 					@Override					
 					public void run() {
-						if(position.y < GameInstance.getInstance().field.getSize().y && direction == 0) {
+						if(currentPosition.y < GameInstance.getInstance().field.getSize().y && direction == 0) {
 							drawPosition.y += 0.05;
 						}
 							
-						if(position.y > 0 && direction == 1) {
+						if(currentPosition.y > 0 && direction == 1) {
 							drawPosition.y -= 0.05;
 						}
 							
-						if(position.x > 0 && direction == 2) {
+						if(currentPosition.x > 0 && direction == 2) {
 							drawPosition.x -= 0.05;
 						}
 							
-						if(position.x < GameInstance.getInstance().field.getSize().x && direction == 3) {
+						if(currentPosition.x < GameInstance.getInstance().field.getSize().x && direction == 3) {
 							drawPosition.x += 0.05;
 						}
 					}
 				}
-				, 0, 0.015f, 19);
+				, 0, 0.01f, 19);
 				
-				//notify that the visual move action ended
-				Timer moveActionEndTimer = new Timer();
-				moveActionEndTimer.scheduleTask(new Timer.Task() {
-					
-					@Override
-					public void run() {
-						isMoving = false;
-					}
-				}, 0.3f, 0, 0);
-										
+				position.set(targetPosition);
 			}
 		}
 			
@@ -251,7 +315,16 @@ public abstract class Player extends Sprite{
 
 
 	public void moveEnd(Timer timer) {
-		timer.clear();
+		if(timer != null) {
+			timer.clear();
+			timer = null;
+			isMoving = false;
+		}
+	}
+	
+	public void moveEnd() {
+		// use for AI non-continuous move
+		isMoving = false;
 	}
 	
 	public void setHomePosition(int x, int y) {

@@ -35,7 +35,7 @@ public class GameScreen implements Screen, InputProcessor {
 	public void render(float delta) {
 		//
 		Gdx.gl20.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        Gdx.gl20.glClearColor(0, 0, 0, 1);
+        Gdx.gl20.glClearColor(255, 255, 255, 1);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
         gameInstance.render();
         //uiBatch.begin();
@@ -76,17 +76,17 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyDown(int keycode) {
-		Player human = gameInstance.getInstance().human;
-		if(keycode == Input.Keys.W) {
+		Player human = gameInstance.human;
+		if(keycode == Input.Keys.W && !human.isMoving) {
 			upTimer = human.moveBegin(0);
 		}
-		if(keycode == Input.Keys.S) {
+		if(keycode == Input.Keys.S && !human.isMoving) {
 			downTimer = human.moveBegin(1);
 		}
-		if(keycode == Input.Keys.A) {
+		if(keycode == Input.Keys.A && !human.isMoving) {
 			leftTimer = human.moveBegin(2);
 		}
-		if(keycode == Input.Keys.D) {
+		if(keycode == Input.Keys.D && !human.isMoving) {
 			rightTimer = human.moveBegin(3);
 		}
 		if(keycode == Input.Keys.J) {
@@ -105,7 +105,7 @@ public class GameScreen implements Screen, InputProcessor {
 
 	@Override
 	public boolean keyUp(int keycode) {
-		Player human = gameInstance.getInstance().human;
+		Player human = gameInstance.human;
 		if(keycode == Input.Keys.W) {
 			human.moveEnd(upTimer);
 		}

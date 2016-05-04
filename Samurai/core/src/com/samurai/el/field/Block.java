@@ -1,6 +1,11 @@
 package com.samurai.el.field;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Array;
 import com.samurai.el.maingame.GameInstance;
 import com.samurai.el.player.Player;
 
@@ -9,17 +14,53 @@ public class Block extends Sprite{
 	public Player owner;
 	public int id;
 	public int side;
-	public int playerOn;
+	public int playerIdOn;
+	public Player playerOn;
+	public Array<Player> players;
 	
 	public Block() {
 		super();
-		playerOn = -1;
+		playerIdOn = -1;
 		id = -1;
 		owner = null;
 		side = -1;
 		isVisible = false;
+		this.set(new Sprite(new Texture(Gdx.files.internal("block0.jpg"))));
 	}
 	
+	public void playerArrive(Player player) {
+		playerOn = player;
+		playerIdOn = playerOn.id;
+	}
+	
+	public void playerArrive(int id) {
+		GameInstance tempInstance = GameInstance.getInstance();
+		switch(id) {
+		case 0:
+			playerArrive(tempInstance.redSpear);
+			break;
+		case 1:
+			playerArrive(tempInstance.redSword);
+			break;
+		case 2:
+			playerArrive(tempInstance.redAxe);
+			break;
+		case 3:
+			playerArrive(tempInstance.blueSpear);
+			break;
+		case 4:
+			playerArrive(tempInstance.blueSword);
+			break;
+		case 5:
+			playerArrive(tempInstance.blueAxe);
+			break;
+		}
+	}
+	
+	public void playerLeave() {
+		playerOn = null;
+		playerIdOn = -1;
+	}
 	
 	public void occupy(int id) {
 		this.id = id;
@@ -52,6 +93,7 @@ public class Block extends Sprite{
 		}
 		
 		//implements to set sprite
+		this.setTexture(new Texture(Gdx.files.internal("block2.jpg")));
 	}
 	
 	public void occupy(Player p) {
@@ -60,14 +102,29 @@ public class Block extends Sprite{
 	
 	public void hide() {
 		isVisible = false;
-		if(!owner.isAllied) {
-			owner.isVisible = false;
+		if((playerOn != null) && (!playerOn.isAllied)) {
+			playerOn.isVisible = false;
 		}
+		this.setTexture(new Texture(Gdx.files.internal("block0.jpg")));
 	}
 	
 	public void show() {
+		players = GameInstance.getInstance().players;
 		isVisible = true;
-		owner.isVisible = true;
-		//implements to set sprite
+		if(playerOn != null) {
+			playerOn.isVisible = true;
+		}
+		if(owner != null) {
+			this.setTexture(new Texture(Gdx.files.internal("block2.jpg")));
+		} else {
+			this.setTexture(new Texture(Gdx.files.internal("block1.jpg")));
+		}
+	}
+		
+	
+	@Override
+	public void draw(Batch batch) {
+		
+		super.draw(batch);
 	}
 }

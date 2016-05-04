@@ -17,6 +17,7 @@ public abstract class Field{
 	
 	public Field() {
 		fieldBatch = new SpriteBatch();
+		
 	}
 	
 	
@@ -24,6 +25,11 @@ public abstract class Field{
 		background.render();
 		
 		fieldBatch.begin();
+		for(int i = 0; i < blocks.length; i++) {
+			for(int j = 0; j < blocks[0].length; j++) {
+				blocks[i][j].draw(fieldBatch);
+			}
+		}
 		fieldBatch.end();
 	}
 	
@@ -50,26 +56,55 @@ public abstract class Field{
 			
 	}
 	
-	public void closeVision(Vector2 position) {
+	public void closeVision(Vector2 position , Player player) {
 		Vector2 targetPosition = new Vector2();
-		for(int i = 1; i <= 11; i++) {
+		for(int i = 1; i <= 6; i++) {
 			for(int j = 1; j <= (2*i-1); j++) {
 				targetPosition.set(position.x+i-6, position.y+j-i);
 				if(targetPosition.x >= 0 && targetPosition.x <= size.x
-						&& targetPosition.y >= 0 && targetPosition.y <= size.y)
+						&& targetPosition.y >= 0 && targetPosition.y <= size.y) {
 					blocks[(int)targetPosition.x][(int)targetPosition.y].hide();
+				}
+			}
+		}
+		
+		for(int i = 7; i <= 11; i++) {
+			for(int j = (2*i-11); j <= 11; j++) {
+				targetPosition.set(position.x+i-6, position.y+j-i);
+				if(targetPosition.x >= 0 && targetPosition.x <= size.x
+						&& targetPosition.y >= 0 && targetPosition.y <= size.y) {
+					blocks[(int)targetPosition.x][(int)targetPosition.y].hide();
+				}
+			}
+		}
+		
+		Array<Player> players = GameInstance.getInstance().players;
+		for(Player p: players) {
+			if(p.side == player.side && p != player) {
+				openVision(p.position);
 			}
 		}
 	}
 	
 	public void openVision(Vector2 position) {
 		Vector2 targetPosition = new Vector2();
-		for(int i = 1; i <= 11; i++) {
+		for(int i = 1; i <= 6; i++) {
 			for(int j = 1; j <= (2*i-1); j++) {
 				targetPosition.set(position.x+i-6, position.y+j-i);
 				if(targetPosition.x >= 0 && targetPosition.x <= size.x
-						&& targetPosition.y >= 0 && targetPosition.y <= size.y)
+						&& targetPosition.y >= 0 && targetPosition.y <= size.y) {
 					blocks[(int)targetPosition.x][(int)targetPosition.y].show();
+				}
+			}
+		}
+		
+		for(int i = 7; i <= 11; i++) {
+			for(int j = (2*i-11); j <= 11; j++) {
+				targetPosition.set(position.x+i-6, position.y+j-i);
+				if(targetPosition.x >= 0 && targetPosition.x <= size.x
+						&& targetPosition.y >= 0 && targetPosition.y <= size.y) {
+					blocks[(int)targetPosition.x][(int)targetPosition.y].show();
+				}
 			}
 		}
 		
@@ -78,29 +113,42 @@ public abstract class Field{
 	public void executeOccupation(Player player, Vector2 position, int direction) {
 		int weapon = player.id % 3;
 		int[][] ox = {
-			    {0, 0, 0, 0, 0, 0, 0},
-			    {0, 0, 1, 1, 2, 0, 0},
+			    {0, 0, 0, 0},
+			    {0, 0, 1, 1, 2},
 			    {-1,-1,-1,0, 1, 1, 1}
 			};
 		int[][] oy = {
-			    {1, 2, 3, 4, 0, 0, 0},
-			    {1, 2, 0, 1, 0, 0, 0},
+			    {1, 2, 3, 4},
+			    {1, 2, 0, 1, 0},
 			    {-1,0 ,1, 1, 1, 0,-1}
 			};
+		int size = 0;
+		
+		switch(weapon) {
+		case 0 :
+			size = 4;
+			break;
+		case 1 :
+			size = 5;
+			break;
+		case 2 :
+			size = 7;
+			break;
+		}
 		
 		switch(direction) {
 		case 0:
 			break;
 		case 1:
 			for(int i = 0; i <= 2; i++) {
-				for(int j = 0; j <= 6; j++) {
+				for(int j = 0; j < ox[i].length; j++) {
 					oy[i][j] = - oy[i][j];
 				}
 			}
 			break;
 		case 2:
 			for(int i = 0; i <= 2; i++) {
-				for(int j = 0; j <= 6; j++) {
+				for(int j = 0; j < ox[i].length; j++) {
 					int c = ox[i][j];
 					ox[i][j] = - oy[i][j];
 					oy[i][j] = c;
@@ -109,7 +157,7 @@ public abstract class Field{
 			break;
 		case 3:
 			for(int i = 0; i <= 2; i++) {
-				for(int j = 0; j <= 6; j++) {
+				for(int j = 0; j < ox[i].length; j++) {
 					int c = ox[i][j];
 					ox[i][j] = oy[i][j];
 					oy[i][j] = -c;
@@ -118,7 +166,7 @@ public abstract class Field{
 			break;
 		}
 		
-			for(int i = 0; i <= 6; i++) {
+			for(int i = 0; i < size; i++) {
 				Vector2 targetPosition = new Vector2();
 				targetPosition.set (position.x+ox[weapon][i], position.y+oy[weapon][i]);
 				

@@ -8,10 +8,13 @@ public class Field3 extends Field {
 		super();
 		background = new Background3();
 		size = new Vector2(11, 11);
+		blockSize = 48;
 		blocks = new Block[(int) size.x+1][(int) size.y+1];
 		for(int i = 0; i <= 11; i++) {
 			for(int j = 0; j <= 11; j++) {
 				blocks[i][j] = new Block();
+				blocks[i][j].setPosition(getBottomLeftCorner().x + i*blockSize, 
+						getBottomLeftCorner().y + j*blockSize);
 			}
 		}
 		homePositions = new Vector2[] {
@@ -19,7 +22,7 @@ public class Field3 extends Field {
 				new Vector2(7,8), new Vector2(6,10) 
 		};
 		
-		blockSize = 48;
+		
 	}
 	
 	@Override

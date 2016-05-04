@@ -102,13 +102,17 @@ public class GameInstance {
 		for(Player p : players) {
 			if(p.isHuman == false) {
 				AIProgram.setAI(p);
-				if(p.side == human.side) {
-					p.isAllied = true;
-					p.isVisible = true;
-					field.openVision(p.position);
-				}
+			}
+			if(p.side == human.side) {
+				p.isAllied = true;
+				p.isVisible = true;
+				field.openVision(p.position);
+			}
+			for(int i = 0; i < 6; i++) {
+				field.blocks[(int) field.homePositions[i].x][(int) field.homePositions[i].y].playerArrive(i);
 			}
 		}
+		
 	}
 	
 	public static GameInstance getInstance() {
@@ -126,10 +130,11 @@ public class GameInstance {
 		field.render();
 				
 		playerBatch.begin();
-		/*for(Player p: players) {
+		for(Player p: players) {
 			p.draw(playerBatch);
-		}*/
-		//human.draw(playerBatch);
+		}
+		
+		
 		playerBatch.end();
 	}
 	
