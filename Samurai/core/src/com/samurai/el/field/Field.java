@@ -75,8 +75,8 @@ public abstract class Field{
 		
 	}
 
-	public void executeOccupation(int owner, Vector2 position, int direction) {
-		int weapon = owner % 3;
+	public void executeOccupation(Player player, Vector2 position, int direction) {
+		int weapon = player.id % 3;
 		int[][] ox = {
 			    {0, 0, 0, 0, 0, 0, 0},
 			    {0, 0, 1, 1, 2, 0, 0},
@@ -120,22 +120,48 @@ public abstract class Field{
 		
 			for(int i = 0; i <= 6; i++) {
 				Vector2 targetPosition = new Vector2();
-				targetPosition.x =  (position.x+ox[weapon][i]);
-				targetPosition.y =  (position.y+oy[weapon][i]);
+				targetPosition.set (position.x+ox[weapon][i], position.y+oy[weapon][i]);
+				
+				
 				if(targetPosition.x <= blocks.length-1 && targetPosition.x >= 0 
 						&&targetPosition.y <= blocks[0].length-1 && targetPosition.y >= 0) {
-					blocks[(int) targetPosition.x][(int) targetPosition.y].owner = owner;
+					
+					//detect enemy
 					Array<Player> players = GameInstance.getInstance().players;
 					for(Player p: players) {
-						if(p.position.equals(targetPosition)) {
+						if(p.position.equals(targetPosition) && !p.isRecovering) {
 							p.attacked();
+							player.getKillBonus();
 						}
 					}
+					
+					//manipulate block
+					Block targetBlock = blocks[(int) targetPosition.x][(int) targetPosition.y];
+					if(targetBlock.owner != player) {
+						if(targetBlock.owner != null) {						
+							targetBlock.owner.loseABlock();							
+						}
+						targetBlock.occupy(player.id);
+						player.getABlock();
+					}
+										
 				}
 			}
 			
 		
 		
+	}
+
+
+
+
+	public boolean isOthersHome(Player player, Vector2 targetPosition) {
+		for(int i = 0; i <= 5; i++) {
+			if((player.id != i) && targetPosition.equals(homePositions[i])) {
+				return true;
+			}
+		}
+		return false;
 	}
 	
 }

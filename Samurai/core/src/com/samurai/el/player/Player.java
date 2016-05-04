@@ -1,7 +1,6 @@
 package com.samurai.el.player;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
@@ -13,9 +12,11 @@ public abstract class Player extends Sprite{
 	public boolean isHuman;
 	public Vector2 position;
 	public Vector2 homePosition;
+	public Vector2 drawPosition;
 	public int direction;
 	public int side;
 	public int id;
+	public int score;
 	public double cooldownTime;
 	public boolean isAllied;
 	public boolean isVisible;
@@ -26,7 +27,7 @@ public abstract class Player extends Sprite{
 	
 	public Player(Vector2 homePosition) {
 		
-		isVisible = true;
+		isVisible = false;
 		isHidden = false;
 		isRecovering = false;
 		isMoving = false;
@@ -36,7 +37,10 @@ public abstract class Player extends Sprite{
 		this.homePosition.set(homePosition);
 		position = new Vector2();
 		position.set(homePosition);
+		drawPosition = new Vector2();
+		drawPosition.set(position);
 		cooldownTime = 0;
+		score = 0;
 		
 	}
 	
@@ -59,8 +63,8 @@ public abstract class Player extends Sprite{
 		}
 		Field field = GameInstance.getInstance().field;
 		//this.set(new Sprite(new Texture(Gdx.files.internal("deletethis.png"))));
-		this.setPosition(field.getBottomLeftCorner().x + position.x*field.blockSize, 
-				field.getBottomLeftCorner().y + position.y*field.blockSize);
+		this.setPosition(field.getBottomLeftCorner().x + drawPosition.x*field.blockSize, 
+				field.getBottomLeftCorner().y + drawPosition.y*field.blockSize);
 		if(isMoving) {
 			//this.set()
 		}
@@ -79,33 +83,38 @@ public abstract class Player extends Sprite{
 	
 	public void occupy() {
 		Field field = GameInstance.getInstance().field;
-		field.executeOccupation(id, position, direction);
+		field.executeOccupation(this, position, direction);
 		cooldownTime = 30;
 	}
 	
 	public void attacked() {
-		Field field = GameInstance.getInstance().field;
-		field.closeVision(position);
-		position.set(homePosition);
-		field.openVision(homePosition);
+		if(isAllied) {
+			Field field = GameInstance.getInstance().field;
+			field.closeVision(position);			
+			field.openVision(homePosition);
+		}
+		position.set(homePosition);	
+		drawPosition.set(homePosition);
 		isRecovering = true;
 		recoverLeftTime = 180;
 	}
 	
 	
 	public void hide() {
-		isHidden = true;
-		if(!isAllied) {
-			isVisible = false;
-		} else {
+		Field field = GameInstance.getInstance().field;
+		if(field.isOwnSide(this, position)) {
+			isHidden = true;
+			
 			//setTheHideSprite 
+			
 		}
 	}
 	
 	public void show() {
-		isHidden = false;
-		if(!isAllied) {
-			isVisible = true;
+		Field field = GameInstance.getInstance().field;
+		if(field.blocks[(int) position.x][(int) position.y].playerOn == -1) {
+			isHidden = false;
+			
 		}
 	}
 
@@ -138,6 +147,7 @@ public abstract class Player extends Sprite{
 			this.direction = direction;
 			Vector2 targetPosition = new Vector2();
 			
+			//store targetPosition if not out of field border
 			if(position.y < field.getSize().y && direction == 0) {
 				targetPosition.set(position.x, position.y+1);
 			}
@@ -154,52 +164,82 @@ public abstract class Player extends Sprite{
 				targetPosition.set(position.x+1, position.y);
 			}
 			
-			if((!isHidden) || (isHidden && field.isOwnSide(this, targetPosition))) {
+			//execute move if the move follows regulation
+			if(((!isHidden && field.blocks[(int) targetPosition.x][(int) targetPosition.y].playerOn == -1) 
+					|| (isHidden && field.isOwnSide(this, targetPosition))) 
+					&& !field.isOthersHome(this,targetPosition)) {
 				isMoving = true;
-				Timer slowMoveTimer = new Timer(); // isolate the move and slowMove timers to ensure each move complete
-				field.closeVision(position);
-				if(position.y < field.getSize().y && direction == 0) {
-					field.openVision(new Vector2(position.x, position.y+1));
-				}
-					
-				if(position.y > 0 && direction == 1) {
-					field.openVision(new Vector2(position.x, position.y-1));
-				}
-					
-				if(position.x > 0 && direction == 2) {
-					field.openVision(new Vector2(position.x-1, position.y));
-				}
-					
-				if(position.x < field.getSize().x && direction == 3) {
-					field.openVision(new Vector2(position.x+1, position.y));
-				}
-			
 				
+				if(!isHidden) {
+					field.blocks[(int) position.x][(int) position.y].playerOn = -1;
+					field.blocks[(int) targetPosition.x][(int) targetPosition.y].playerOn = this.id;
+				}
+				position.set(targetPosition);
+				
+				//set new vision
+				if(!isAllied) {
+					if(field.blocks[(int) targetPosition.x][(int) targetPosition.y].isVisible) {
+						this.isVisible = true;
+					} else { 
+						this.isVisible = false;
+					}
+				} else {
+					field.closeVision(position);
+					if(position.y < field.getSize().y && direction == 0) {
+						field.openVision(targetPosition);
+					}
+							
+					if(position.y > 0 && direction == 1) {
+						field.openVision(targetPosition);
+					}
+							
+					if(position.x > 0 && direction == 2) {
+						field.openVision(targetPosition);
+					}
+							
+					if(position.x < field.getSize().x && direction == 3) {
+						field.openVision(targetPosition);
+					}
+				}			
+				
+				
+				// isolate the move and slowMove timers to ensure each move complete
+				// the below is not actual move
+				// it's to slow the pace (only slow down the visual action, actual position already set)
+				Timer slowMoveTimer = new Timer(); 				
 				slowMoveTimer.scheduleTask(new Timer.Task() {
 					
-					@Override
-					//filter the pace
+					@Override					
 					public void run() {
 						if(position.y < GameInstance.getInstance().field.getSize().y && direction == 0) {
-							position.y += 0.05;
+							drawPosition.y += 0.05;
 						}
 							
 						if(position.y > 0 && direction == 1) {
-							position.y -= 0.05;
+							drawPosition.y -= 0.05;
 						}
 							
 						if(position.x > 0 && direction == 2) {
-							position.x -= 0.05;
+							drawPosition.x -= 0.05;
 						}
 							
 						if(position.x < GameInstance.getInstance().field.getSize().x && direction == 3) {
-							position.x += 0.05;
+							drawPosition.x += 0.05;
 						}
 					}
 				}
-				, 0, 0.015f, 20);
-						
-				isMoving = false;
+				, 0, 0.015f, 19);
+				
+				//notify that the visual move action ended
+				Timer moveActionEndTimer = new Timer();
+				moveActionEndTimer.scheduleTask(new Timer.Task() {
+					
+					@Override
+					public void run() {
+						isMoving = false;
+					}
+				}, 0.3f, 0, 0);
+										
 			}
 		}
 			
@@ -214,14 +254,8 @@ public abstract class Player extends Sprite{
 		timer.clear();
 	}
 	
-	public void setPosition(int x, int y) {
-		position.x = x;
-		position.y = y;
-	}
-	
 	public void setHomePosition(int x, int y) {
-		homePosition.x = x;
-		homePosition.y = y;
+		homePosition.set(x, y);
 	}
 	
 	public Vector2 getPosition() {
@@ -230,6 +264,22 @@ public abstract class Player extends Sprite{
 	
 	public Vector2 getHomePosition() {
 		return new Vector2(homePosition.x,homePosition.y);
+	}
+
+
+	public void getKillBonus() {
+		score += 5;
+	}
+
+
+	public void loseABlock() {
+		score -= 1;		
+	}
+
+
+	public void getABlock() {
+		score += 1;
+		
 	}
 	
 }

@@ -1,5 +1,6 @@
 package com.samurai.el.maingame;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.samurai.el.ai.AIProgram;
@@ -20,6 +21,7 @@ public class GameInstance {
 	
 	public static GameInstance instance;
 	public int totalTime;
+	public double currentTime;
 	public RedSpear redSpear;
 	public RedSword redSword;
 	public RedAxe redAxe;
@@ -33,6 +35,7 @@ public class GameInstance {
 	
 	private GameInstance(int mapid, int time, int difficulty) {
 		totalTime = time;
+		currentTime = totalTime;
 		
 		//setMap
 		switch(mapid) {
@@ -53,8 +56,7 @@ public class GameInstance {
 			break;
 		}
 		
-		
-		
+				
 		playerBatch = new SpriteBatch();
 		AIProgram.setDifficulty(difficulty);
 				
@@ -102,6 +104,7 @@ public class GameInstance {
 				AIProgram.setAI(p);
 				if(p.side == human.side) {
 					p.isAllied = true;
+					p.isVisible = true;
 					field.openVision(p.position);
 				}
 			}
@@ -119,6 +122,7 @@ public class GameInstance {
 	
 	public void render() {
 		
+		currentTime -= Gdx.graphics.getDeltaTime();
 		field.render();
 				
 		playerBatch.begin();
@@ -127,6 +131,29 @@ public class GameInstance {
 		}*/
 		//human.draw(playerBatch);
 		playerBatch.end();
+	}
+	
+	public int[] gameOver() {
+		int[] scores = new int[6];
+		for(Player p: players) {
+			scores[p.id] = p.score;
+		}
+		int redScore = scores[0] + scores[1] + scores[2];
+		int blueScore = scores[3] + scores[4] + scores[5];
+		int isWinner = -1;
+		
+		if((human.side == 0 && redScore > blueScore) || (human.side == 1 && blueScore > redScore)) {
+			isWinner = 1;
+		} else if((human.side == 0 && redScore < blueScore) || (human.side == 1 && blueScore < redScore)) {
+			isWinner = 0;
+		}
+		
+		int[] result = new int[7];
+		for(int i = 0; i <= 5; i++) {
+			result[i] = scores[i];
+		}
+		result[6] = isWinner;
+		return result;
 	}
 	
 	public void dispose() {
