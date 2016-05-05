@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.samurai.el.maingame.GameInstance;
 import com.samurai.el.player.Player;
@@ -17,6 +18,9 @@ public class Block extends Sprite{
 	public int playerIdOn;
 	public int viewerNum;
 	public Player playerOn;
+	public Texture block0;
+	public Texture block1;
+	public Texture block2;
 	
 	public Block() {		
 		super();
@@ -26,7 +30,10 @@ public class Block extends Sprite{
 		owner = null;
 		side = -1;
 		isVisible = false;
-		this.set(new Sprite(new Texture(Gdx.files.internal("block0.jpg"))));
+		block0 = new Texture(Gdx.files.internal("block0.jpg"));
+		block1 = new Texture(Gdx.files.internal("block1.jpg"));
+		block2 = new Texture(Gdx.files.internal("block2.jpg"));
+		this.set(new Sprite(block0));
 	}
 	
 	public void playerArrive(Player player) {
@@ -101,7 +108,8 @@ public class Block extends Sprite{
 		}
 		
 		//implements to set sprite
-		this.setTexture(new Texture(Gdx.files.internal("block2.jpg")));
+		this.setTexture(block2);
+		
 	}
 	
 	public void occupy(Player p) {
@@ -115,7 +123,7 @@ public class Block extends Sprite{
 			if((playerOn != null) && (!playerOn.isAllied)) {
 				playerOn.isVisible = false;
 			}
-			this.setTexture(new Texture(Gdx.files.internal("block0.jpg")));
+			this.setTexture(block0);
 		}
 	}
 	
@@ -126,9 +134,10 @@ public class Block extends Sprite{
 				playerOn.isVisible = true;
 			}
 			if(owner != null) {
-				this.setTexture(new Texture(Gdx.files.internal("block2.jpg")));
+				this.setTexture(block2);
+
 			} else {
-				this.setTexture(new Texture(Gdx.files.internal("block1.jpg")));
+				this.setTexture(block1);
 			}
 		}
 		viewerNum += 1;
