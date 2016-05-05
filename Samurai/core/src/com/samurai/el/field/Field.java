@@ -78,12 +78,6 @@ public abstract class Field{
 			}
 		}
 		
-		Array<Player> players = GameInstance.getInstance().players;
-		for(Player p: players) {
-			if(p.side == player.side && p != player) {
-				openVision(p.position);
-			}
-		}
 	}
 	
 	public void openVision(Vector2 position) {

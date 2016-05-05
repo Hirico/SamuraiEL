@@ -15,11 +15,12 @@ public class Block extends Sprite{
 	public int id;
 	public int side;
 	public int playerIdOn;
+	public int viewerNum;
 	public Player playerOn;
-	public Array<Player> players;
 	
-	public Block() {
+	public Block() {		
 		super();
+		viewerNum = 0;
 		playerIdOn = -1;
 		id = -1;
 		owner = null;
@@ -31,6 +32,9 @@ public class Block extends Sprite{
 	public void playerArrive(Player player) {
 		playerOn = player;
 		playerIdOn = playerOn.id;
+		if(isVisible) {
+			playerOn.isVisible = true;
+		}
 	}
 	
 	public void playerArrive(int id) {
@@ -58,8 +62,12 @@ public class Block extends Sprite{
 	}
 	
 	public void playerLeave() {
-		playerOn = null;
+		if(playerOn != null) {
+			playerOn.isVisible = false;
+		}
+		playerOn = null;		
 		playerIdOn = -1;
+		
 	}
 	
 	public void occupy(int id) {
@@ -101,24 +109,29 @@ public class Block extends Sprite{
 	}
 	
 	public void hide() {
-		isVisible = false;
-		if((playerOn != null) && (!playerOn.isAllied)) {
-			playerOn.isVisible = false;
+		viewerNum -= 1;
+		if(viewerNum == 0) {
+			isVisible = false;
+			if((playerOn != null) && (!playerOn.isAllied)) {
+				playerOn.isVisible = false;
+			}
+			this.setTexture(new Texture(Gdx.files.internal("block0.jpg")));
 		}
-		this.setTexture(new Texture(Gdx.files.internal("block0.jpg")));
 	}
 	
-	public void show() {
-		players = GameInstance.getInstance().players;
-		isVisible = true;
-		if(playerOn != null) {
-			playerOn.isVisible = true;
+	public void show() {		
+		if(viewerNum == 0) {
+			isVisible = true;
+			if(playerOn != null) {
+				playerOn.isVisible = true;
+			}
+			if(owner != null) {
+				this.setTexture(new Texture(Gdx.files.internal("block2.jpg")));
+			} else {
+				this.setTexture(new Texture(Gdx.files.internal("block1.jpg")));
+			}
 		}
-		if(owner != null) {
-			this.setTexture(new Texture(Gdx.files.internal("block2.jpg")));
-		} else {
-			this.setTexture(new Texture(Gdx.files.internal("block1.jpg")));
-		}
+		viewerNum += 1;
 	}
 		
 	
