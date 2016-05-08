@@ -113,7 +113,7 @@ public abstract class Field{
 		int weapon = player.id % 3;
 		int[][] ox = {
 			    {0, 0, 0, 0},
-			    {0, 0, 1, 1, 2},
+			    {0, 0, -1, -1, -2},
 			    {-1,-1,-1,0, 1, 1, 1}
 			};
 		int[][] oy = {
@@ -142,6 +142,7 @@ public abstract class Field{
 			for(int i = 0; i <= 2; i++) {
 				for(int j = 0; j < ox[i].length; j++) {
 					oy[i][j] = - oy[i][j];
+					ox[i][j] = - ox[i][j];
 				}
 			}
 			break;

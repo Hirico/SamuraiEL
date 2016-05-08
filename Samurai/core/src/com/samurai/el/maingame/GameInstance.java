@@ -119,7 +119,7 @@ public class GameInstance {
 				field.blocks[(int) field.homePositions[i].x][(int) field.homePositions[i].y].playerArrive(i);
 			}
 		}
-		AIProgram.setDifficulty(difficulty);
+		aiProgram.setDifficulty(difficulty);
 		
 	}
 	
