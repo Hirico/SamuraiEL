@@ -38,6 +38,7 @@ public class MainMenuScreen implements Screen{
 	public MainMenuScreen()
 	{
 		music=Gdx.audio.newMusic(Gdx.files.internal("foxwel_temp/test.mp3"));
+		music.setLooping(true);
 		music.play();
 		
 		
@@ -125,6 +126,18 @@ public class MainMenuScreen implements Screen{
 	           @Override
 	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 	        	   ScreenCenter.setscreen(3);
+	           }
+	           @Override
+	           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) {
+	        	   		//button3=new ImageButton( new TextureRegionDrawable(buttonsplit[0][5]),new TextureRegionDrawable(buttonsplit[0][4]));
+
+						return true;
+	           }
+		});
+		button4.addListener(new InputListener(){
+	           @Override
+	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+	        	   Gdx.app.exit();
 	           }
 	           @Override
 	           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) {

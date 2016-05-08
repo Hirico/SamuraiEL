@@ -1,6 +1,6 @@
+package com.samurai.el.maingame;
 
-package com.samurai.el.achievement;
-
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -14,12 +14,17 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.samurai.el.mainmenu.ScreenCenter;
 
-public class AchievementScreen implements Screen{
-
+public class OverScreen implements Screen
+{
+	int[][] result;
+	int winflag;
 	Stage stage;
 	ImageButton returnbutton;
-	Screen mainmenuscreen;
-	public AchievementScreen() {
+	
+	public OverScreen(int[][] result,int winflag)
+	{
+		this.result=result;
+		this.winflag=winflag;
 		stage = new Stage(new StretchViewport(1280,720));
 		
 		Sprite returnbutton0=new Sprite(new Texture("foxwel_temp/return0.png"));
@@ -94,4 +99,7 @@ public class AchievementScreen implements Screen{
 	}
 
 }
+
+
+
 

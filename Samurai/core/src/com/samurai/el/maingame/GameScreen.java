@@ -24,6 +24,7 @@ public class GameScreen implements Screen, InputProcessor {
 		this.game = game;
 		Gdx.input.setInputProcessor(this);
 		gameInstance = GameInstance.getInstance();
+		uiBatch = new SpriteBatch();
 	}
 	
 	@Override
@@ -44,8 +45,9 @@ public class GameScreen implements Screen, InputProcessor {
         	int[][] result = gameInstance.gameOver();       	
         	//result[6][3] contains each samurai's score(territory), killNum, killedNum
         	//winFlag: 1:win 0:lose -1:tied
-        	//game.setScreen(new OverScreen(game, result, winFlag)));
-        	//dispose();
+        	int winFlag=gameInstance.winFlag;
+        	game.setScreen(new OverScreen(result, winFlag));
+        	dispose();
         }
         
 		
