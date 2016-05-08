@@ -15,7 +15,7 @@ public abstract class Background {
 	}
 	
 	public void dispose() {
-		backBatch.dispose();
-		music.dispose();
+		//backBatch.dispose();
+		//music.dispose();
 	}
 }
