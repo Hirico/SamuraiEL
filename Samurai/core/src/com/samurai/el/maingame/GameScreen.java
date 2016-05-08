@@ -39,14 +39,13 @@ public class GameScreen implements Screen, InputProcessor {
         Gdx.gl20.glClearColor(255, 255, 255, 1);
         Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
         gameInstance.render();
-        //uiBatch.begin();
-        //uiBatch.end();
+        uiBatch.begin();
+        uiBatch.end();
         if(gameInstance.currentTime <= 0) {
         	int[][] result = gameInstance.gameOver();       	
         	//result[6][3] contains each samurai's score(territory), killNum, killedNum
         	//winFlag: 1:win 0:lose -1:tied
-        	int winFlag=gameInstance.winFlag;
-        	game.setScreen(new OverScreen(result, winFlag));
+        	game.setScreen(new OverScreen(result, gameInstance.winFlag));
         	dispose();
         }
         

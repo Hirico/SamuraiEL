@@ -9,13 +9,17 @@ public abstract class Background {
 	protected SpriteBatch backBatch;	
 	protected Music music;
 		
+	public Background() {
+		backBatch = new SpriteBatch();
+	}
+	
 	public void render() {
-		//backBatch.begin();
-		//backBatch.end();
+		backBatch.begin();
+		backBatch.end();
 	}
 	
 	public void dispose() {
 		backBatch.dispose();
-		music.dispose();
+		//music.dispose();
 	}
 }
