@@ -1,55 +1,43 @@
 package com.samurai.el.gamesetting;
 
-import com.badlogic.gdx.Game;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.samurai.el.maingame.GameInstance;
-import com.samurai.el.maingame.GameScreen;
-import com.samurai.el.mainmenu.MainMenuScreen;
+import com.samurai.el.mainmenu.ScreenCenter;
 
 
 
 public class GameSetScreen implements Screen{
-	Game game;
+
 	Stage stage;
+
 	ImageButton returnbutton;
 	ImageButton enterbutton;
 	BitmapFont font;
-	
+	Music music;
 	CheckBox[] fieldcheckbox=new CheckBox[4];
 	CheckBox[] playercheckbox=new CheckBox[6];
 	CheckBox[] difficultycheckbox=new CheckBox[3];
 	
-	public GameSetScreen(Game game) {
-		this.game = game;//return game;
-		
-	}
-	
-	@Override
-	public void show() {
-		
+	public GameSetScreen() {
 		font=new BitmapFont(Gdx.files.internal("foxwel_temp/choose/1.fnt"),Gdx.files.internal("foxwel_temp/choose/1.png"), false);
 		// TODO Auto-generated method stub
+		
 		stage = new Stage(new StretchViewport(1280,720));
-		Gdx.input.setInputProcessor(stage);
-		
-		
-		
 		
 		
 		Sprite returnbuttonp0=new Sprite(new Texture("foxwel_temp/return0.png"));
@@ -61,11 +49,6 @@ public class GameSetScreen implements Screen{
 		returnbuttonstyle.imageOver=new SpriteDrawable(returnbuttonp1);
 		
 		returnbutton=new ImageButton(returnbuttonstyle);
-		stage.addActor(returnbutton);
-		returnbutton.setPosition(1280-128, 0);
-		
-
-		
 		
 		
 		Sprite enterbuttonp0=new Sprite(new Texture("foxwel_temp/choose/enter0.png"));
@@ -77,10 +60,6 @@ public class GameSetScreen implements Screen{
 		enterbuttonstyle.imageOver=new SpriteDrawable(enterbuttonp1);
 		
 		enterbutton=new ImageButton(enterbuttonstyle);
-		stage.addActor(enterbutton);
-		enterbutton.setPosition(720-enterbutton.getWidth()-50, 20);
-		
-		
 		
 		
 		Sprite c0=new Sprite(new Texture("foxwel_temp/choose/c0.png"));
@@ -99,6 +78,29 @@ public class GameSetScreen implements Screen{
 		fieldcheckbox[2]=new CheckBox("map2",choosestyle);
 		fieldcheckbox[3]=new CheckBox("map3",choosestyle);
 
+		playercheckbox[0]=new CheckBox("redSpear",choosestyle);
+		playercheckbox[1]=new CheckBox("redSword",choosestyle);
+		playercheckbox[2]=new CheckBox("redAxe",choosestyle);
+		playercheckbox[3]=new CheckBox("blueSpear",choosestyle);
+		playercheckbox[4]=new CheckBox("blueSword",choosestyle);
+		playercheckbox[5]=new CheckBox("blueAxe",choosestyle);
+		
+		difficultycheckbox[0]=new CheckBox("easy",choosestyle);
+		difficultycheckbox[1]=new CheckBox("normal",choosestyle);
+		difficultycheckbox[2]=new CheckBox("hard",choosestyle);
+	}
+	
+	@Override
+	public void show() {
+		
+		Gdx.input.setInputProcessor(stage);
+		stage.addActor(returnbutton);
+		returnbutton.setPosition(1280-128, 0);
+		
+		stage.addActor(enterbutton);
+		enterbutton.setPosition(720-enterbutton.getWidth()-50, 20);
+		
+		
 		int filedstartX=120;
 		for (int i=0;i<4;++i)
 		{
@@ -129,12 +131,6 @@ public class GameSetScreen implements Screen{
 		}
 		
 		
-		playercheckbox[0]=new CheckBox("redSpear",choosestyle);
-		playercheckbox[1]=new CheckBox("redSword",choosestyle);
-		playercheckbox[2]=new CheckBox("redAxe",choosestyle);
-		playercheckbox[3]=new CheckBox("blueSpear",choosestyle);
-		playercheckbox[4]=new CheckBox("blueSword",choosestyle);
-		playercheckbox[5]=new CheckBox("blueAxe",choosestyle);
 		
 		int playerstartX=240;
 		for (int i=0;i<6;++i)
@@ -165,10 +161,7 @@ public class GameSetScreen implements Screen{
 			});
 		}
 		
-		difficultycheckbox[0]=new CheckBox("easy",choosestyle);
-		difficultycheckbox[1]=new CheckBox("normal",choosestyle);
-		difficultycheckbox[2]=new CheckBox("hard",choosestyle);
-
+		
 		int difficultydstartX=240;
 		for (int i=0;i<3;++i)
 		{
@@ -243,7 +236,7 @@ public class GameSetScreen implements Screen{
 		returnbutton.addListener(new InputListener(){
 	           @Override
 	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-	        	   game.setScreen(new MainMenuScreen(game));
+	        	   ScreenCenter.setscreen(0);
 	           }
 	           @Override
 	           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) {
@@ -258,11 +251,15 @@ public class GameSetScreen implements Screen{
 	           @Override
 	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 	        	   GameInstance.setInstance(getchoose(fieldcheckbox), getchoose(playercheckbox), 200, getchoose(difficultycheckbox));
-	        	   game.setScreen(new GameScreen(game));
+	        	  // GameInstance.setInstance(0,0,200,1);
+	        	   ScreenCenter.mainmenuscreen.music.stop();
+	        	   ScreenCenter.mainmenuscreen.music.dispose();
+	        	   ScreenCenter.setscreen(4);
 	           }
 	           @Override
 	           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) {
-	        	   if (ischoose(fieldcheckbox)&&ischoose(playercheckbox)&&ischoose(difficultycheckbox)) return true;else return false;
+	        	  //return true;
+	        	  if (ischoose(fieldcheckbox)&&ischoose(playercheckbox)&&ischoose(difficultycheckbox)) return true;else return false;
 	           }
 		});
 	}

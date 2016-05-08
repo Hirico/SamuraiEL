@@ -1,6 +1,6 @@
+
 package com.samurai.el.achievement;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -12,14 +12,14 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.samurai.el.mainmenu.MainMenuScreen;
+import com.samurai.el.mainmenu.ScreenCenter;
 
 public class AchievementScreen implements Screen{
-	Game game;
+
 	Stage stage;
 	ImageButton returnbutton;
-	public AchievementScreen(Game game) {
-		this.game = game;//return game;
+	Screen mainmenuscreen;
+	public AchievementScreen() {
 		
 	}
 	
@@ -36,7 +36,6 @@ public class AchievementScreen implements Screen{
 		returnbuttonstyle.imageDown=new SpriteDrawable(returnbutton0);
 		returnbuttonstyle.imageOver=new SpriteDrawable(returnbutton1);
 		
-		
 		returnbutton=new ImageButton(returnbuttonstyle);
 		stage.addActor(returnbutton);
 		returnbutton.setPosition(1280-128, 0);
@@ -44,7 +43,7 @@ public class AchievementScreen implements Screen{
 		returnbutton.addListener(new InputListener(){
 	           @Override
 	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-	        	   game.setScreen(new MainMenuScreen(game));
+	        	   ScreenCenter.setscreen(0);
 	           }
 	           @Override
 	           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) {
@@ -95,3 +94,4 @@ public class AchievementScreen implements Screen{
 	}
 
 }
+

@@ -1,3 +1,4 @@
+
 package com.samurai.el.setting;
 
 import com.badlogic.gdx.Game;
@@ -12,15 +13,15 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
-import com.samurai.el.mainmenu.MainMenuScreen;
+import com.samurai.el.mainmenu.ScreenCenter;
 
 public class SettingScreen implements Screen{
 	Game game;
+	Screen mainmenuscreen;
 	Stage stage;
 	ImageButton returnbutton;
-	public SettingScreen(Game game) {
-		this.game = game;//return game;
-		
+	public SettingScreen() {
+
 	}
 	
 	@Override
@@ -36,7 +37,6 @@ public class SettingScreen implements Screen{
 		returnbuttonstyle.imageDown=new SpriteDrawable(returnbutton0);
 		returnbuttonstyle.imageOver=new SpriteDrawable(returnbutton1);
 		
-		
 		returnbutton=new ImageButton(returnbuttonstyle);
 		stage.addActor(returnbutton);
 		returnbutton.setPosition(1280-128, 0);
@@ -44,13 +44,13 @@ public class SettingScreen implements Screen{
 		returnbutton.addListener(new InputListener(){
 	           @Override
 	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-	        	   game.setScreen(new MainMenuScreen(game));
+	        	   ScreenCenter.setscreen(0);
 	           }
 	           @Override
 	           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) {
 	        	 
 
-						return true;
+						return true;  
 	           }
 		});
 	}
