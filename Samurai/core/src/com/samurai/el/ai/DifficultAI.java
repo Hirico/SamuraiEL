@@ -19,7 +19,7 @@ public class DifficultAI extends AIProgram{
     	 this.fieldy=GameInstance.getInstance().field.getSize().y;
      }
      public static void update(){
-    	 this.field=GameInstance.getInstance().field.blocks;
+    	 field=GameInstance.getInstance().field.blocks;
      }
      public void reaction(){
        while(GameInstance.getInstance().currentTime%this.timeCell==0&GameInstance.getInstance().currentTime<GameInstance.getInstance().totalTime){   	 
@@ -179,6 +179,7 @@ public class DifficultAI extends AIProgram{
      public void blueSword(){
     	 int x=(int)GameInstance.getInstance().blueSword.getPosition().x;
     	 int y=(int)GameInstance.getInstance().blueSword.getPosition().y;
+    	 if(x-2)
      }
      public void redAxe(){
     	 int x=(int)GameInstance.getInstance().redAxe.getPosition().x;
@@ -291,6 +292,7 @@ public class DifficultAI extends AIProgram{
     	 
      }
      public void redSword(){
-    	 
+    	 int x=(int)GameInstance.getInstance().blueSword.getPosition().x;
+    	 int y=(int)GameInstance.getInstance().blueSword.getPosition().y;
      }
 }

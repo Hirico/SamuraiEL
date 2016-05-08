@@ -10,7 +10,7 @@ public class AIProgram {
     float fieldy;
     static Array<Player> AIplayers;
      static AIProgram AI;
-     Block[][] field;
+     static Block[][] field;
     public static void setAI(Player player) {
 		AI.AIplayers.add(player);
 	}
