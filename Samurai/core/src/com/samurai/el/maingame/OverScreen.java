@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -25,13 +26,17 @@ public class OverScreen implements Screen
 	BitmapFont font;
 	LabelStyle labelstyle;
 	Label[] scorelabel=new Label[6];
+	SpriteBatch batch;
+	Sprite background;
+	
 	
 	public OverScreen(int[][] result,int winflag)
 	{
 		font=new BitmapFont(Gdx.files.internal("foxwel_temp/choose/1.fnt"),Gdx.files.internal("foxwel_temp/choose/1.png"), false);
 		labelstyle=new LabelStyle(font, font.getColor());
 		
-		
+		background=new Sprite(new Texture(Gdx.files.internal("foxwel_temp/photo.jpg")));
+		batch=new SpriteBatch();
 		
 		this.result=result;
 		this.winflag=winflag;
@@ -52,7 +57,7 @@ public class OverScreen implements Screen
 	
 	@Override
 	public void show() {
-		
+		ScreenCenter.startmusic();
 		Gdx.input.setInputProcessor(stage);
 		stage.addActor(returnbutton);
 		for (int i=0;i<6;++i) stage.addActor(scorelabel[i]);
@@ -82,6 +87,11 @@ public class OverScreen implements Screen
 		// TODO Auto-generated method stub
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
+		batch.begin();
+		batch.draw(background,0,0);
+		batch.end();
+		
 		stage.act();
 		stage.draw();
 	}

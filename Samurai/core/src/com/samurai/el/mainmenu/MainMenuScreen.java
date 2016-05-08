@@ -1,5 +1,7 @@
 package com.samurai.el.mainmenu;
 
+import javax.swing.JOptionPane;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
@@ -17,7 +19,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 
-
 public class MainMenuScreen implements Screen{
 
 	Stage stage;
@@ -30,25 +31,18 @@ public class MainMenuScreen implements Screen{
 	Sprite background;
 	public Music music;
 	
-	Music getmusic()
-	{
-		return music;
-	}
-	
 	public MainMenuScreen()
 	{
-		music=Gdx.audio.newMusic(Gdx.files.internal("foxwel_temp/test.mp3"));
-		music.setLooping(true);
-		music.play();
 		
-		
+		//music=Gdx.audio.newMusic(Gdx.files.internal("foxwel_temp/test.mp3"));
+		//music.setLooping(true);
+		//music.play();
+				
 		
 		background=new Sprite(new Texture(Gdx.files.internal("foxwel_temp/photo.jpg")));
 		batch=new SpriteBatch();
-		stage = new Stage(new StretchViewport(1280,720));
-		
-
-		
+		stage=new Stage(new StretchViewport(1280,720));
+				
 		
 		buttonpng=new Texture(Gdx.files.internal("foxwel_temp/mainbutton.png"));
 		final TextureRegion[][] buttonsplit=TextureRegion.split(buttonpng, 128, 128);
@@ -71,8 +65,7 @@ public class MainMenuScreen implements Screen{
 		button3style.imageUp=new TextureRegionDrawable(buttonsplit[0][4]);
 		button3style.imageDown=new TextureRegionDrawable(buttonsplit[0][4]);
 		button3style.imageOver=new TextureRegionDrawable(buttonsplit[0][5]);
-		
-		
+				
 		button4style.imageUp=new SpriteDrawable(returnbutton0);
 		button4style.imageDown=new SpriteDrawable(returnbutton0);
 		button4style.imageOver=new SpriteDrawable(returnbutton1);
@@ -88,6 +81,7 @@ public class MainMenuScreen implements Screen{
 	public void show() {
 		// TODO Auto-generated method stub
 		Gdx.input.setInputProcessor(stage);
+		
 		stage.addActor(button1);
 		stage.addActor(button2);
 		stage.addActor(button3);
@@ -98,52 +92,59 @@ public class MainMenuScreen implements Screen{
 		button3.setPosition(576+200, 360-64);
 		button4.setPosition(1280-128, 0);
 		
-		button1.addListener(new InputListener(){
+		button1.addListener(new InputListener()
+		{
 	           @Override
-	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) 
+	           {
 	        	   ScreenCenter.setscreen(1);
 	           }
 	           @Override
-	           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) {
-
+	           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) 
+	           {
 						return true;
 	           }
 		});
 		
-		button2.addListener(new InputListener(){
+		button2.addListener(new InputListener()
+		{
 	           @Override
-	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) 
+	           {
 	        	   ScreenCenter.setscreen(2);
 	           }
 	           @Override
-	           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) {
-
+	           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) 
+	           {
 						return true;
 	           }
 		});
 		
-		button3.addListener(new InputListener(){
+		button3.addListener(new InputListener()
+		{
 	           @Override
-	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) 
+	           {
 	        	   ScreenCenter.setscreen(3);
 	           }
 	           @Override
-	           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) {
-	        	   		//button3=new ImageButton( new TextureRegionDrawable(buttonsplit[0][5]),new TextureRegionDrawable(buttonsplit[0][4]));
-
+	           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) 
+	           {
 						return true;
 	           }
 		});
-		button4.addListener(new InputListener(){
+		button4.addListener(new InputListener()
+		{
 	           @Override
-	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-	        	   Gdx.app.exit();
+	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) 
+	           {
+	        	   int message=JOptionPane.showConfirmDialog(null,"您确认退出游戏吗？","Warning！", JOptionPane.YES_NO_OPTION); 
+	        	   if (message==JOptionPane.YES_OPTION) Gdx.app.exit();
 	           }
 	           @Override
-	           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) {
-	        	   		//button3=new ImageButton( new TextureRegionDrawable(buttonsplit[0][5]),new TextureRegionDrawable(buttonsplit[0][4]));
-
-						return true;
+	           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) 
+	           {
+	        	   return true;
 	           }
 		});
 	}
@@ -151,7 +152,6 @@ public class MainMenuScreen implements Screen{
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
-		
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
@@ -192,6 +192,6 @@ public class MainMenuScreen implements Screen{
 		// TODO Auto-generated method stub
 		batch.dispose();
 		stage.dispose();
+		music.dispose();
 	}
-
 }

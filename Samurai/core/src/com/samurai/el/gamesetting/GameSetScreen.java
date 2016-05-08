@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -32,10 +33,15 @@ public class GameSetScreen implements Screen{
 	CheckBox[] fieldcheckbox=new CheckBox[4];
 	CheckBox[] playercheckbox=new CheckBox[6];
 	CheckBox[] difficultycheckbox=new CheckBox[3];
+	SpriteBatch batch;
+	Sprite background;
 	
 	public GameSetScreen() {
 		font=new BitmapFont(Gdx.files.internal("foxwel_temp/choose/1.fnt"),Gdx.files.internal("foxwel_temp/choose/1.png"), false);
 		// TODO Auto-generated method stub
+		
+		batch=new SpriteBatch();
+		background=new Sprite(new Texture(Gdx.files.internal("foxwel_temp/setphoto.jpg")));
 		
 		stage = new Stage(new StretchViewport(1280,720));
 		
@@ -71,7 +77,7 @@ public class GameSetScreen implements Screen{
 		choosestyle.checkboxOn=new SpriteDrawable(c4);
 		choosestyle.checkboxOff=new SpriteDrawable(c0);
 		choosestyle.font=font;
-		choosestyle.fontColor=new Color(0, 1, 0, 1);
+		choosestyle.fontColor=new Color(Color.YELLOW);
 	
 		fieldcheckbox[0]=new CheckBox("map0",choosestyle);
 		fieldcheckbox[1]=new CheckBox("map1",choosestyle);
@@ -191,48 +197,6 @@ public class GameSetScreen implements Screen{
 			});
 		}
 		
-		
-		/*
-		 * fieldcheckbox1.addListener(new InputListener(){
-	           @Override
-	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-		        	fieldcheckbox0.setChecked(false);
-		   			fieldcheckbox2.setChecked(false);
-		   			fieldcheckbox3.setChecked(false);
-	           }
-	           @Override
-	           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) {
-						return true;
-	           }
-		});
-		
-		fieldcheckbox2.addListener(new InputListener(){
-	           @Override
-	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-		        	fieldcheckbox1.setChecked(false);
-		   			fieldcheckbox0.setChecked(false);
-		   			fieldcheckbox3.setChecked(false);
-	           }
-	           @Override
-	           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) {
-						return true;
-	           }
-		});
-		
-		fieldcheckbox3.addListener(new InputListener(){
-	           @Override
-	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-	        	fieldcheckbox1.setChecked(false);
-	   			fieldcheckbox2.setChecked(false);
-	   			fieldcheckbox0.setChecked(false);
-	           }
-	           @Override
-	           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) {
-						return true;
-	           }
-		});
-		*/
-		
 		returnbutton.addListener(new InputListener(){
 	           @Override
 	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
@@ -252,8 +216,9 @@ public class GameSetScreen implements Screen{
 	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 	        	   GameInstance.setInstance(getchoose(fieldcheckbox), getchoose(playercheckbox), 5, getchoose(difficultycheckbox));
 	        	  // GameInstance.setInstance(0,0,200,1);
-	        	   ScreenCenter.mainmenuscreen.music.stop();
+	        	  // ScreenCenter.mainmenuscreen.music.stop();
 	        	   //ScreenCenter.mainmenuscreen.music.dispose();
+	        	   ScreenCenter.stopmusic();
 	        	   ScreenCenter.setscreen(4);
 	           }
 	           @Override
@@ -279,11 +244,16 @@ public class GameSetScreen implements Screen{
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
-		Gdx.gl.glClearColor(1, 1, 1, 1);
+		//Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		
+		batch.begin();
+		batch.draw(background,0,0);
+		batch.end();
 		
 		stage.act();
 		stage.draw();
+		
 	}
 
 	@Override
