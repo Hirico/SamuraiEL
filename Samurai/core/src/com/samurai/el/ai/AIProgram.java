@@ -12,7 +12,8 @@ public class AIProgram {
      static AIProgram AI;
      static Block[][] field;
     public static void setAI(Player player) {
-		AI.AIplayers.add(player);
+    	AIplayers = new Array<Player>();
+		AIplayers.add(player);
 	}
 
 
@@ -20,10 +21,24 @@ public class AIProgram {
 		switch(difficulty){
 		  case 0:
 		      AI=new EasyAI();
+		      break;
 		  case 1:
 			  AI=new DifficultAI();
+			  break;
 		  default:
 			  AI=new DifficultAI();
 		}
+	}
+	
+	public AIProgram() {
+		
+	}
+
+
+
+
+	public void update() {
+		// TODO Auto-generated method stub
+		
 	}
 }

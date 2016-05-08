@@ -1,5 +1,6 @@
 package com.samurai.el.ai;
 
+import com.samurai.el.field.Field;
 import com.samurai.el.field.Field0;
 import com.samurai.el.field.Field1;
 import com.samurai.el.field.Field2;
@@ -15,10 +16,11 @@ import com.samurai.el.player.Player;
 public class DifficultAI extends AIProgram{
      public DifficultAI(){
     	 this.timeCell=0.5f;
+    	 Field field = GameInstance.getInstance().field;
     	 this.fieldx=GameInstance.getInstance().field.getSize().x;
     	 this.fieldy=GameInstance.getInstance().field.getSize().y;
      }
-     public static void update(){
+     public void update(){
     	 field=GameInstance.getInstance().field.blocks;
      }
      public void reaction(){
@@ -179,7 +181,7 @@ public class DifficultAI extends AIProgram{
      public void blueSword(){
     	 int x=(int)GameInstance.getInstance().blueSword.getPosition().x;
     	 int y=(int)GameInstance.getInstance().blueSword.getPosition().y;
-    	 if(x-2)
+    	 //if(x-2)
      }
      public void redAxe(){
     	 int x=(int)GameInstance.getInstance().redAxe.getPosition().x;

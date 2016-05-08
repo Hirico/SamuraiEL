@@ -1,6 +1,8 @@
 package com.samurai.el.maingame;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.ai.GdxAI;
+import com.badlogic.gdx.ai.msg.MessageDispatcher;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.samurai.el.ai.AIProgram;
@@ -32,10 +34,16 @@ public class GameInstance {
 	public Array<Player> players;
 	public Field field;
 	public SpriteBatch playerBatch;
+	public int winFlag;
+	public AIProgram aiProgram;
+	public MessageDispatcher messageDispatcher;
 	
-	private GameInstance(int mapid, int time, int difficulty) {
+	private GameInstance(int mapid, int time) {
 		totalTime = time;
 		currentTime = totalTime;
+		winFlag = -1;
+		aiProgram = new AIProgram();
+		messageDispatcher = new MessageDispatcher();
 		
 		//setMap
 		switch(mapid) {
@@ -58,11 +66,10 @@ public class GameInstance {
 		
 				
 		playerBatch = new SpriteBatch();
-		AIProgram.setDifficulty(difficulty);
 				
 	}
 	
-	public void initializePlayer(int humanid) {
+	public void initializePlayer(int humanid,  int difficulty) {
 		//initialize players
 		players = new Array<Player>();		
 		players.add(redSpear = new RedSpear(field.homePositions[0]));
@@ -101,7 +108,7 @@ public class GameInstance {
 		}
 		for(Player p : players) {
 			if(p.isHuman == false) {
-				AIProgram.setAI(p);
+				aiProgram.setAI(p);
 			}
 			if(p.side == human.side) {
 				p.isAllied = true;
@@ -112,6 +119,7 @@ public class GameInstance {
 				field.blocks[(int) field.homePositions[i].x][(int) field.homePositions[i].y].playerArrive(i);
 			}
 		}
+		AIProgram.setDifficulty(difficulty);
 		
 	}
 	
@@ -120,8 +128,8 @@ public class GameInstance {
 	}
 	
 	public static void setInstance(int mapid, int human, int time, int difficulty) {
-		instance = new GameInstance(mapid, time, difficulty);
-		instance.initializePlayer(human);
+		instance = new GameInstance(mapid, time);
+		instance.initializePlayer(human, difficulty);
 	}
 	
 	public void render() {
@@ -136,28 +144,32 @@ public class GameInstance {
 		
 		
 		playerBatch.end();
+		
+		
+		//update AI
+		GdxAI.getTimepiece().update(0);
+		messageDispatcher.update();
+		aiProgram.update();
 	}
 	
-	public int[] gameOver() {
+	public int[][] gameOver() {
+		int[][] result = new int[6][4];
 		int[] scores = new int[6];
 		for(Player p: players) {
-			scores[p.id] = p.score;
+			result[p.id][0] = scores[p.id] = p.score;
+			result[p.id][1] = p.killNum;
+			result[p.id][2] = p.killedNum;
 		}
 		int redScore = scores[0] + scores[1] + scores[2];
 		int blueScore = scores[3] + scores[4] + scores[5];
-		int isWinner = -1;
 		
 		if((human.side == 0 && redScore > blueScore) || (human.side == 1 && blueScore > redScore)) {
-			isWinner = 1;
+			winFlag = 1;
 		} else if((human.side == 0 && redScore < blueScore) || (human.side == 1 && blueScore < redScore)) {
-			isWinner = 0;
+			winFlag = 0;
 		}
 		
-		int[] result = new int[7];
-		for(int i = 0; i <= 5; i++) {
-			result[i] = scores[i];
-		}
-		result[6] = isWinner;
+	
 		return result;
 	}
 	

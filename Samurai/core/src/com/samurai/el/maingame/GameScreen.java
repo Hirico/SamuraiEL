@@ -41,10 +41,13 @@ public class GameScreen implements Screen, InputProcessor {
         //uiBatch.begin();
         //uiBatch.end();
         if(gameInstance.currentTime <= 0) {
-        	int[] result = gameInstance.gameOver();
-        	//0-5 of result are scores, 6 is whetherWin(0-lose, 1-win, -1-tied)
-        	//game.setScreen(new OverScreen(game, result));
+        	int[][] result = gameInstance.gameOver();       	
+        	//result[6][3] contains each samurai's score(territory), killNum, killedNum
+        	//winFlag: 1:win 0:lose -1:tied
+        	//game.setScreen(new OverScreen(game, result, winFlag)));
+        	//dispose();
         }
+        
 		
 	}
 
@@ -77,22 +80,20 @@ public class GameScreen implements Screen, InputProcessor {
 	@Override
 	public boolean keyDown(int keycode) {
 		Player human = gameInstance.human;
-		if(keycode == Input.Keys.W && !human.isMoving) {
+		if(keycode == Input.Keys.W) {
 			upTimer = human.moveBegin(0);
 		}
-		if(keycode == Input.Keys.S && !human.isMoving) {
+		if(keycode == Input.Keys.S) {
 			downTimer = human.moveBegin(1);
 		}
-		if(keycode == Input.Keys.A && !human.isMoving) {
+		if(keycode == Input.Keys.A) {
 			leftTimer = human.moveBegin(2);
 		}
-		if(keycode == Input.Keys.D && !human.isMoving) {
+		if(keycode == Input.Keys.D) {
 			rightTimer = human.moveBegin(3);
 		}
 		if(keycode == Input.Keys.J) {
-			if(human.occupiable()) {
-				human.occupy();
-			}
+			human.occupy();
 		}
 		if(keycode == Input.Keys.K) {
 			human.hide();

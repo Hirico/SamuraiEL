@@ -18,6 +18,8 @@ public abstract class Player extends Sprite{
 	public int side;
 	public int id;
 	public int score;
+	public int killNum;
+	public int killedNum;
 	public double cooldownTime;
 	public boolean isAllied;
 	public boolean isVisible;
@@ -33,6 +35,7 @@ public abstract class Player extends Sprite{
 	public Sprite move1;
 	public Sprite move2;
 	public Sprite move3;
+	public Texture specBlockTexture;
 	
 	public Player(Vector2 homePosition) {
 		
@@ -50,16 +53,18 @@ public abstract class Player extends Sprite{
 		drawPosition.set(position);
 		cooldownTime = 0;
 		score = 0;
+		killNum = 0;
+		killedNum = 0;
 		direction = 1;
 		
-		stand0 = new Sprite(new Texture(Gdx.files.internal("stand0.jpg")));
-		stand1 = new Sprite(new Texture(Gdx.files.internal("stand1.jpg")));
-		stand2 = new Sprite(new Texture(Gdx.files.internal("stand2.jpg")));
-		stand3 = new Sprite(new Texture(Gdx.files.internal("stand3.jpg")));
-		move0 = new Sprite(new Texture(Gdx.files.internal("move0.jpg")));
-		move1 = new Sprite(new Texture(Gdx.files.internal("move1.jpg")));
-		move2 = new Sprite(new Texture(Gdx.files.internal("move2.jpg")));
-		move3 = new Sprite(new Texture(Gdx.files.internal("move3.jpg")));
+		stand0 = new Sprite(new Texture(Gdx.files.internal("hirico_temp/stand0.jpg")));
+		stand1 = new Sprite(new Texture(Gdx.files.internal("hirico_temp/stand1.jpg")));
+		stand2 = new Sprite(new Texture(Gdx.files.internal("hirico_temp/stand2.jpg")));
+		stand3 = new Sprite(new Texture(Gdx.files.internal("hirico_temp/stand3.jpg")));
+		move0 = new Sprite(new Texture(Gdx.files.internal("hirico_temp/move0.jpg")));
+		move1 = new Sprite(new Texture(Gdx.files.internal("hirico_temp/move1.jpg")));
+		move2 = new Sprite(new Texture(Gdx.files.internal("hirico_temp/move2.jpg")));
+		move3 = new Sprite(new Texture(Gdx.files.internal("hirico_temp/move3.jpg")));
 		this.set(stand1);
 	}
 	
@@ -128,7 +133,7 @@ public abstract class Player extends Sprite{
 	}
 	
 	public boolean occupiable() {
-		if(cooldownTime == 0 && !isRecovering && !isHidden && !isMoving) {
+		if(cooldownTime == 0 && !isRecovering && !isHidden) {
 			return true;
 		} else {
 			return false;
@@ -136,9 +141,11 @@ public abstract class Player extends Sprite{
 	}
 	
 	public void occupy() {
-		Field field = GameInstance.getInstance().field;
-		field.executeOccupation(this, position, direction);
-		cooldownTime = 30;
+		if(occupiable()) {
+			Field field = GameInstance.getInstance().field;
+			field.executeOccupation(this, position, direction);
+			cooldownTime = 90; // this divides 60 is the real time in seconds
+		}
 	}
 	
 	public void attacked() {
@@ -151,6 +158,7 @@ public abstract class Player extends Sprite{
 		drawPosition.set(homePosition);
 		isRecovering = true;
 		recoverLeftTime = 180;
+		killedNum += 1;
 	}
 	
 	
@@ -178,7 +186,7 @@ public abstract class Player extends Sprite{
 		float delay = 0;
 		if(direction != this.direction) {
 			this.direction = direction;
-			delay = 0.2f;
+			//delay = 0.2f;
 		}
 		
 		Timer moveTimer = new Timer();
@@ -200,20 +208,6 @@ public abstract class Player extends Sprite{
 		if(!isRecovering) {
 			Field field = GameInstance.getInstance().field;
 			this.direction = direction;
-			switch(direction) {
-			case 0:
-				this.set(stand0);
-				break;
-			case 1:
-				this.set(stand1);
-				break;
-			case 2:
-				this.set(stand2);
-				break;
-			case 3:
-				this.set(stand3);
-				break;
-			}
 			Vector2 targetPosition = new Vector2();
 			targetPosition.set(position);
 			
@@ -341,7 +335,7 @@ public abstract class Player extends Sprite{
 
 
 	public void getKillBonus() {
-		score += 5;
+		killNum += 1;
 	}
 
 

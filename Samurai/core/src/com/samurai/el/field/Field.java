@@ -44,6 +44,11 @@ public abstract class Field{
 	
 	public void dispose() {
 		background.dispose();
+		for(int i = 0; i < blocks.length; i++) {
+			for(int j = 0; j < blocks[0].length; j++) {
+				blocks[i][j].dispose();
+			}
+		}
 		fieldBatch.dispose();
 	}
 	
@@ -173,7 +178,9 @@ public abstract class Field{
 					for(Player p: players) {
 						if(p.position.equals(targetPosition) && !p.isRecovering) {
 							p.attacked();
-							player.getKillBonus();
+							if(p.side != player.side) {
+								player.getKillBonus();
+							}
 						}
 					}
 					

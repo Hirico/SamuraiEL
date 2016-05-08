@@ -4,9 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Array;
 import com.samurai.el.maingame.GameInstance;
 import com.samurai.el.player.Player;
 
@@ -18,9 +15,8 @@ public class Block extends Sprite{
 	public int playerIdOn;
 	public int viewerNum;
 	public Player playerOn;
-	public Texture block0;
-	public Texture block1;
-	public Texture block2;
+	public Texture block6; // invisible block
+	public Texture block7; // neutral block
 	
 	public Block() {		
 		super();
@@ -30,10 +26,9 @@ public class Block extends Sprite{
 		owner = null;
 		side = -1;
 		isVisible = false;
-		block0 = new Texture(Gdx.files.internal("block0.jpg"));
-		block1 = new Texture(Gdx.files.internal("block1.jpg"));
-		block2 = new Texture(Gdx.files.internal("block2.jpg"));
-		this.set(new Sprite(block0));
+		block6 = new Texture(Gdx.files.internal("hirico_temp/block6.jpg"));
+		block7 = new Texture(Gdx.files.internal("hirico_temp/block7.jpg"));
+		this.set(new Sprite(block6));
 	}
 	
 	public void playerArrive(Player player) {
@@ -107,8 +102,8 @@ public class Block extends Sprite{
 			break;
 		}
 		
-		//implements to set sprite
-		this.setTexture(block2);
+		//implements to set texture
+		this.setTexture(owner.specBlockTexture);
 		
 	}
 	
@@ -123,7 +118,7 @@ public class Block extends Sprite{
 			if((playerOn != null) && (!playerOn.isAllied)) {
 				playerOn.isVisible = false;
 			}
-			this.setTexture(block0);
+			this.setTexture(block6);
 		}
 	}
 	
@@ -134,10 +129,10 @@ public class Block extends Sprite{
 				playerOn.isVisible = true;
 			}
 			if(owner != null) {
-				this.setTexture(block2);
+				this.setTexture(owner.specBlockTexture);
 
 			} else {
-				this.setTexture(block1);
+				this.setTexture(block7);
 			}
 		}
 		viewerNum += 1;
@@ -148,5 +143,10 @@ public class Block extends Sprite{
 	public void draw(Batch batch) {
 		
 		super.draw(batch);
+	}
+	
+	public void dispose() {
+		block6.dispose();
+		block7.dispose();
 	}
 }

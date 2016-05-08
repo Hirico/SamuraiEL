@@ -18,8 +18,8 @@ public class Field0 extends Field {
 			}
 		}
 		homePositions = new Vector2[] {
-				new Vector2(0,0), new Vector2(0,9), new Vector2(0,18), new Vector2(29,0), 
-				new Vector2(29,9), new Vector2(29,18) 
+				new Vector2(6,0), new Vector2(0,9), new Vector2(6,18), new Vector2(10,9), 
+				new Vector2(15,9), new Vector2(20,9) 
 		};
 		
 		
