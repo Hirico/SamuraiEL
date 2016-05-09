@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 public class Field2 extends Field {
 	
 	public Field2() {
+		//this is initialized before player, so player reference is not accessible here
 		super();
 		background = new Background2();
 		size = new Vector2(9, 9);
@@ -21,6 +22,9 @@ public class Field2 extends Field {
 				new Vector2(0,0), new Vector2(0,9), new Vector2(9,0), new Vector2(3,3), 
 				new Vector2(6,6), new Vector2(9,9) 
 		};
+		for(int i = 0; i < 5; i++) {
+			blocks[(int) homePositions[i].x][(int) homePositions[i].y].isHome = true;
+		}
 	
 		
 		

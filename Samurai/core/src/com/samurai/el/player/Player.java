@@ -5,11 +5,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Timer;
 import com.samurai.el.field.Field;
 import com.samurai.el.maingame.GameInstance;
+import com.samurai.el.resource.Resources;
 
-public abstract class Player extends Sprite{
+public abstract class Player extends Sprite implements Disposable{
 	public boolean isHuman;
 	public Vector2 position;
 	public Vector2 homePosition;
@@ -52,19 +54,21 @@ public abstract class Player extends Sprite{
 		drawPosition = new Vector2();
 		drawPosition.set(position);
 		cooldownTime = 0;
-		score = 0;
+		score = 1;
 		killNum = 0;
 		killedNum = 0;
 		direction = 1;
 		
-		stand0 = new Sprite(new Texture(Gdx.files.internal("hirico_temp/stand0.jpg")));
-		stand1 = new Sprite(new Texture(Gdx.files.internal("hirico_temp/stand1.jpg")));
-		stand2 = new Sprite(new Texture(Gdx.files.internal("hirico_temp/stand2.jpg")));
-		stand3 = new Sprite(new Texture(Gdx.files.internal("hirico_temp/stand3.jpg")));
-		move0 = new Sprite(new Texture(Gdx.files.internal("hirico_temp/move0.jpg")));
-		move1 = new Sprite(new Texture(Gdx.files.internal("hirico_temp/move1.jpg")));
-		move2 = new Sprite(new Texture(Gdx.files.internal("hirico_temp/move2.jpg")));
-		move3 = new Sprite(new Texture(Gdx.files.internal("hirico_temp/move3.jpg")));
+		
+		stand0 = Resources.getInstance().stand0;
+		stand1 = Resources.getInstance().stand1;
+		stand2 = Resources.getInstance().stand2;
+		stand3 = Resources.getInstance().stand3;
+		move0 = Resources.getInstance().move0;
+		move1 = Resources.getInstance().move1;
+		move2 = Resources.getInstance().move2;
+		move3 = Resources.getInstance().move3;
+		
 		this.set(stand1);
 	}
 	
@@ -120,6 +124,7 @@ public abstract class Player extends Sprite{
 				break;
 			}
 		}
+		
 		if(isHidden) {
 			this.setColor(this.getColor().r, this.getColor().g, this.getColor().b, 0.5f);
 		}
@@ -193,8 +198,12 @@ public abstract class Player extends Sprite{
 		moveTimer.scheduleTask(new Timer.Task() {
 			
 			@Override
-			public void run() {
-				move(direction);
+			public void run() {				
+				if(GameInstance.getInstance() == null) {
+					this.cancel();					
+				} else {
+					move(direction);
+				}
 			}
 		}
 		, delay, 0.2f);//run,turnDelay,interval/moveSpeed(seconds)
@@ -229,7 +238,7 @@ public abstract class Player extends Sprite{
 			}
 			
 			
-			//execute move if the move follows regulation
+			//execute move if the move follows regulation 
 			if(((!isHidden && field.blocks[(int) targetPosition.x][(int) targetPosition.y].playerIdOn == -1) 
 					|| (isHidden && field.isOwnSide(this, targetPosition))) 
 					&& !field.isOthersHome(this,targetPosition)) {
@@ -271,31 +280,41 @@ public abstract class Player extends Sprite{
 				// isolate the move and slowMove timers to ensure each move complete
 				// the below is not actual move
 				// it's to slow the pace (only slow down the visual action, actual position set elsewhere)
-				Timer slowMoveTimer = new Timer(); 
+				final Timer slowMoveTimer = new Timer(); 
 				final Vector2 currentPosition = new Vector2();
 				currentPosition.set(position);
 				slowMoveTimer.scheduleTask(new Timer.Task() {
 					
 					@Override					
 					public void run() {
-						if(currentPosition.y < GameInstance.getInstance().field.getSize().y && direction == 0) {
-							drawPosition.y += 0.05;
-						}
-							
-						if(currentPosition.y > 0 && direction == 1) {
-							drawPosition.y -= 0.05;
-						}
-							
-						if(currentPosition.x > 0 && direction == 2) {
-							drawPosition.x -= 0.05;
-						}
-							
-						if(currentPosition.x < GameInstance.getInstance().field.getSize().x && direction == 3) {
-							drawPosition.x += 0.05;
+						if(GameInstance.getInstance() != null) {
+							if(currentPosition.y < GameInstance.getInstance().field.getSize().y && direction == 0) {
+								drawPosition.y += 0.05;
+							}
+								
+							if(currentPosition.y > 0 && direction == 1) {
+								drawPosition.y -= 0.05;
+							}
+								
+							if(currentPosition.x > 0 && direction == 2) {
+								drawPosition.x -= 0.05;
+							}
+								
+							if(currentPosition.x < GameInstance.getInstance().field.getSize().x && direction == 3) {
+								drawPosition.x += 0.05;
+							}
 						}
 					}
 				}
 				, 0, 0.01f, 19);
+				
+				slowMoveTimer.scheduleTask(new Timer.Task() {
+					@Override
+					public void run() {
+						slowMoveTimer.clear();
+						slowMoveTimer.stop();					
+					}					
+				} ,0.21f);
 				
 				position.set(targetPosition);
 			}
@@ -311,6 +330,7 @@ public abstract class Player extends Sprite{
 	public void moveEnd(Timer timer) {
 		if(timer != null) {
 			timer.clear();
+			timer.stop();
 			timer = null;
 			isMoving = false;
 		}
@@ -347,6 +367,10 @@ public abstract class Player extends Sprite{
 	public void getABlock() {
 		score += 1;
 		
+	}
+	
+	public void dispose() {
+		specBlockTexture.dispose();
 	}
 	
 }

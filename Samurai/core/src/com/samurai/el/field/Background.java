@@ -3,8 +3,9 @@ package com.samurai.el.field;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Disposable;
 
-public abstract class Background {
+public abstract class Background implements Disposable{
 	protected Sprite background;
 	protected SpriteBatch backBatch;	
 	protected Music music;

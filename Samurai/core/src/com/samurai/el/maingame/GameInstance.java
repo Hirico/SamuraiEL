@@ -5,6 +5,7 @@ import com.badlogic.gdx.ai.GdxAI;
 import com.badlogic.gdx.ai.msg.MessageDispatcher;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Disposable;
 import com.samurai.el.ai.AIProgram;
 import com.samurai.el.field.Field;
 import com.samurai.el.field.Field0;
@@ -19,7 +20,7 @@ import com.samurai.el.player.RedAxe;
 import com.samurai.el.player.RedSpear;
 import com.samurai.el.player.RedSword;
 
-public class GameInstance {
+public class GameInstance implements Disposable{
 	
 	public static GameInstance instance;
 	public int totalTime;
@@ -37,13 +38,15 @@ public class GameInstance {
 	public int winFlag;
 	public AIProgram aiProgram;
 	public MessageDispatcher messageDispatcher;
+	public boolean gameOver;
 	
 	private GameInstance(int mapid, int time) {
 		totalTime = time;
 		currentTime = totalTime;
 		winFlag = -1;
-		aiProgram = new AIProgram();
-		messageDispatcher = new MessageDispatcher();
+		gameOver = false;
+		//aiProgram = new AIProgram();
+		//messageDispatcher = new MessageDispatcher();
 		
 		//setMap
 		switch(mapid) {
@@ -106,20 +109,24 @@ public class GameInstance {
 			human = blueAxe;
 			break;
 		}
+		
 		for(Player p : players) {
 			if(p.isHuman == false) {
-				aiProgram.setAI(p);
+				//aiProgram.setAI(p);
 			}
 			if(p.side == human.side) {
 				p.isAllied = true;
 				p.isVisible = true;
 				field.openVision(p.position);
+				
 			}
 			for(int i = 0; i < 6; i++) {
 				field.blocks[(int) field.homePositions[i].x][(int) field.homePositions[i].y].playerArrive(i);
+				field.homeInitialize(i);
 			}
 		}
-		aiProgram.setDifficulty(difficulty);
+		
+		//aiProgram.setDifficulty(difficulty);
 		
 	}
 	
@@ -128,8 +135,8 @@ public class GameInstance {
 	}
 	
 	public static void setInstance(int mapid, int human, int time, int difficulty) {
-		instance = new GameInstance(mapid, time);
-		instance.initializePlayer(human, difficulty);
+			instance = new GameInstance(mapid, time);
+			instance.initializePlayer(human, difficulty);
 	}
 	
 	public void render() {
@@ -147,9 +154,9 @@ public class GameInstance {
 		
 		
 		//update AI
-		GdxAI.getTimepiece().update(0);
-		messageDispatcher.update();
-		aiProgram.update();
+		//GdxAI.getTimepiece().update(0);
+		//messageDispatcher.update();
+		//aiProgram.update();
 	}
 	
 	public int[][] gameOver() {
@@ -169,12 +176,21 @@ public class GameInstance {
 			winFlag = 0;
 		}
 		
-	
+		gameOver = true;
 		return result;
 	}
 	
 	public void dispose() {
 		playerBatch.dispose();
+		for(Player p: players) {
+			p.dispose();
+		}
 		field.dispose();
+	}
+
+	/** Set the instance to null without dispose */
+	public static void closeInstance() {
+		instance = null;
+		
 	}
 }

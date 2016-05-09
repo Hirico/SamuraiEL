@@ -1,11 +1,11 @@
 package com.samurai.el.field;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.samurai.el.maingame.GameInstance;
 import com.samurai.el.player.Player;
+import com.samurai.el.resource.Resources;
 
 public class Block extends Sprite{
 	public boolean isVisible;
@@ -14,6 +14,7 @@ public class Block extends Sprite{
 	public int side;
 	public int playerIdOn;
 	public int viewerNum;
+	public boolean isHome;
 	public Player playerOn;
 	public Texture block6; // invisible block
 	public Texture block7; // neutral block
@@ -26,9 +27,10 @@ public class Block extends Sprite{
 		owner = null;
 		side = -1;
 		isVisible = false;
-		block6 = new Texture(Gdx.files.internal("hirico_temp/block6.jpg"));
-		block7 = new Texture(Gdx.files.internal("hirico_temp/block7.jpg"));
+		block6 = Resources.getInstance().block6;
+		block7 = Resources.getInstance().block7;
 		this.set(new Sprite(block6));
+		isHome = false;
 	}
 	
 	public void playerArrive(Player player) {
@@ -103,7 +105,9 @@ public class Block extends Sprite{
 		}
 		
 		//implements to set texture
-		this.setTexture(owner.specBlockTexture);
+		if(isVisible) {
+			this.setTexture(owner.specBlockTexture);
+		}
 		
 	}
 	
@@ -146,7 +150,6 @@ public class Block extends Sprite{
 	}
 	
 	public void dispose() {
-		block6.dispose();
-		block7.dispose();
+
 	}
 }

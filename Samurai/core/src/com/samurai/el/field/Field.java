@@ -3,11 +3,12 @@ package com.samurai.el.field;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.badlogic.gdx.utils.Disposable;
 import com.samurai.el.field.Background;
 import com.samurai.el.maingame.GameInstance;
 import com.samurai.el.player.Player;
 
-public abstract class Field{
+public abstract class Field implements Disposable{
 	public Background background;
 	public SpriteBatch fieldBatch;
 	public Vector2 size;
@@ -16,6 +17,7 @@ public abstract class Field{
 	public Vector2[] homePositions;
 	
 	public Field() {
+		//this is initialized before player, so player reference is not accessible here
 		fieldBatch = new SpriteBatch();
 		
 	}
@@ -108,6 +110,10 @@ public abstract class Field{
 		}
 		
 	}
+	
+	public void homeInitialize(int i) {
+		blocks[(int) homePositions[i].x][(int) homePositions[i].y].occupy(i);
+	}
 
 	public void executeOccupation(Player player, Vector2 position, int direction) {
 		int weapon = player.id % 3;
@@ -188,13 +194,14 @@ public abstract class Field{
 					//manipulate block
 					Block targetBlock = blocks[(int) targetPosition.x][(int) targetPosition.y];
 					if(targetBlock.owner != player) {
-						if(targetBlock.owner != null) {						
-							targetBlock.owner.loseABlock();							
+						if(targetBlock.isHome == false) {
+							if(targetBlock.owner != null) {						
+								targetBlock.owner.loseABlock();							
+							}
+							targetBlock.occupy(player.id);
+							player.getABlock();
 						}
-						targetBlock.occupy(player.id);
-						player.getABlock();
-					}
-										
+					}										
 				}
 			}
 			
