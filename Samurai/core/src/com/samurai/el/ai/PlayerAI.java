@@ -19,7 +19,7 @@ public abstract class PlayerAI {
 	public void update() {
 		
 		//find target
-		if(target == null) {
+		if(target == null || target.isRecovering) {
 			getRandomTarget();
 		}
 
@@ -49,9 +49,7 @@ public abstract class PlayerAI {
 		} else {
 			int targetId = (int)(Math.random()*2);
 			target = gameInstance.players.get(targetId);
-		}
-		
-		
+		}		
 	}
 	
 	public void pursueMove() {
