@@ -11,9 +11,11 @@ public class GameStage extends Stage{
 	private Timer leftTimer;
 	private Timer rightTimer;
 	private GameInstance gameInstance;
+	private GameScreen screen;
 	
-	public GameStage(GameInstance gameInstance) {
+	public GameStage(GameInstance gameInstance, GameScreen screen) {
 		super();
+		this.screen = screen;
 		gameInstance = GameInstance.getInstance();
 	}
 
@@ -22,6 +24,12 @@ public class GameStage extends Stage{
 	public boolean keyDown(int keycode) {
 		gameInstance = GameInstance.getInstance();
 		Player human = gameInstance.human;
+		
+		if(keycode == Input.Keys.ESCAPE) {
+			screen.pause();
+			screen.game.setScreen(new PauseScreen(screen));
+		}
+		
 		if(keycode == Input.Keys.W) {
 			upTimer = human.moveBegin(0);
 		}

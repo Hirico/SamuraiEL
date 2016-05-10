@@ -6,10 +6,10 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.Timer;
+import com.samurai.el.resource.Resources;
 
 public class GameScreen implements Screen {
-	private Game game;
+	Game game;
 	private GameInstance gameInstance;
 	private SpriteBatch uiBatch;
 	private GameStage stage;
@@ -18,11 +18,11 @@ public class GameScreen implements Screen {
 		this.game = game;
 		gameInstance = GameInstance.getInstance();		
 		uiBatch = new SpriteBatch();
+		stage = new GameStage(gameInstance, this);
 	}
 	
 	@Override
-	public void show() {
-		stage = new GameStage(gameInstance);
+	public void show() {		
 		Gdx.input.setInputProcessor(stage);
 	}
 
@@ -43,6 +43,7 @@ public class GameScreen implements Screen {
         	game.setScreen(new OverScreen(result, gameInstance.winFlag));        	
         	dispose();				
 			GameInstance.closeInstance();
+			Resources.getInstance().reInit();
         	
         }
         

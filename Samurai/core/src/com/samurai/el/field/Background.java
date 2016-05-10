@@ -9,14 +9,19 @@ public abstract class Background implements Disposable{
 	protected Sprite background;
 	protected SpriteBatch backBatch;	
 	protected Music music;
+	
+	public Background() {
+		backBatch = new SpriteBatch();
+	}
 		
 	public void render() {
-		//backBatch.begin();
-		//backBatch.end();
+		backBatch.begin();
+		backBatch.end();
 	}
 	
 	public void dispose() {
-		//backBatch.dispose();
-		//music.dispose();
+		backBatch.dispose();
+		music.stop();
+		music.dispose();
 	}
 }
