@@ -6,7 +6,7 @@ import com.badlogic.gdx.ai.msg.MessageDispatcher;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
-import com.samurai.el.ai.AIProgram;
+import com.samurai.el.ai.AIProgramCenter;
 import com.samurai.el.field.Field;
 import com.samurai.el.field.Field0;
 import com.samurai.el.field.Field1;
@@ -36,7 +36,7 @@ public class GameInstance implements Disposable{
 	public Field field;
 	public SpriteBatch playerBatch;
 	public int winFlag;
-	public AIProgram aiProgram;
+	public AIProgramCenter aiProgram;
 	public MessageDispatcher messageDispatcher;
 	public boolean gameOver;
 	
@@ -45,7 +45,7 @@ public class GameInstance implements Disposable{
 		currentTime = totalTime;
 		winFlag = -1;
 		gameOver = false;
-		//aiProgram = new AIProgram();
+		aiProgram = new AIProgramCenter();
 		//messageDispatcher = new MessageDispatcher();
 		
 		//setMap
@@ -83,6 +83,7 @@ public class GameInstance implements Disposable{
 		players.add(blueAxe = new BlueAxe(field.homePositions[5]));
 		
 		//setAI
+		aiProgram.setDifficulty(difficulty);		
 		switch(humanid) {
 		case 0:
 			redSpear.isHuman = true;
@@ -112,7 +113,7 @@ public class GameInstance implements Disposable{
 		
 		for(Player p : players) {
 			if(p.isHuman == false) {
-				//aiProgram.setAI(p);
+				aiProgram.setAI(p);
 			}
 			if(p.side == human.side) {
 				p.isAllied = true;
@@ -126,7 +127,7 @@ public class GameInstance implements Disposable{
 			}
 		}
 		
-		//aiProgram.setDifficulty(difficulty);
+		
 		
 	}
 	
@@ -154,9 +155,9 @@ public class GameInstance implements Disposable{
 		
 		
 		//update AI
-		//GdxAI.getTimepiece().update(0);
+		GdxAI.getTimepiece().update(Gdx.graphics.getDeltaTime());
 		//messageDispatcher.update();
-		//aiProgram.update();
+		aiProgram.update();
 	}
 	
 	public int[][] gameOver() {

@@ -1,5 +1,12 @@
 package com.samurai.el.ai;
 
-public class EasyAI extends AIProgram{
+import com.samurai.el.player.Player;
+
+public class EasyAI extends PlayerAI{
+
+	public EasyAI(Player player) {
+		super(player);
+		
+	}
 
 }

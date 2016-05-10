@@ -20,7 +20,6 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 
 public class MainMenuScreen implements Screen{
-int h=0;
 	Stage stage;
 	ImageButton button1;
 	ImageButton button2;
@@ -73,8 +72,6 @@ int h=0;
 	
 	@Override
 	public void show() {
-		h++;
-		System.out.println(h);
 		// TODO Auto-generated method stub
 		Gdx.input.setInputProcessor(stage);
 		
@@ -134,7 +131,7 @@ int h=0;
 	           @Override
 	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) 
 	           {
-	        	   int message=JOptionPane.showConfirmDialog(null,"ÄúÈ·ÈÏÍË³öÓÎÏ·Âð£¿","Warning£¡", JOptionPane.YES_NO_OPTION); 
+	        	   int message=JOptionPane.showConfirmDialog(null,"ï¿½ï¿½È·ï¿½ï¿½ï¿½Ë³ï¿½ï¿½ï¿½Ï·ï¿½ï¿½","Warningï¿½ï¿½", JOptionPane.YES_NO_OPTION); 
 	        	   if (message==JOptionPane.YES_OPTION) Gdx.app.exit();
 	           }
 	           @Override

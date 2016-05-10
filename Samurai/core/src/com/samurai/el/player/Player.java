@@ -154,14 +154,14 @@ public abstract class Player extends Sprite implements Disposable{
 	}
 	
 	public void attacked() {
+		isRecovering = true;
 		if(isAllied) {
 			Field field = GameInstance.getInstance().field;
 			field.closeVision(position, this);			
 			field.openVision(homePosition);
 		}
 		position.set(homePosition);	
-		drawPosition.set(homePosition);
-		isRecovering = true;
+		drawPosition.set(homePosition);		
 		recoverLeftTime = 180;
 		killedNum += 1;
 	}
@@ -287,7 +287,7 @@ public abstract class Player extends Sprite implements Disposable{
 					
 					@Override					
 					public void run() {
-						if(GameInstance.getInstance() != null) {
+						if(GameInstance.getInstance() != null && !isRecovering) {
 							if(currentPosition.y < GameInstance.getInstance().field.getSize().y && direction == 0) {
 								drawPosition.y += 0.05;
 							}
