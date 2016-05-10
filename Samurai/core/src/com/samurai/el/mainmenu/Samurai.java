@@ -9,7 +9,7 @@ public class Samurai extends Game {
 	public void create () {
 		
 		ScreenCenter.setscreencenter(this);
-		ScreenCenter.setscreen(0);
+		setScreen(new MainMenuScreen());
 	}	
 }
 

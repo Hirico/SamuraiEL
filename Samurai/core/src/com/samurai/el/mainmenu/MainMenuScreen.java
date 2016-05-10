@@ -20,7 +20,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 
 public class MainMenuScreen implements Screen{
-
+int h=0;
 	Stage stage;
 	ImageButton button1;
 	ImageButton button2;
@@ -33,17 +33,11 @@ public class MainMenuScreen implements Screen{
 	
 	public MainMenuScreen()
 	{
-		
-		//music=Gdx.audio.newMusic(Gdx.files.internal("foxwel_temp/test.mp3"));
-		//music.setLooping(true);
-		//music.play();
-				
-		
-		background=new Sprite(new Texture(Gdx.files.internal("foxwel_temp/photo.jpg")));
-		batch=new SpriteBatch();
 		stage=new Stage(new StretchViewport(1280,720));
-				
 		
+		batch=new SpriteBatch();
+		background=new Sprite(new Texture(Gdx.files.internal("foxwel_temp/photo.jpg")));
+
 		buttonpng=new Texture(Gdx.files.internal("foxwel_temp/mainbutton.png"));
 		final TextureRegion[][] buttonsplit=TextureRegion.split(buttonpng, 128, 128);
 		Sprite returnbutton0=new Sprite(new Texture("foxwel_temp/return0.png"));
@@ -74,11 +68,13 @@ public class MainMenuScreen implements Screen{
 		button2=new ImageButton(button2style);
 		button3=new ImageButton(button3style);
 		button4=new ImageButton(button4style);
-		
+	
 	}
 	
 	@Override
 	public void show() {
+		h++;
+		System.out.println(h);
 		// TODO Auto-generated method stub
 		Gdx.input.setInputProcessor(stage);
 		
@@ -192,6 +188,5 @@ public class MainMenuScreen implements Screen{
 		// TODO Auto-generated method stub
 		batch.dispose();
 		stage.dispose();
-		music.dispose();
 	}
 }

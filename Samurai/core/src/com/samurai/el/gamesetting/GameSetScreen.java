@@ -214,7 +214,7 @@ public class GameSetScreen implements Screen{
 		enterbutton.addListener(new InputListener(){
 	           @Override
 	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-	        	   GameInstance.setInstance(getchoose(fieldcheckbox), getchoose(playercheckbox), 5, getchoose(difficultycheckbox));
+	        	   GameInstance.setInstance(getchoose(fieldcheckbox), getchoose(playercheckbox), 20, getchoose(difficultycheckbox));
 	        	  // GameInstance.setInstance(0,0,200,1);
 	        	  // ScreenCenter.mainmenuscreen.music.stop();
 	        	   //ScreenCenter.mainmenuscreen.music.dispose();

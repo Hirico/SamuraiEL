@@ -19,10 +19,10 @@ public class ScreenCenter
 	{
 		game=_game;
 		
-		mainmenuscreen=new MainMenuScreen();
-		settingscreen=new SettingScreen();
-		achievementscreen=new AchievementScreen();
-		gamesetscreen=new GameSetScreen();
+		//mainmenuscreen=new MainMenuScreen();
+		//settingscreen=new SettingScreen();
+		//achievementscreen=new AchievementScreen();
+		//gamesetscreen=new GameSetScreen();
 
 		music=Gdx.audio.newMusic(Gdx.files.internal("foxwel_temp/test.mp3"));
 		music.setLooping(true);
@@ -47,16 +47,20 @@ public class ScreenCenter
 		switch(screennum)
 		{
 			case 0:
-				game.setScreen(mainmenuscreen);
+				game.getScreen().dispose();
+				game.setScreen(new MainMenuScreen());
 				break;
 			case 1:
-				game.setScreen(settingscreen);
+				game.getScreen().dispose();
+				game.setScreen(new SettingScreen());
 				break;
 			case 2:
-				game.setScreen(gamesetscreen);
+				game.getScreen().dispose();
+				game.setScreen(new GameSetScreen());
 				break;
 			case 3:
-				game.setScreen(achievementscreen);
+				game.getScreen().dispose();
+				game.setScreen(new AchievementScreen());
 				break;
 			case 4:
 				game.setScreen(new GameScreen(game));

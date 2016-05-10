@@ -57,8 +57,8 @@ public class OverScreen implements Screen
 	
 	@Override
 	public void show() {
-		ScreenCenter.startmusic();
 		Gdx.input.setInputProcessor(stage);
+		ScreenCenter.startmusic();
 		stage.addActor(returnbutton);
 		for (int i=0;i<6;++i) stage.addActor(scorelabel[i]);
 		returnbutton.setPosition(1280-128, 0);
