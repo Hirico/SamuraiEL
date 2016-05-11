@@ -6,7 +6,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.utils.Timer;
 import com.samurai.el.mainmenu.ScreenCenter;
 import com.samurai.el.resource.Resources;
 
@@ -24,7 +23,7 @@ public class GameScreen implements Screen {
 		gameInstance = GameInstance.getInstance();		
 		uiBatch = new SpriteBatch();
 		stage = new GameStage(gameInstance, this);
-		gameOverCountDown = 1.5f;
+		gameOverCountDown = 3f;
 	}
 	
 	@Override
@@ -45,6 +44,7 @@ public class GameScreen implements Screen {
         if(gameInstance.currentTime <= 0 && !gameInstance.stoped) {
         	result = gameInstance.gameOver(); 
         	gameInstance.stop();
+        	stage.stop();
         }
         else if(gameInstance.currentTime <= 0 && gameInstance.stoped) { 
         	if(gameOverCountDown >= 0) {

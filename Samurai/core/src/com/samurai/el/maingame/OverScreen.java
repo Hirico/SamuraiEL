@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Label.LabelStyle;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.samurai.el.maingame.Timer;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.samurai.el.mainmenu.ScreenCenter;
 
@@ -57,6 +58,8 @@ public class OverScreen implements Screen
 	
 	@Override
 	public void show() {
+		Timer.clearInstances();
+		System.gc();
 		Gdx.input.setInputProcessor(stage);
 		ScreenCenter.startmusic();
 		stage.addActor(returnbutton);

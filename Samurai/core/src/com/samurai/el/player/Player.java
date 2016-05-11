@@ -6,7 +6,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Disposable;
-import com.badlogic.gdx.utils.Timer;
+import com.samurai.el.maingame.Timer;
 import com.samurai.el.field.Field;
 import com.samurai.el.maingame.GameInstance;
 import com.samurai.el.resource.Resources;
@@ -332,8 +332,39 @@ public abstract class Player extends Sprite implements Disposable{
 			
 	}
 	
-	public void turn(int direction) {
-		this.direction = direction;	
+	/** simply turn direction once */
+	public void turn(boolean clockwise) {
+		if(clockwise) {
+			switch(direction) {
+			case 0:
+				direction = 3;
+				break;
+			case 1:
+				direction = 2;
+				break;
+			case 2:
+				direction = 0;
+				break;
+			case 3:
+				direction = 1;
+				break;
+			}
+		} else {
+			switch(direction) {
+			case 0:
+				direction = 2;
+				break;
+			case 1:
+				direction = 3;
+				break;
+			case 2:
+				direction = 1;
+				break;
+			case 3:
+				direction = 0;
+				break;
+			}
+		}
 	}
 
 

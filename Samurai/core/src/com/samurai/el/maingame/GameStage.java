@@ -2,7 +2,7 @@ package com.samurai.el.maingame;
 
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.utils.Timer;
+import com.samurai.el.maingame.Timer;
 import com.samurai.el.player.Player;
 
 public class GameStage extends Stage{
@@ -17,6 +17,22 @@ public class GameStage extends Stage{
 		super();
 		this.screen = screen;
 		gameInstance = GameInstance.getInstance();
+	}
+	
+	public void stop() {
+		Player human = gameInstance.human;
+		if(upTimer != null) {
+			human.moveEnd(upTimer);
+		}
+		if(downTimer != null) {
+			human.moveEnd(downTimer);
+		}
+		if(leftTimer != null) {
+			human.moveEnd(leftTimer);
+		}
+		if(rightTimer != null) {
+			human.moveEnd(rightTimer);
+		}
 	}
 
 
@@ -51,6 +67,12 @@ public class GameStage extends Stage{
 			}
 			if(keycode == Input.Keys.L) {
 				human.show();
+			}
+			if(keycode == Input.Keys.Q) {
+				human.turn(false);
+			}
+			if(keycode == Input.Keys.E) {
+				human.turn(true);
 			}
 		}
 		return false;

@@ -24,8 +24,11 @@ public abstract class PlayerAI {
 	public void update() {
 		
 		//find target
-		if(target == null || target.isRecovering || target.isHidden) {
+		if(target == null) {
 			getRandomTarget();
+		}
+		if(target.isRecovering || target.isHidden) {
+			changeTarget();
 		}
 
 
@@ -50,6 +53,14 @@ public abstract class PlayerAI {
 			int targetId = (int)(Math.random()*2);
 			target = gameInstance.players.get(targetId);
 		}		
+	}
+	
+	public void changeTarget() {
+		if(target.side == 0) {
+			target = gameInstance.players.get((target.id+1)%3);
+		} else {
+			target = gameInstance.players.get((target.id-2)%3+3);
+		}
 	}
 	
 	/**call pursueMove */
