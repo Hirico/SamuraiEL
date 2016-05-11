@@ -10,16 +10,18 @@ public abstract class PlayerAI {
 	public Player player;
 	public Player target;
 	public GameInstance gameInstance;
+	public int stuckState;
 	
 	public PlayerAI(Player player) {
 		this.player = player;
 		gameInstance = GameInstance.getInstance();
+		stuckState = 0;
 	}
 	
 	public void update() {
 		
 		//find target
-		if(target == null || target.isRecovering) {
+		if(target == null || target.isRecovering || target.isHidden) {
 			getRandomTarget();
 		}
 
@@ -29,8 +31,17 @@ public abstract class PlayerAI {
 			if(moveCooldown >= 0) {
 				moveCooldown -= Gdx.graphics.getDeltaTime();
 			} else {
-				pursueMove();
-				moveCooldown = 0.2f;
+				if(player.isStuck) {
+					resolveStuck();
+					moveCooldown = 0.2f;
+				} else {
+					if(Math.random() < 0.5f) {
+						pursueMove1();
+					} else {
+						pursueMove2();
+					}
+					moveCooldown = 0.2f;
+				}
 			}
 			
 		//occupy
@@ -52,7 +63,8 @@ public abstract class PlayerAI {
 		}		
 	}
 	
-	public void pursueMove() {
+	/** horizontal first*/
+	public void pursueMove1() {
 		if(target.position.x < player.position.x) {
 			player.move(2);
 		}
@@ -64,6 +76,34 @@ public abstract class PlayerAI {
 		}
 		else if(target.position.y > player.position.y) {
 			player.move(0);
+		}
+	}
+	
+	/** vertical first*/
+	public void pursueMove2() {		
+		if(target.position.y < player.position.y) {
+			player.move(1);
+		}
+		else if(target.position.y > player.position.y) {
+			player.move(0);
+		}
+		else if(target.position.x < player.position.x) {
+			player.move(2);
+		}
+		else if(target.position.x > player.position.x) {
+			player.move(3);
+		}
+	}
+	
+	public void resolveStuck() {
+		if(stuckState == 0) {
+			player.move((player.direction+2)%4);
+			stuckState = 1;
+		}
+		else if(stuckState == 1) {
+			player.move((player.direction+2)%4);
+			stuckState = 0;
+			player.isStuck = false;
 		}
 	}
 }

@@ -185,9 +185,7 @@ public abstract class Field implements Disposable{
 					for(Player p: players) {
 						if(p.position.equals(targetPosition) && !p.isRecovering) {
 							p.attacked();
-							if(p.side != player.side) {
-								player.getKillBonus();
-							}
+							player.getKillBonus();
 						}
 					}
 					

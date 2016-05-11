@@ -38,9 +38,11 @@ public abstract class Player extends Sprite implements Disposable{
 	public Sprite move2;
 	public Sprite move3;
 	public Texture specBlockTexture;
+	public boolean isStuck;
 	
 	public Player(Vector2 homePosition) {
 		
+		isStuck = false;
 		isVisible = false;
 		isHidden = false;
 		isRecovering = false;
@@ -154,7 +156,11 @@ public abstract class Player extends Sprite implements Disposable{
 	}
 	
 	public void attacked() {
+		isHidden = false;
+		GameInstance.getInstance().field.blocks[(int) position.x][(int) position.y].playerLeave();
+		GameInstance.getInstance().field.blocks[(int) homePosition.x][(int) homePosition.y].playerArrive(this);
 		isRecovering = true;
+		isMoving = false;
 		if(isAllied) {
 			Field field = GameInstance.getInstance().field;
 			field.closeVision(position, this);			
@@ -237,6 +243,10 @@ public abstract class Player extends Sprite implements Disposable{
 				targetPosition.set(position.x+1, position.y);
 			}
 			
+			//use for AI
+			if(field.isOthersHome(this,targetPosition)) {
+				isStuck = true;
+			}
 			
 			//execute move if the move follows regulation 
 			if(((!isHidden && field.blocks[(int) targetPosition.x][(int) targetPosition.y].playerIdOn == -1) 
