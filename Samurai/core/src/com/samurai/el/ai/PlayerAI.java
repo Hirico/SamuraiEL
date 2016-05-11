@@ -6,16 +6,19 @@ import com.samurai.el.player.Player;
 
 public abstract class PlayerAI {
 	
-	public double moveCooldown = 0.2f;
+	public double moveCooldown;
+	public double totalMoveCooldown;
 	public Player player;
 	public Player target;
 	public GameInstance gameInstance;
 	public int stuckState;
 	
 	public PlayerAI(Player player) {
-		this.player = player;
+		this.player = player;		
 		gameInstance = GameInstance.getInstance();
 		stuckState = 0;
+		moveCooldown = 0.2f;
+		totalMoveCooldown = 0.2f;
 	}
 	
 	public void update() {
@@ -28,21 +31,7 @@ public abstract class PlayerAI {
 
 		if(!player.isRecovering) {	
 		//move				
-			if(moveCooldown >= 0) {
-				moveCooldown -= Gdx.graphics.getDeltaTime();
-			} else {
-				if(player.isStuck) {
-					resolveStuck();
-					moveCooldown = 0.2f;
-				} else {
-					if(Math.random() < 0.5f) {
-						pursueMove1();
-					} else {
-						pursueMove2();
-					}
-					moveCooldown = 0.2f;
-				}
-			}
+			pursue();
 			
 		//occupy
 			if(player.occupiable()) {
@@ -61,6 +50,25 @@ public abstract class PlayerAI {
 			int targetId = (int)(Math.random()*2);
 			target = gameInstance.players.get(targetId);
 		}		
+	}
+	
+	/**call pursueMove */
+	public void pursue() {
+		if(moveCooldown >= 0) {
+			moveCooldown -= Gdx.graphics.getDeltaTime();
+		} else {
+			if(player.isStuck) {
+				resolveStuck();
+				moveCooldown = totalMoveCooldown;
+			} else {
+				if(Math.random() < 0.5f) {
+					pursueMove1();
+				} else {
+					pursueMove2();
+				}
+				moveCooldown = totalMoveCooldown;
+			}
+		}
 	}
 	
 	/** horizontal first*/

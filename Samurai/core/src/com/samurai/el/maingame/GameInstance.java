@@ -38,14 +38,14 @@ public class GameInstance implements Disposable{
 	public int winFlag;
 	public AIProgramCenter aiProgram;
 	public MessageDispatcher messageDispatcher;
-	public boolean gameOver;
+	public boolean stoped;
 	
 	private GameInstance(int mapid, int time) {
 		totalTime = time;
 		currentTime = totalTime;
 		winFlag = -1;
-		gameOver = false;
 		aiProgram = new AIProgramCenter();
+		stoped = false;
 		//messageDispatcher = new MessageDispatcher();
 		
 		//setMap
@@ -141,25 +141,26 @@ public class GameInstance implements Disposable{
 	}
 	
 	public void render() {
-		
-		currentTime -= Gdx.graphics.getDeltaTime();
-		field.render();
-				
-		playerBatch.begin();
-		for(Player p: players) {
-			p.draw(playerBatch);
+		if(!stoped) {
+			currentTime -= Gdx.graphics.getDeltaTime();
+			//update AI
+			GdxAI.getTimepiece().update(Gdx.graphics.getDeltaTime());
+			//messageDispatcher.update();
+			aiProgram.update();
 		}
 		
-		
-		playerBatch.end();
-		
-		
-		//update AI
-		GdxAI.getTimepiece().update(Gdx.graphics.getDeltaTime());
-		//messageDispatcher.update();
-		aiProgram.update();
+			field.render();
+			
+			playerBatch.begin();
+			for(Player p: players) {
+				p.draw(playerBatch);
+			}						
+			playerBatch.end();
+			
+			
 	}
 	
+	/**only return the game data to overScreen, no influence in the current game */
 	public int[][] gameOver() {
 		int[][] result = new int[6][4];
 		int[] scores = new int[6];
@@ -177,7 +178,6 @@ public class GameInstance implements Disposable{
 			winFlag = 0;
 		}
 		
-		gameOver = true;
 		return result;
 	}
 	
@@ -187,6 +187,17 @@ public class GameInstance implements Disposable{
 			p.dispose();
 		}
 		field.dispose();
+	}
+	
+	/**stop the AI update and show the whole map */
+	public void stop() {
+		stoped = true;
+		for(int i = 0; i < field.blocks.length; i++) {
+			for(int j = 0; j < field.blocks[0].length; j++) {
+				field.blocks[i][j].show();
+			}
+		}
+		
 	}
 
 	/** Set the instance to null without dispose */

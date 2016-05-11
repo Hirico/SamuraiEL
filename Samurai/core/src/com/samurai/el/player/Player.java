@@ -151,7 +151,7 @@ public abstract class Player extends Sprite implements Disposable{
 		if(occupiable()) {
 			Field field = GameInstance.getInstance().field;
 			field.executeOccupation(this, position, direction);
-			cooldownTime = 90; // this divides 60 is the real time in seconds
+			cooldownTime = 60; // this divides 60 is the real time in seconds
 		}
 	}
 	
@@ -168,7 +168,7 @@ public abstract class Player extends Sprite implements Disposable{
 		}
 		position.set(homePosition);	
 		drawPosition.set(homePosition);		
-		recoverLeftTime = 180;
+		recoverLeftTime = 120;
 		killedNum += 1;
 	}
 	

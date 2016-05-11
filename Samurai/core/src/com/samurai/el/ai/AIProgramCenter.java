@@ -22,7 +22,7 @@ public class AIProgramCenter {
     		AIs.add(new NormalAI(player));
     		break;
     	case 2:
-    		AIs.add(new DifficultAI(player));
+    		AIs.add(new HardAI(player));
     		break;
     	default:
     		AIs.add(new EasyAI(player));

@@ -25,31 +25,33 @@ public class GameStage extends Stage{
 		gameInstance = GameInstance.getInstance();
 		Player human = gameInstance.human;
 		
-		if(keycode == Input.Keys.ESCAPE) {
-			screen.pause();
-			screen.game.setScreen(new PauseScreen(screen));
-		}
-		
-		if(keycode == Input.Keys.W) {
-			upTimer = human.moveBegin(0);
-		}
-		if(keycode == Input.Keys.S) {
-			downTimer = human.moveBegin(1);
-		}
-		if(keycode == Input.Keys.A) {
-			leftTimer = human.moveBegin(2);
-		}
-		if(keycode == Input.Keys.D) {
-			rightTimer = human.moveBegin(3);
-		}
-		if(keycode == Input.Keys.J) {
-			human.occupy();
-		}
-		if(keycode == Input.Keys.K) {
-			human.hide();
-		}
-		if(keycode == Input.Keys.L) {
-			human.show();
+		if(!gameInstance.stoped) {
+			if(keycode == Input.Keys.ESCAPE) {
+				screen.pause();
+				screen.game.setScreen(new PauseScreen(screen));
+			}
+			
+			if(keycode == Input.Keys.W) {
+				upTimer = human.moveBegin(0);
+			}
+			if(keycode == Input.Keys.S) {
+				downTimer = human.moveBegin(1);
+			}
+			if(keycode == Input.Keys.A) {
+				leftTimer = human.moveBegin(2);
+			}
+			if(keycode == Input.Keys.D) {
+				rightTimer = human.moveBegin(3);
+			}
+			if(keycode == Input.Keys.J) {
+				human.occupy();
+			}
+			if(keycode == Input.Keys.K) {
+				human.hide();
+			}
+			if(keycode == Input.Keys.L) {
+				human.show();
+			}
 		}
 		return false;
 	}

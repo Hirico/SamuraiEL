@@ -6,6 +6,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Timer;
+import com.samurai.el.mainmenu.ScreenCenter;
 import com.samurai.el.resource.Resources;
 
 public class GameScreen implements Screen {
@@ -13,12 +15,16 @@ public class GameScreen implements Screen {
 	private GameInstance gameInstance;
 	private SpriteBatch uiBatch;
 	private GameStage stage;
+	private double gameOverCountDown;
+	private int[][] result;
 
 	public GameScreen(Game game) {
+		result = new int[6][3];
 		this.game = game;
 		gameInstance = GameInstance.getInstance();		
 		uiBatch = new SpriteBatch();
 		stage = new GameStage(gameInstance, this);
+		gameOverCountDown = 1.5f;
 	}
 	
 	@Override
@@ -36,18 +42,31 @@ public class GameScreen implements Screen {
         uiBatch.begin();
         stage.act();
         uiBatch.end();
-        if(gameInstance.currentTime <= 0) {
-        	int[][] result = gameInstance.gameOver();       	
-        	//result[6][3] contains each samurai's score(territory), killNum, killedNum
-        	//winFlag: 1:win 0:lose -1:tied
-        	game.setScreen(new OverScreen(result, gameInstance.winFlag));        	
-        	dispose();				
-			GameInstance.closeInstance();
-			Resources.getInstance().reInit();
-        	
+        if(gameInstance.currentTime <= 0 && !gameInstance.stoped) {
+        	result = gameInstance.gameOver(); 
+        	gameInstance.stop();
+        }
+        else if(gameInstance.currentTime <= 0 && gameInstance.stoped) { 
+        	if(gameOverCountDown >= 0) {
+        		gameOverCountDown -= Gdx.graphics.getDeltaTime();
+        	} else {
+				//result[6][3] contains each samurai's score(territory), killNum, killedNum
+				//winFlag: 1:win 0:lose -1:tied  
+        		game.setScreen(new OverScreen(result, gameInstance.winFlag));        	
+				dispose();				
+				GameInstance.closeInstance();
+				Resources.getInstance().reInit(); 													   
+        	}
         }
         
 		
+	}
+	
+	/**End the game and back to main menu  */
+	public void exit() {
+		ScreenCenter.setscreen(0); // dispose() is in this method        					
+		GameInstance.closeInstance();
+		Resources.getInstance().reInit();
 	}
 
 	@Override
