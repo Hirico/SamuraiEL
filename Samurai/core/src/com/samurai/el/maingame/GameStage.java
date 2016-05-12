@@ -10,13 +10,13 @@ public class GameStage extends Stage{
 	private Timer downTimer;
 	private Timer leftTimer;
 	private Timer rightTimer;
-	private GameInstance gameInstance;
+	public GameInstance gameInstance;
 	private GameScreen screen;
 	
 	public GameStage(GameInstance gameInstance, GameScreen screen) {
 		super();
 		this.screen = screen;
-		gameInstance = GameInstance.getInstance();
+		this.gameInstance = gameInstance;
 	}
 	
 	public void stop() {
@@ -33,6 +33,7 @@ public class GameStage extends Stage{
 		if(rightTimer != null) {
 			human.moveEnd(rightTimer);
 		}
+		
 	}
 
 

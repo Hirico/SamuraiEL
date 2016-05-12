@@ -29,16 +29,11 @@ public abstract class Player extends Sprite implements Disposable{
 	public boolean isRecovering;
 	public double recoverLeftTime;
 	public boolean isMoving;
-	public Sprite stand0;
-	public Sprite stand1;
-	public Sprite stand2;
-	public Sprite stand3;
-	public Sprite move0;
-	public Sprite move1;
-	public Sprite move2;
-	public Sprite move3;
 	public Texture specBlockTexture;
 	public boolean isStuck;
+	public int movestate;
+	public Resources resource;
+	public int size;
 	
 	public Player(Vector2 homePosition) {
 		
@@ -59,19 +54,13 @@ public abstract class Player extends Sprite implements Disposable{
 		score = 1;
 		killNum = 0;
 		killedNum = 0;
+		movestate = 0;
 		direction = 1;
+		size = GameInstance.getInstance().field.blockSize;
 		
+		resource = Resources.getInstance();
 		
-		stand0 = Resources.getInstance().stand0;
-		stand1 = Resources.getInstance().stand1;
-		stand2 = Resources.getInstance().stand2;
-		stand3 = Resources.getInstance().stand3;
-		move0 = Resources.getInstance().move0;
-		move1 = Resources.getInstance().move1;
-		move2 = Resources.getInstance().move2;
-		move3 = Resources.getInstance().move3;
-		
-		this.set(stand1);
+		this.set(resource.stand1);
 	}
 	
 	
@@ -96,36 +85,54 @@ public abstract class Player extends Sprite implements Disposable{
 		Field field = GameInstance.getInstance().field;
 		
 		if(isMoving) {
-			switch(direction) {
-			case 0:
-				this.set(move0);
-				break;
-			case 1:
-				this.set(move1);
-				break;
-			case 2:
-				this.set(move2);
-				break;
-			case 3:
-				this.set(move3);
-				break;
+			if(movestate == 0) {
+				switch(direction) {
+				case 0:
+					this.set(resource.move0_0);
+					break;
+				case 1:
+					this.set(resource.move1_0);
+					break;
+				case 2:
+					this.set(resource.move2_0);
+					break;
+				case 3:
+					this.set(resource.move3_0);
+					break;
+				}
+			} else {
+				switch(direction) {
+				case 0:
+					this.set(resource.move0_1);
+					break;
+				case 1:
+					this.set(resource.move1_1);
+					break;
+				case 2:
+					this.set(resource.move2_1);
+					break;
+				case 3:
+					this.set(resource.move3_1);
+					break;
+				}
 			}
 		} else {
 			switch(direction) {
 			case 0:
-				this.set(stand0);
+				this.set(resource.stand0);
 				break;
 			case 1:
-				this.set(stand1);
+				this.set(resource.stand1);
 				break;
 			case 2:
-				this.set(stand2);
+				this.set(resource.stand2);
 				break;
 			case 3:
-				this.set(stand3);
+				this.set(resource.stand3);
 				break;
 			}
 		}
+		
 		
 		if(isHidden) {
 			this.setColor(this.getColor().r, this.getColor().g, this.getColor().b, 0.5f);
@@ -133,6 +140,7 @@ public abstract class Player extends Sprite implements Disposable{
 		
 		this.setPosition(field.getBottomLeftCorner().x + drawPosition.x*field.blockSize, 
 				field.getBottomLeftCorner().y + drawPosition.y*field.blockSize);
+		this.setSize(size, size);
 		
 		if(isAllied || (isVisible && !isHidden)) {
 			super.draw(batch);
@@ -155,6 +163,12 @@ public abstract class Player extends Sprite implements Disposable{
 		}
 	}
 	
+	/**use for AI before occupy() to avoid making friendly fire */
+	public boolean fireSafe() {
+		return GameInstance.getInstance().field.fireSafeCheck(this, position, direction);
+	}
+	
+	
 	public void attacked() {
 		isHidden = false;
 		GameInstance.getInstance().field.blocks[(int) position.x][(int) position.y].playerLeave();
@@ -168,7 +182,7 @@ public abstract class Player extends Sprite implements Disposable{
 		}
 		position.set(homePosition);	
 		drawPosition.set(homePosition);		
-		recoverLeftTime = 120;
+		recoverLeftTime = 90;
 		killedNum += 1;
 	}
 	
@@ -250,7 +264,7 @@ public abstract class Player extends Sprite implements Disposable{
 			
 			//execute move if the move follows regulation 
 			if(((!isHidden && field.blocks[(int) targetPosition.x][(int) targetPosition.y].playerIdOn == -1) 
-					|| (isHidden && field.isOwnSide(this, targetPosition))) 
+					|| (isHidden && field.isOwnSide(this, targetPosition) && !targetPosition.equals(position))) 
 					&& !field.isOthersHome(this,targetPosition)) {
 				isMoving = true;
 				
@@ -326,6 +340,11 @@ public abstract class Player extends Sprite implements Disposable{
 					}					
 				} ,0.21f);
 				
+				if(movestate == 0) {
+					movestate = 1;
+				} else {
+					movestate = 0;
+				}
 				position.set(targetPosition);
 			}
 		}
@@ -397,6 +416,7 @@ public abstract class Player extends Sprite implements Disposable{
 
 	public void getKillBonus() {
 		killNum += 1;
+		score += 1;
 	}
 
 

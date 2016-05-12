@@ -18,9 +18,12 @@ public class Block extends Sprite{
 	public Player playerOn;
 	public Texture block6; // invisible block
 	public Texture block7; // neutral block
+	public int size;
 	
-	public Block() {		
+	public Block(int size) {
 		super();
+		this.size = size;
+		
 		viewerNum = 0;
 		playerIdOn = -1;
 		id = -1;
@@ -145,7 +148,7 @@ public class Block extends Sprite{
 	
 	@Override
 	public void draw(Batch batch) {
-		
+		this.setSize(size, size);
 		super.draw(batch);
 	}
 	

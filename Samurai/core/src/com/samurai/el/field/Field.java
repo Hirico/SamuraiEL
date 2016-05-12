@@ -206,7 +206,86 @@ public abstract class Field implements Disposable{
 		
 		
 	}
-
+	
+	
+	public boolean fireSafeCheck(Player player, Vector2 position, int direction) {
+		int weapon = player.id % 3;
+		int[][] ox = {
+			    {0, 0, 0, 0},
+			    {0, 0, -1, -1, -2},
+			    {-1,-1,-1,0, 1, 1, 1}
+			};
+		int[][] oy = {
+			    {1, 2, 3, 4},
+			    {1, 2, 0, 1, 0},
+			    {-1,0 ,1, 1, 1, 0,-1}
+			};
+		int size = 0;
+		
+		switch(weapon) {
+		case 0 :
+			size = 4;
+			break;
+		case 1 :
+			size = 5;
+			break;
+		case 2 :
+			size = 7;
+			break;
+		}
+		
+		switch(direction) {
+		case 0:
+			break;
+		case 1:
+			for(int i = 0; i <= 2; i++) {
+				for(int j = 0; j < ox[i].length; j++) {
+					oy[i][j] = - oy[i][j];
+					ox[i][j] = - ox[i][j];
+				}
+			}
+			break;
+		case 2:
+			for(int i = 0; i <= 2; i++) {
+				for(int j = 0; j < ox[i].length; j++) {
+					int c = ox[i][j];
+					ox[i][j] = - oy[i][j];
+					oy[i][j] = c;
+				}
+			}
+			break;
+		case 3:
+			for(int i = 0; i <= 2; i++) {
+				for(int j = 0; j < ox[i].length; j++) {
+					int c = ox[i][j];
+					ox[i][j] = oy[i][j];
+					oy[i][j] = -c;
+				}
+			}
+			break;
+		}
+		
+			for(int i = 0; i < size; i++) {
+				Vector2 targetPosition = new Vector2();
+				targetPosition.set (position.x+ox[weapon][i], position.y+oy[weapon][i]);								
+				if(targetPosition.x <= blocks.length-1 && targetPosition.x >= 0 
+						&&targetPosition.y <= blocks[0].length-1 && targetPosition.y >= 0) {
+					
+					//detect friend
+					Array<Player> players = GameInstance.getInstance().players;
+					for(Player p: players) {
+						if(p.position.equals(targetPosition) && p.side == player.side) {
+							return false;
+						}
+					}
+														
+				}
+			}
+			return true;
+			
+		
+		
+	}
 
 
 

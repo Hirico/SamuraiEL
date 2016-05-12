@@ -10,4 +10,18 @@ public class HardAI extends PlayerAI {
 		
 	}
 	
+	// chase fiercely
+	@Override
+	public void update() {
+		if(!player.isRecovering) {	
+		//move
+			pursue();
+		//occupy
+			if(player.occupiable()) {
+				player.occupy();
+			}
+		}
+				
+	}
+	
 }

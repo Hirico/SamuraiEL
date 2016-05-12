@@ -13,7 +13,7 @@ public class Field0 extends Field {
 		blocks = new Block[(int) size.x+1][(int) size.y+1];
 		for(int i = 0; i <= 29; i++) {
 			for(int j = 0; j <= 18; j++) {
-				blocks[i][j] = new Block();
+				blocks[i][j] = new Block(blockSize);
 				blocks[i][j].setPosition(getBottomLeftCorner().x + i*blockSize, 
 						getBottomLeftCorner().y + j*blockSize);
 			}

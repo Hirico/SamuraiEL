@@ -6,9 +6,10 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Disposable;
 
 public abstract class Background implements Disposable{
-	protected Sprite background;
-	protected SpriteBatch backBatch;	
-	protected Music music;
+	public Sprite background;
+	public SpriteBatch backBatch;	
+	public Music music;
+	public double beatInterval;
 	
 	public Background() {
 		backBatch = new SpriteBatch();
@@ -16,6 +17,7 @@ public abstract class Background implements Disposable{
 		
 	public void render() {
 		backBatch.begin();
+		background.draw(backBatch);
 		backBatch.end();
 	}
 	

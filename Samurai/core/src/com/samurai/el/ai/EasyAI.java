@@ -10,8 +10,19 @@ public class EasyAI extends PlayerAI{
 		
 	}
 	
+	// only chase linearly
 	@Override
 	public void pursue() {
+		
+		//find target
+		if(target == null) {
+			getRandomTarget();
+		}
+		if(target.isRecovering || target.isHidden) {
+			changeTarget();
+		}
+		
+		
 		if(moveCooldown >= 0) {
 			moveCooldown -= Gdx.graphics.getDeltaTime();
 		} else {

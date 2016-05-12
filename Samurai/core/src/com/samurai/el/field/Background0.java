@@ -5,7 +5,8 @@ import com.samurai.el.resource.Resources;
 public class Background0 extends Background {
 	public Background0() {
 		super();
-		music = Resources.getInstance().bgm04;
+		background = Resources.getInstance().background0;
+		music = Resources.getInstance().bgm02;
 		music.setLooping(true);
 		music.play();
 	}

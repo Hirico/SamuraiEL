@@ -50,7 +50,7 @@ public class GameScreen implements Screen {
         	if(gameOverCountDown >= 0) {
         		gameOverCountDown -= Gdx.graphics.getDeltaTime();
         	} else {
-				//result[6][3] contains each samurai's score(territory), killNum, killedNum
+				//result[6][3] contains each samurai's score(territory+killNum), killNum, killedNum
 				//winFlag: 1:win 0:lose -1:tied  
         		game.setScreen(new OverScreen(result, gameInstance.winFlag));        	
 				dispose();				
