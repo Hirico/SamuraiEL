@@ -11,6 +11,7 @@ public class BlueSpear extends Player {
 		side = 1;
 		id = 3;
 		specBlockTexture = Resources.getInstance().block3;
+		attackSound = Resources.getInstance().attack0;
 	}
 	
 }

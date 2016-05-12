@@ -11,6 +11,7 @@ public class BlueAxe extends Player {
 		side = 1;
 		id = 5;
 		specBlockTexture = Resources.getInstance().block5;
+		attackSound = Resources.getInstance().attack2;
 	}
 	
 }

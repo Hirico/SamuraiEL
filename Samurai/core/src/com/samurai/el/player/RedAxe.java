@@ -11,6 +11,7 @@ public class RedAxe extends Player {
 		side = 0;
 		id = 2;
 		specBlockTexture = Resources.getInstance().block2;
+		attackSound = Resources.getInstance().attack2;
 	}
 	
 }

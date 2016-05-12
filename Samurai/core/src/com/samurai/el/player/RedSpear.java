@@ -11,6 +11,7 @@ public class RedSpear extends Player {
 		side = 0;
 		id = 0;
 		specBlockTexture = Resources.getInstance().block0;
+		attackSound = Resources.getInstance().attack0;
 	}
 	
 }

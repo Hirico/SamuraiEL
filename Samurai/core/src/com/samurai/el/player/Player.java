@@ -1,6 +1,8 @@
 package com.samurai.el.player;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -34,6 +36,7 @@ public abstract class Player extends Sprite implements Disposable{
 	public int movestate;
 	public Resources resource;
 	public int size;
+	public Sound attackSound;
 	
 	public Player(Vector2 homePosition) {
 		
@@ -142,6 +145,16 @@ public abstract class Player extends Sprite implements Disposable{
 				field.getBottomLeftCorner().y + drawPosition.y*field.blockSize);
 		this.setSize(size, size);
 		
+		if(side == 1) {
+			this.setColor(Color.BLUE);
+		} else {
+			this.setColor(Color.RED);
+		}
+		if(isHuman && !occupiable()) {
+			this.setColor(Color.WHITE);
+		}
+		
+		
 		if(isAllied || (isVisible && !isHidden)) {
 			super.draw(batch);
 		}
@@ -160,12 +173,22 @@ public abstract class Player extends Sprite implements Disposable{
 			Field field = GameInstance.getInstance().field;
 			field.executeOccupation(this, position, direction);
 			cooldownTime = 60; // this divides 60 is the real time in seconds
+			if(!isHuman) {
+				attackSound.play(0.3f);
+			} else {
+				attackSound.play();
+			}
 		}
 	}
 	
 	/**use for AI before occupy() to avoid making friendly fire */
 	public boolean fireSafe() {
-		return GameInstance.getInstance().field.fireSafeCheck(this, position, direction);
+		if(GameInstance.getInstance().field.fireSafeCheck(this, position, direction)) {
+			return true;
+		} else {
+			isStuck = true;
+			return false;
+		}
 	}
 	
 	
@@ -416,7 +439,7 @@ public abstract class Player extends Sprite implements Disposable{
 
 	public void getKillBonus() {
 		killNum += 1;
-		score += 1;
+		score += 2;
 	}
 
 

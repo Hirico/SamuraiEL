@@ -265,23 +265,28 @@ public abstract class Field implements Disposable{
 			break;
 		}
 		
+			boolean safe = true;
 			for(int i = 0; i < size; i++) {
 				Vector2 targetPosition = new Vector2();
 				targetPosition.set (position.x+ox[weapon][i], position.y+oy[weapon][i]);								
 				if(targetPosition.x <= blocks.length-1 && targetPosition.x >= 0 
 						&&targetPosition.y <= blocks[0].length-1 && targetPosition.y >= 0) {
 					
-					//detect friend
+					//detect friend and enemy (fire first)
 					Array<Player> players = GameInstance.getInstance().players;
 					for(Player p: players) {
-						if(p.position.equals(targetPosition) && p.side == player.side) {
-							return false;
-						}
+						if(p.position.equals(targetPosition)) {
+							if(p.side != player.side) {
+								return true;
+							} else {
+								safe = false;
+							}
+						}				
 					}
 														
 				}
 			}
-			return true;
+			return safe;
 			
 		
 		

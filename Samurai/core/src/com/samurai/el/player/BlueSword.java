@@ -11,6 +11,7 @@ public class BlueSword extends Player {
 		side = 1;
 		id = 4;
 		specBlockTexture = Resources.getInstance().block4;
+		attackSound = Resources.getInstance().attack1;
 	}
 	
 }

@@ -7,6 +7,7 @@ public class Background3 extends Background {
 		super();
 		background = Resources.getInstance().background3;
 		music = Resources.getInstance().bgm05;
+		music.setVolume(0.8f);
 		music.setLooping(true);
 		music.play();
 	}

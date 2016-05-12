@@ -2,6 +2,7 @@ package com.samurai.el.resource;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
@@ -35,7 +36,9 @@ public class Resources {
 	public Music bgm03 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm04.mp3"));
 	public Music bgm04 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm04.mp3"));
 	public Music bgm05 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm04.mp3"));
-	
+	public Sound attack0 = Gdx.audio.newSound(Gdx.files.internal(("sound/attack0.wav")));
+	public Sound attack1 = Gdx.audio.newSound(Gdx.files.internal(("sound/attack1.wav")));
+	public Sound attack2 = Gdx.audio.newSound(Gdx.files.internal(("sound/attack2.wav")));
 	
 	public static Resources instance;
 	
@@ -81,6 +84,9 @@ public class Resources {
 		bgm03 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm03.mp3"));
 		bgm04 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm04.mp3"));
 		bgm05 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm04.mp3"));
+		attack0 = Gdx.audio.newSound(Gdx.files.internal(("sound/attack0.wav")));
+		attack1 = Gdx.audio.newSound(Gdx.files.internal(("sound/attack1.wav")));
+		attack2 = Gdx.audio.newSound(Gdx.files.internal(("sound/attack2.wav")));
 	}
 	
 	public void dispose() {
@@ -95,5 +101,8 @@ public class Resources {
 		bgm03.dispose();
 		bgm04.dispose();
 		bgm05.dispose();
+		attack0.dispose();
+		attack1.dispose();
+		attack2.dispose();
 	}
 }
