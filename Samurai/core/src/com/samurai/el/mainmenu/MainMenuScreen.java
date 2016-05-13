@@ -25,6 +25,14 @@ public class MainMenuScreen implements Screen{
 	ImageButton button2;
 	ImageButton button3;
 	ImageButton button4;
+	Sprite buttonA0;
+	Sprite buttonA1;
+	Sprite buttonB0;
+	Sprite buttonB1;
+	Sprite buttonC0;
+	Sprite buttonC1;
+	
+	
 	Texture buttonpng;
 	SpriteBatch batch;
 	Sprite background;
@@ -35,10 +43,16 @@ public class MainMenuScreen implements Screen{
 		stage=new Stage(new StretchViewport(1280,720));
 		
 		batch=new SpriteBatch();
-		background=new Sprite(new Texture(Gdx.files.internal("foxwel_temp/photo.jpg")));
+		background=new Sprite(new Texture(Gdx.files.internal("img/background/setting.png")));
 
-		buttonpng=new Texture(Gdx.files.internal("foxwel_temp/mainbutton.png"));
-		final TextureRegion[][] buttonsplit=TextureRegion.split(buttonpng, 128, 128);
+		buttonA0=new Sprite(new Texture(Gdx.files.internal("img/button/mainmenu/buttonA0.png")));
+		buttonA1=new Sprite(new Texture(Gdx.files.internal("img/button/mainmenu/buttonA1.png")));
+		buttonB0=new Sprite(new Texture(Gdx.files.internal("img/button/mainmenu/buttonB0.png")));
+		buttonB1=new Sprite(new Texture(Gdx.files.internal("img/button/mainmenu/buttonB1.png")));
+		buttonC0=new Sprite(new Texture(Gdx.files.internal("img/button/mainmenu/buttonC0.png")));
+		buttonC1=new Sprite(new Texture(Gdx.files.internal("img/button/mainmenu/buttonC1.png")));
+		
+		
 		Sprite returnbutton0=new Sprite(new Texture("foxwel_temp/return0.png"));
 		Sprite returnbutton1=new Sprite(new Texture("foxwel_temp/return1.png"));
 		
@@ -47,17 +61,17 @@ public class MainMenuScreen implements Screen{
 		ImageButton.ImageButtonStyle button3style=new ImageButton.ImageButtonStyle();
 		ImageButton.ImageButtonStyle button4style=new ImageButton.ImageButtonStyle();
 		
-		button1style.imageUp=new TextureRegionDrawable(buttonsplit[0][0]);	
-		button1style.imageDown=new TextureRegionDrawable(buttonsplit[0][0]);
-		button1style.imageOver=new TextureRegionDrawable(buttonsplit[0][1]);
+		button2style.imageUp=new TextureRegionDrawable(buttonA0);	
+		button2style.imageDown=new TextureRegionDrawable(buttonA0);
+		button2style.imageOver=new TextureRegionDrawable(buttonA1);
 		
-		button2style.imageUp=new TextureRegionDrawable(buttonsplit[0][2]);
-		button2style.imageDown=new TextureRegionDrawable(buttonsplit[0][2]);
-		button2style.imageOver=new TextureRegionDrawable(buttonsplit[0][3]);
+		button1style.imageUp=new TextureRegionDrawable(buttonB0);
+		button1style.imageDown=new TextureRegionDrawable(buttonB0);
+		button1style.imageOver=new TextureRegionDrawable(buttonB1);
 		
-		button3style.imageUp=new TextureRegionDrawable(buttonsplit[0][4]);
-		button3style.imageDown=new TextureRegionDrawable(buttonsplit[0][4]);
-		button3style.imageOver=new TextureRegionDrawable(buttonsplit[0][5]);
+		button3style.imageUp=new TextureRegionDrawable(buttonC0);
+		button3style.imageDown=new TextureRegionDrawable(buttonC0);
+		button3style.imageOver=new TextureRegionDrawable(buttonC1);
 				
 		button4style.imageUp=new SpriteDrawable(returnbutton0);
 		button4style.imageDown=new SpriteDrawable(returnbutton0);
@@ -80,9 +94,19 @@ public class MainMenuScreen implements Screen{
 		stage.addActor(button3);
 		stage.addActor(button4);
 		
-		button1.setPosition(576-200, 360-64);
-		button2.setPosition(576, 360-64);
-		button3.setPosition(576+200, 360-64);
+		button1.setHeight(81);
+		button1.setWidth(238);
+		
+		button2.setHeight(81);
+		button2.setWidth(238);
+		
+		button3.setHeight(81);
+		button3.setWidth(238);
+		
+		int std=(1280-238)/2;
+		button1.setPosition(std-300, 360-200);
+		button2.setPosition(std, 360-200);
+		button3.setPosition(std+300, 360-200);
 		button4.setPosition(1280-128, 0);
 		
 		button1.addListener(new InputListener()
@@ -131,7 +155,7 @@ public class MainMenuScreen implements Screen{
 	           @Override
 	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) 
 	           {
-	        	   int message=JOptionPane.showConfirmDialog(null,"ï¿½ï¿½È·ï¿½ï¿½ï¿½Ë³ï¿½ï¿½ï¿½Ï·ï¿½ï¿½","Warningï¿½ï¿½", JOptionPane.YES_NO_OPTION); 
+	        	   int message=JOptionPane.showConfirmDialog(null,"È·ÈÏÍË³öÂï£¡£¡£¡£¡","Warning!", JOptionPane.YES_NO_OPTION); 
 	        	   if (message==JOptionPane.YES_OPTION) Gdx.app.exit();
 	           }
 	           @Override

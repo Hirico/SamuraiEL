@@ -14,11 +14,12 @@ public class ScreenCenter
 	static public GameSetScreen gamesetscreen;
 	static public MainMenuScreen mainmenuscreen;
 	static public Music music;
+	static public float last;
 	
 	public static void setscreencenter(Game _game)
 	{
 		game=_game;
-		
+		last=0.5f;
 		//mainmenuscreen=new MainMenuScreen();
 		//settingscreen=new SettingScreen();
 		//achievementscreen=new AchievementScreen();
@@ -35,10 +36,21 @@ public class ScreenCenter
 		music.dispose();
 	}
 	
+	public static void startmusic(float temp)
+	{
+		music=Gdx.audio.newMusic(Gdx.files.internal("foxwel_temp/test.mp3"));
+		music.setLooping(true);
+		last=temp;
+		music.setVolume(temp);
+		music.play();
+	}
+	
+	
 	public static void startmusic()
 	{
 		music=Gdx.audio.newMusic(Gdx.files.internal("foxwel_temp/test.mp3"));
 		music.setLooping(true);
+		music.setVolume(last);
 		music.play();
 	}
 	
