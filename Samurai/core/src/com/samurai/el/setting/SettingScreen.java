@@ -87,7 +87,7 @@ public class SettingScreen implements Screen{
 		
 		stage.addActor(volume);
 		volume.setBounds(640-700/2, 450, 700, 35);
-		volume.setValue(500);
+		volume.setValue(1000*Gdx.app.getPreferences("volumePref").getFloat("musicVolume", 0.5f));
 	
 		
 		stage.addActor(ismusic);
@@ -125,7 +125,7 @@ public class SettingScreen implements Screen{
 	        		   ScreenCenter.stopmusic();
 	        	   }else{
 	        		   volume.setDisabled(false);
-	        		   ScreenCenter.startmusic((float) (volume.getValue()/1000.0));
+	        		   ScreenCenter.startmusic();
 	        	   }
 	           }
 	           @Override
@@ -141,7 +141,10 @@ public class SettingScreen implements Screen{
 		
 		volume.addListener(new ChangeListener(){
 			 public void changed (ChangeEvent event, Actor actor) {
-				 ScreenCenter.music.setVolume((float) (volume.getValue()/1000.0));
+				 //ScreenCenter.music.setVolume((float) (volume.getValue()/1000.0));
+				 Gdx.app.getPreferences("volumePref").putFloat("musicVolume", (float) (volume.getValue()/1000.0));
+				 Gdx.app.getPreferences("volumePref").flush();
+				 ScreenCenter.changeVolume();
 	           }
 		});
 	}

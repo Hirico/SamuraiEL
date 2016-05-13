@@ -1,6 +1,7 @@
 package com.samurai.el.mainmenu;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Music;
 import com.samurai.el.achievement.AchievementScreen;
 import com.samurai.el.gamesetting.GameSetScreen;
@@ -15,11 +16,11 @@ public class ScreenCenter
 	static public MainMenuScreen mainmenuscreen;
 	static public Music music;
 	static public float last;
+	static public Preferences volumePref;
 	
 	public static void setscreencenter(Game _game)
 	{
 		game=_game;
-		last=0.5f;
 		//mainmenuscreen=new MainMenuScreen();
 		//settingscreen=new SettingScreen();
 		//achievementscreen=new AchievementScreen();
@@ -27,6 +28,8 @@ public class ScreenCenter
 
 		music=Gdx.audio.newMusic(Gdx.files.internal("foxwel_temp/test.mp3"));
 		music.setLooping(true);
+		volumePref = Gdx.app.getPreferences("volumePref");
+		music.setVolume(volumePref.getFloat("musicVolume", 0.5f));
 		music.play();
 	}
 	
@@ -36,21 +39,16 @@ public class ScreenCenter
 		music.dispose();
 	}
 	
-	public static void startmusic(float temp)
-	{
-		music=Gdx.audio.newMusic(Gdx.files.internal("foxwel_temp/test.mp3"));
-		music.setLooping(true);
-		last=temp;
-		music.setVolume(temp);
-		music.play();
+	/**let music volume change to what is in preference */
+	public static void changeVolume() {
+		music.setVolume(volumePref.getFloat("musicVolume"));
 	}
-	
 	
 	public static void startmusic()
 	{
 		music=Gdx.audio.newMusic(Gdx.files.internal("foxwel_temp/test.mp3"));
 		music.setLooping(true);
-		music.setVolume(last);
+		music.setVolume(volumePref.getFloat("musicVolume", 0.5f));
 		music.play();
 	}
 	
