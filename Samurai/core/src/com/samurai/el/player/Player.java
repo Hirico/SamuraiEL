@@ -137,9 +137,7 @@ public abstract class Player extends Sprite implements Disposable{
 		}
 		
 		
-		if(isHidden) {
-			this.setColor(this.getColor().r, this.getColor().g, this.getColor().b, 0.5f);
-		}
+		
 		
 		this.setPosition(field.getBottomLeftCorner().x + drawPosition.x*field.blockSize, 
 				field.getBottomLeftCorner().y + drawPosition.y*field.blockSize);
@@ -154,6 +152,9 @@ public abstract class Player extends Sprite implements Disposable{
 			this.setColor(Color.WHITE);
 		}
 		
+		if(isHidden) {
+			this.setColor(this.getColor().r, this.getColor().g, this.getColor().b, 0.5f);
+		}
 		
 		if(isAllied || (isVisible && !isHidden)) {
 			super.draw(batch);

@@ -5,7 +5,7 @@ import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Music;
 import com.samurai.el.achievement.AchievementScreen;
 import com.samurai.el.gamesetting.GameSetScreen;
-import com.samurai.el.maingame.GameScreen;
+import com.samurai.el.maingame.GameloadScreen;
 import com.samurai.el.setting.SettingScreen;
 public class ScreenCenter 
 {
@@ -26,7 +26,7 @@ public class ScreenCenter
 		//achievementscreen=new AchievementScreen();
 		//gamesetscreen=new GameSetScreen();
 
-		music=Gdx.audio.newMusic(Gdx.files.internal("foxwel_temp/test.mp3"));
+		music=Gdx.audio.newMusic(Gdx.files.internal("music/bgm01.mp3"));
 		music.setLooping(true);
 		volumePref = Gdx.app.getPreferences("volumePref");
 		music.setVolume(volumePref.getFloat("musicVolume", 0.5f));
@@ -46,7 +46,7 @@ public class ScreenCenter
 	
 	public static void startmusic()
 	{
-		music=Gdx.audio.newMusic(Gdx.files.internal("foxwel_temp/test.mp3"));
+		music=Gdx.audio.newMusic(Gdx.files.internal("music/bgm01.mp3"));
 		music.setLooping(true);
 		music.setVolume(volumePref.getFloat("musicVolume", 0.5f));
 		music.play();
@@ -73,7 +73,7 @@ public class ScreenCenter
 				game.setScreen(new AchievementScreen());
 				break;
 			case 4:
-				game.setScreen(new GameScreen(game));
+				game.setScreen(new GameloadScreen(game));
 		}
 	}
 }

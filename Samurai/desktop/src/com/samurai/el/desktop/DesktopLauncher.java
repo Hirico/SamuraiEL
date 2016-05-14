@@ -11,6 +11,7 @@ public class DesktopLauncher {
 		config.title = "Samurai";
 		config.width = 1280;
 		config.height = 720;
+		config.fullscreen = true;
 		new LwjglApplication(new Samurai(), config);
 	}
 }

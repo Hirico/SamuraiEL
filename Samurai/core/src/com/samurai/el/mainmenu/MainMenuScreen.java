@@ -1,7 +1,5 @@
 package com.samurai.el.mainmenu;
 
-import javax.swing.JOptionPane;
-
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
@@ -10,7 +8,6 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -34,6 +31,9 @@ public class MainMenuScreen implements Screen{
 	Sprite buttonB1;
 	Sprite buttonC0;
 	Sprite buttonC1;
+	Sprite blackFade;
+	SpriteBatch fadeBatch;
+	public float fade;
 	
 	
 	Texture buttonpng;
@@ -46,6 +46,9 @@ public class MainMenuScreen implements Screen{
 		stage=new Stage(new StretchViewport(1280,720));
 		
 		batch=new SpriteBatch();
+		fadeBatch = new SpriteBatch();
+		fadeBatch.getProjectionMatrix().setToOrtho2D(0, 0, 2, 2);
+		blackFade = Resources.getInstance().blackFade;
 		background=new Sprite(new Texture(Gdx.files.internal("img/background/setting.png")));
 
 		buttonA0=new Sprite(new Texture(Gdx.files.internal("img/button/mainmenu/buttonA0.png")));
@@ -89,6 +92,7 @@ public class MainMenuScreen implements Screen{
 	
 	@Override
 	public void show() {
+		fade = 1.0f;
 		// TODO Auto-generated method stub
 		Gdx.input.setInputProcessor(stage);
 		
@@ -187,8 +191,7 @@ public class MainMenuScreen implements Screen{
 	           @Override
 	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) 
 	           {
-	        	   int message=JOptionPane.showConfirmDialog(null,"Exit?","Warning!", JOptionPane.YES_NO_OPTION); 
-	        	   if (message==JOptionPane.YES_OPTION) Gdx.app.exit();
+	        	   Gdx.app.exit();
 	           }
 	           @Override
 	           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) 
@@ -204,12 +207,24 @@ public class MainMenuScreen implements Screen{
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
+		
+		
 		batch.begin();
 		batch.draw(background, 0, 0,1280,720);
 		batch.end();
 		
 		stage.act();
 		stage.draw();
+		
+		if (fade > 0) {
+			fade = Math.max(fade - Gdx.graphics.getDeltaTime() / 2.f, 0);
+			fadeBatch.begin();
+			blackFade.setColor(blackFade.getColor().r, blackFade.getColor().g, blackFade.getColor().b, fade);
+			blackFade.draw(fadeBatch);
+			fadeBatch.end();
+		}
+		
+		
 	}
 
 	@Override
