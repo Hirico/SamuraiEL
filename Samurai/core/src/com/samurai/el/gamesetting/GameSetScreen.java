@@ -4,12 +4,14 @@ package com.samurai.el.gamesetting;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -19,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.samurai.el.maingame.GameInstance;
 import com.samurai.el.mainmenu.ScreenCenter;
+import com.samurai.el.resource.Resources;
 
 
 
@@ -120,6 +123,13 @@ public class GameSetScreen implements Screen{
 			final int temp1=i;
 			fieldcheckbox[i].addListener(new InputListener()
 			{
+				 @Override
+			        public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+			            super.enter(event, x, y, pointer, fromActor);
+			            Sound sound = Resources.getInstance().hover;
+			            sound.play(Gdx.app.getPreferences("volumePref").getFloat("soundVolume", 1f));
+			        
+			        }
 				@Override
 				public void touchUp(InputEvent event, float x, float y, int pointer, int button) 
 				{
@@ -151,6 +161,13 @@ public class GameSetScreen implements Screen{
 			final int temp1=i;
 			playercheckbox[i].addListener(new InputListener()
 			{
+				 @Override
+			        public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+			            super.enter(event, x, y, pointer, fromActor);
+			            Sound sound = Resources.getInstance().hover;
+			            sound.play(Gdx.app.getPreferences("volumePref").getFloat("soundVolume", 1f));
+			        
+			        }
 				@Override
 				public void touchUp(InputEvent event, float x, float y, int pointer, int button) 
 				{
@@ -181,6 +198,13 @@ public class GameSetScreen implements Screen{
 			final int temp1=i;
 			difficultycheckbox[i].addListener(new InputListener()
 			{
+				 @Override
+			        public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+			            super.enter(event, x, y, pointer, fromActor);
+			            Sound sound = Resources.getInstance().hover;
+			            sound.play(Gdx.app.getPreferences("volumePref").getFloat("soundVolume", 1f));
+			        
+			        }
 				@Override
 				public void touchUp(InputEvent event, float x, float y, int pointer, int button) 
 				{
@@ -198,6 +222,13 @@ public class GameSetScreen implements Screen{
 		}
 		
 		returnbutton.addListener(new InputListener(){
+			 @Override
+		        public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+		            super.enter(event, x, y, pointer, fromActor);
+		            Sound sound = Resources.getInstance().hover;
+		            sound.play(Gdx.app.getPreferences("volumePref").getFloat("soundVolume", 1f));
+		        
+		        }
 	           @Override
 	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 	        	   ScreenCenter.setscreen(0);
@@ -212,9 +243,16 @@ public class GameSetScreen implements Screen{
 		
 		
 		enterbutton.addListener(new InputListener(){
+			 @Override
+		        public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+		            super.enter(event, x, y, pointer, fromActor);
+		            Sound sound = Resources.getInstance().hover;
+		            sound.play(Gdx.app.getPreferences("volumePref").getFloat("soundVolume", 1f));
+		        
+		        }
 	           @Override
 	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-	        	   GameInstance.setInstance(getchoose(fieldcheckbox), getchoose(playercheckbox),new int[]{1,2,3,4}, 10, getchoose(difficultycheckbox));
+	        	   GameInstance.setInstance(getchoose(fieldcheckbox), getchoose(playercheckbox),new int[]{1,2,3,4}, 90, getchoose(difficultycheckbox));
 	        	  // GameInstance.setInstance(0,0,200,1);
 	        	  // ScreenCenter.mainmenuscreen.music.stop();
 	        	   //ScreenCenter.mainmenuscreen.music.dispose();

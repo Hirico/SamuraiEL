@@ -2,11 +2,13 @@ package com.samurai.el.maingame;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -17,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.samurai.el.maingame.Timer;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.samurai.el.mainmenu.ScreenCenter;
+import com.samurai.el.resource.Resources;
 
 public class OverScreen implements Screen
 {
@@ -72,6 +75,14 @@ public class OverScreen implements Screen
 		}
 		
 		returnbutton.addListener(new InputListener(){
+			
+			 @Override
+		        public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+		            super.enter(event, x, y, pointer, fromActor);
+		            Sound sound = Resources.getInstance().hover;
+		            sound.play(Gdx.app.getPreferences("volumePref").getFloat("soundVolume", 1f));
+		        
+		        }
 	           @Override
 	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 	        	   ScreenCenter.setscreen(0);

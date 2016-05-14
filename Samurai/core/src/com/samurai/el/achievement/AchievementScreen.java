@@ -3,9 +3,11 @@ package com.samurai.el.achievement;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -13,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.samurai.el.mainmenu.ScreenCenter;
+import com.samurai.el.resource.Resources;
 
 public class AchievementScreen implements Screen{
 
@@ -41,6 +44,13 @@ public class AchievementScreen implements Screen{
 		returnbutton.setPosition(1280-128, 0);
 		
 		returnbutton.addListener(new InputListener(){
+			 @Override
+		        public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+		            super.enter(event, x, y, pointer, fromActor);
+		            Sound sound = Resources.getInstance().hover;
+		            sound.play(Gdx.app.getPreferences("volumePref").getFloat("soundVolume", 1f));
+		        
+		        }
 	           @Override
 	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 	        	   ScreenCenter.setscreen(0);
