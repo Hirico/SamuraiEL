@@ -137,7 +137,6 @@ public class Block extends Sprite{
 			}
 			if(owner != null) {
 				this.setTexture(owner.specBlockTexture);
-
 			} else {
 				this.setTexture(block7);
 			}

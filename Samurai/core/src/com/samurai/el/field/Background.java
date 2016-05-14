@@ -1,5 +1,6 @@
 package com.samurai.el.field;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -25,5 +26,10 @@ public abstract class Background implements Disposable{
 		backBatch.dispose();
 		music.stop();
 		music.dispose();
+	}
+
+	public void changeVolume() {
+		music.setVolume(Gdx.app.getPreferences("volumePref").getFloat("musicVolume"));
+		
 	}
 }

@@ -42,4 +42,12 @@ public class AIProgramCenter {
 		}
 		
 	}
+
+	/**To avoid loop nested error, this is called later after ai's creating */
+	public void initializeEnemies() {
+		for(PlayerAI ai: AIs) {
+			ai.initializeEnemy();
+		}
+		
+	}
 }

@@ -1,5 +1,6 @@
 package com.samurai.el.field;
 
+import com.badlogic.gdx.Gdx;
 import com.samurai.el.resource.Resources;
 
 public class Background0 extends Background {
@@ -7,7 +8,7 @@ public class Background0 extends Background {
 		super();
 		background = Resources.getInstance().background0;
 		music = Resources.getInstance().bgm02;
-		music.setVolume(0.8f);
+		music.setVolume(Gdx.app.getPreferences("volumePref").getFloat("musicVolume", 0.8f));
 		music.setLooping(true);
 		music.play();
 	}

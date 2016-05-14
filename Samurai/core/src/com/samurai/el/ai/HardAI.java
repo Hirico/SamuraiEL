@@ -10,7 +10,7 @@ public class HardAI extends PlayerAI {
 		
 	}
 	
-	/* chase fiercely
+	/* chase fiercely, ignore friend
 	@Override
 	public void update() {
 		if(!player.isRecovering) {	

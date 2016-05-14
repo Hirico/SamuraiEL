@@ -174,9 +174,9 @@ public abstract class Player extends Sprite implements Disposable{
 			field.executeOccupation(this, position, direction);
 			cooldownTime = 60; // this divides 60 is the real time in seconds
 			if(!isHuman) {
-				attackSound.play(0.3f);
+				attackSound.play(0.3f * Gdx.app.getPreferences("volumePref").getFloat("soundVolume", 1));
 			} else {
-				attackSound.play();
+				attackSound.play(Gdx.app.getPreferences("volumePref").getFloat("soundVolume", 1));
 			}
 		}
 	}

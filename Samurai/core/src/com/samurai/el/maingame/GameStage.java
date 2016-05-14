@@ -12,11 +12,13 @@ public class GameStage extends Stage{
 	private Timer rightTimer;
 	public GameInstance gameInstance;
 	private GameScreen screen;
+	public boolean paused;
 	
 	public GameStage(GameInstance gameInstance, GameScreen screen) {
 		super();
 		this.screen = screen;
 		this.gameInstance = gameInstance;
+		paused = false;
 	}
 	
 	public void stop() {
@@ -43,9 +45,15 @@ public class GameStage extends Stage{
 		Player human = gameInstance.human;
 		
 		if(!gameInstance.stoped) {
-			if(keycode == Input.Keys.ESCAPE) {
-				screen.pause();
-				screen.game.setScreen(new PauseScreen(screen));
+			if(keycode == Input.Keys.P) {
+				if(!paused) {
+					screen.pause();
+					stop();
+					paused = true;
+				} else {
+					screen.resume();
+					paused = false;
+				}
 			}
 			
 			if(keycode == Input.Keys.W) {
@@ -93,6 +101,9 @@ public class GameStage extends Stage{
 		}
 		if(keycode == Input.Keys.D) {
 			human.moveEnd(rightTimer);
+		}
+		if(keycode == Input.Keys.ESCAPE) {
+			screen.exit();
 		}
 		return false;
 	}

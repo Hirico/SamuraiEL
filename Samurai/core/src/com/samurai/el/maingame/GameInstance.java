@@ -1,7 +1,6 @@
 package com.samurai.el.maingame;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.ai.GdxAI;
 import com.badlogic.gdx.ai.msg.MessageDispatcher;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
@@ -46,7 +45,6 @@ public class GameInstance implements Disposable{
 		winFlag = -1;
 		aiProgram = new AIProgramCenter();
 		stoped = false;
-		//messageDispatcher = new MessageDispatcher();
 		
 		//setMap
 		switch(mapid) {
@@ -72,43 +70,72 @@ public class GameInstance implements Disposable{
 				
 	}
 	
-	public void initializePlayer(int humanid,  int difficulty) {
+	public void initializePlayer(int humanid, int[] AIid, int difficulty) {
 		//initialize players
-		players = new Array<Player>();		
-		players.add(redSpear = new RedSpear(field.homePositions[0]));
-		players.add(redSword = new RedSword(field.homePositions[1]));
-		players.add(redAxe = new RedAxe(field.homePositions[2]));
-		players.add(blueSpear = new BlueSpear(field.homePositions[3]));
-		players.add(blueSword = new BlueSword(field.homePositions[4]));
-		players.add(blueAxe = new BlueAxe(field.homePositions[5]));
+		players = new Array<Player>();
 		
-		//setAI
+		//add player
 		aiProgram.setDifficulty(difficulty);		
 		switch(humanid) {
 		case 0:
+			players.add(redSpear = new RedSpear(field.homePositions[0]));
 			redSpear.isHuman = true;
 			human = redSpear;
 			break;
 		case 1:
+			players.add(redSword = new RedSword(field.homePositions[1]));
 			redSword.isHuman = true;
 			human = redSword;
 			break;
 		case 2:
+			players.add(redAxe = new RedAxe(field.homePositions[2]));
 			redAxe.isHuman = true;
 			human = redAxe;
 			break;
 		case 3:
+			players.add(blueSpear = new BlueSpear(field.homePositions[3]));
 			blueSpear.isHuman = true;
 			human = blueSpear;
 			break;
 		case 4:
+			players.add(blueSword = new BlueSword(field.homePositions[4]));
 			blueSword.isHuman = true;
 			human = blueSword;
 			break;
 		case 5:
+			players.add(blueAxe = new BlueAxe(field.homePositions[5]));
 			blueAxe.isHuman = true;
 			human = blueAxe;
 			break;
+		}
+		
+		for(int i = 0; i < AIid.length; i++) {
+			switch(AIid[i]) {
+			case 0:
+				players.add(redSpear = new RedSpear(field.homePositions[0]));
+				redSpear.isHuman = false;
+				break;
+			case 1:
+				players.add(redSword = new RedSword(field.homePositions[1]));
+				redSword.isHuman = false;
+				break;
+			case 2:
+				players.add(redAxe = new RedAxe(field.homePositions[2]));
+				redAxe.isHuman = false;
+				break;
+			case 3:
+				players.add(blueSpear = new BlueSpear(field.homePositions[3]));
+				blueSpear.isHuman = false;
+				break;
+			case 4:
+				players.add(blueSword = new BlueSword(field.homePositions[4]));
+				blueSword.isHuman = false;
+				break;
+			case 5:
+				players.add(blueAxe = new BlueAxe(field.homePositions[5]));
+				blueAxe.isHuman = false;
+				break;
+			}
 		}
 		
 		for(Player p : players) {
@@ -118,14 +145,14 @@ public class GameInstance implements Disposable{
 			if(p.side == human.side) {
 				p.isAllied = true;
 				p.isVisible = true;
-				field.openVision(p.position);
-				
+				field.openVision(p.position);				
 			}
-			for(int i = 0; i < 6; i++) {
-				field.blocks[(int) field.homePositions[i].x][(int) field.homePositions[i].y].playerArrive(i);
-				field.homeInitialize(i);
-			}
+			
+			field.blocks[(int) field.homePositions[p.id].x][(int) field.homePositions[p.id].y].playerArrive(p.id);
+			field.homeInitialize(p.id);			
 		}
+		
+		aiProgram.initializeEnemies();
 		
 		
 		
@@ -135,17 +162,14 @@ public class GameInstance implements Disposable{
 		return instance;
 	}
 	
-	public static void setInstance(int mapid, int human, int time, int difficulty) {
+	public static void setInstance(int mapid, int human, int[]AIid, int time, int difficulty) {
 			instance = new GameInstance(mapid, time);
-			instance.initializePlayer(human, difficulty);
+			instance.initializePlayer(human, AIid, difficulty);
 	}
 	
 	public void render() {
 		if(!stoped) {
 			currentTime -= Gdx.graphics.getDeltaTime();
-			//update AI
-			GdxAI.getTimepiece().update(Gdx.graphics.getDeltaTime());
-			//messageDispatcher.update();
 			aiProgram.update();
 		}
 		

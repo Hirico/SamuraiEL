@@ -24,15 +24,15 @@ public abstract class PlayerAI {
 		stuckState = 0;
 		moveCooldown = 0.2f;
 		totalMoveCooldown = 0.2f;
-		enemies = new Array<Player>(3);
-		if(player.side == 0) {
-			enemies.add(gameInstance.players.get(3));
-			enemies.add(gameInstance.players.get(4));
-			enemies.add(gameInstance.players.get(5));
-		} else {
-			enemies.add(gameInstance.players.get(0));
-			enemies.add(gameInstance.players.get(1));
-			enemies.add(gameInstance.players.get(2));
+
+	}
+	
+	public void initializeEnemy() {
+		enemies = new Array<Player>();
+		for(Player p: gameInstance.players) {
+			if(p.side != player.side) {
+				enemies.add(p);
+			}	
 		}
 	}
 	
@@ -40,7 +40,14 @@ public abstract class PlayerAI {
 
 		if(!player.isRecovering) {	
 		//move
-			if(enemies.get(0).isRecovering && enemies.get(1).isRecovering && enemies.get(2).isRecovering) {
+			boolean wanderFlag = true;
+			for(Player p: enemies) {
+				if(!p.isRecovering) {
+					wanderFlag = false;
+					break;
+				}
+			}
+			if(wanderFlag) {
 				wander();
 			} else {
 				pursue();
@@ -56,12 +63,12 @@ public abstract class PlayerAI {
 	
 
 	public void getRandomTarget() {
-		int targetId = (int)(Math.random()*2);
+		int targetId = (int)(Math.random()*(enemies.size-1));
 		target = enemies.get(targetId);				
 	}
 	
-	public void changeTarget() {
-		target = enemies.get((target.id+1)%3);
+	public void changeTarget() {	
+		target = enemies.get((target.id+1)%enemies.size);
 	}
 	
 	/**pursue move strategy, chase a random enemy */
