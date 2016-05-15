@@ -17,7 +17,13 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.List;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
+import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.samurai.el.maingame.GameInstance;
 import com.samurai.el.mainmenu.ScreenCenter;
@@ -34,7 +40,12 @@ public class GameSetScreen implements Screen{
 	BitmapFont font;
 	Music music;
 	CheckBox[] fieldcheckbox=new CheckBox[4];
-	CheckBox[][] playercheckbox=new CheckBox[6][5];
+	CheckBox[] playercheckbox=new CheckBox[6];
+	
+	Skin skin;
+	List list;
+	SelectBox[] playerselectbox=new SelectBox[6];
+	Object[] itemlist={"Player","Easy AI","Normal AI","Hard AI"};
 	
 	SpriteBatch batch;
 	Sprite background;
@@ -93,18 +104,20 @@ public class GameSetScreen implements Screen{
 		fieldcheckbox[2]=new CheckBox("  map2",checkstyle);
 		fieldcheckbox[3]=new CheckBox("  map3",checkstyle);
 
-		playercheckbox[0][0]=new CheckBox("  redSpear",checkstyle);
-		playercheckbox[1][0]=new CheckBox("  redSword",checkstyle);
-		playercheckbox[2][0]=new CheckBox("  redAxe",checkstyle);
-		playercheckbox[3][0]=new CheckBox("  blueSpear",checkstyle);
-		playercheckbox[4][0]=new CheckBox("  blueSword",checkstyle);
-		playercheckbox[5][0]=new CheckBox("  blueAxe",checkstyle);
+		playercheckbox[0]=new CheckBox("  redSpear",checkstyle);
+		playercheckbox[1]=new CheckBox("  redSword",checkstyle);
+		playercheckbox[2]=new CheckBox("  redAxe",checkstyle);
+		playercheckbox[3]=new CheckBox("  blueSpear",checkstyle);
+		playercheckbox[4]=new CheckBox("  blueSword",checkstyle);
+		playercheckbox[5]=new CheckBox("  blueAxe",checkstyle);
 		
-		for (int i=0;i<6;++i) playercheckbox[i][1]=new CheckBox("  Me!",checkstyle);
-		for (int i=0;i<6;++i) playercheckbox[i][2]=new CheckBox("  Simple AI!",checkstyle);
-		for (int i=0;i<6;++i) playercheckbox[i][3]=new CheckBox("  Normal AI!",checkstyle);
-		for (int i=0;i<6;++i) playercheckbox[i][4]=new CheckBox("  Hard AI!",checkstyle);
+		
+		skin = new Skin(Gdx.files.internal("test.json"));
+		for (int i=0;i<6;++i) playerselectbox[i]=new SelectBox(skin);
+
 	}
+		
+
 	
 	@Override
 	public void show() {
@@ -116,7 +129,7 @@ public class GameSetScreen implements Screen{
 		
 		stage.addActor(enterbutton);
 		enterbutton.setPosition(720-enterbutton.getWidth()-50, 20);
-		
+
 		
 		int filedstartX=120;
 		for (int i=0;i<4;++i)
@@ -131,9 +144,10 @@ public class GameSetScreen implements Screen{
 			final int temp1=i;
 			fieldcheckbox[i].addListener(new InputListener()
 			{
-				 @Override
+				 @Override                                                                                                                                                       
 			        public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
 			            super.enter(event, x, y, pointer, fromActor);
+			
 			            Sound sound = Resources.getInstance().hover;
 			            sound.play(Gdx.app.getPreferences("volumePref").getFloat("soundVolume", 1f));
 			        
@@ -154,34 +168,36 @@ public class GameSetScreen implements Screen{
 			});
 		}
 		
+		for (int i=0;i<6;++i)
+		{
+			playerselectbox[i].setItems(itemlist);
+			playerselectbox[i].setSelected("Normal AI");
+			playerselectbox[i].setSize(160, 30);
+			playerselectbox[i].getScrollPane().setScrollingDisabled(false, false);
+			stage.addActor(playerselectbox[i]);
+		}
+		playerselectbox[0].setSelected("Player");
 		
-
 		for (int i=0;i<6;++i)
 		{
 			int tempx=0;
 			int tempy=0;
-			for (int j=0;j<5;++j) stage.addActor(playercheckbox[i][j]);
+			stage.addActor(playercheckbox[i]);
 			
 			if (i<3) tempx=150;else tempx=650;
 			tempy=500-(i%3)*160;
 			
-			playercheckbox[i][0].setX(tempx);
-			playercheckbox[i][0].setY(tempy);
+			playercheckbox[i].setX(tempx);
+			playercheckbox[i].setY(tempy);
 			
 			tempx+=120;
 			
-			
-			playercheckbox[i][1].setX(tempx);
-			playercheckbox[i][1].setY(tempy+90);
-			playercheckbox[i][2].setX(tempx);
-			playercheckbox[i][2].setY(tempy+30);
-			playercheckbox[i][3].setX(tempx);
-			playercheckbox[i][3].setY(tempy-30);
-			playercheckbox[i][4].setX(tempx);
-			playercheckbox[i][4].setY(tempy-90);
+
+			playerselectbox[i].setPosition(tempx-40,tempy-40);
 			
 		}
 	
+		/*
 		for (int i=0;i<6;++i)
 		{
 			final int temp0=i;
@@ -277,72 +293,169 @@ public class GameSetScreen implements Screen{
 	        	  if (OK()) return true;else return false;
 	           }
 		});
+		
+	*/
+		for (int i=0;i<6;++i)
+		{
+			final int temp=i;
+
+			playerselectbox[i].addListener(new ChangeListener()
+			{
+				
+				
+				 public void changed (ChangeEvent event, Actor actor) 
+				 {
+					 if (playerselectbox[temp].getSelected()=="Player")
+					 {
+						 for (int j=0;j<6;++j)
+						 {
+							 final int temp1=j;
+							 if (j!=temp)
+							 {
+								 if (playerselectbox[j].getSelected()=="Player") playerselectbox[j].setSelected("Normal AI");
+							 }
+						 }
+					 }
+				 }
+			});
+			playerselectbox[i].addListener(new InputListener(){
+				 @Override
+			        public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+			            super.enter(event, x, y, pointer, fromActor);
+			            Sound sound = Resources.getInstance().hover;
+			            sound.play(Gdx.app.getPreferences("volumePref").getFloat("soundVolume", 1f));
+			        
+			        }
+					
+			});
+			playercheckbox[i].addListener(new InputListener(){
+				 @Override
+			        public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+			            super.enter(event, x, y, pointer, fromActor);
+			            Sound sound = Resources.getInstance().hover;
+			            sound.play(Gdx.app.getPreferences("volumePref").getFloat("soundVolume", 1f));
+			        
+			        }
+					
+			});
+		}
+		
+		returnbutton.addListener(new InputListener(){
+			 @Override
+		        public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+		            super.enter(event, x, y, pointer, fromActor);
+		            Sound sound = Resources.getInstance().hover;
+		            sound.play(Gdx.app.getPreferences("volumePref").getFloat("soundVolume", 1f));
+		        
+		        }
+	           @Override
+	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+	        	   ScreenCenter.setscreen(0);
+	           }
+	           @Override
+	           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) {
+	        	 
+
+						return true;
+	           }
+		});
+		
+		enterbutton.addListener(new InputListener(){
+			 @Override
+		        public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+		            super.enter(event, x, y, pointer, fromActor);
+		            Sound sound = Resources.getInstance().hover;
+		            sound.play(Gdx.app.getPreferences("volumePref").getFloat("soundVolume", 1f));
+		        
+		        }
+	           @Override
+	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
+	        	   int[][] testt=new int[5][2];
+	        	   for (int i=0;i<5;++i)
+	        	   {
+	        		   testt[i][0]=i+1;
+	        		   testt[i][1]=1;
+	        	   }
+	        	   GameInstance.setInstance(getchoose(fieldcheckbox),getme(),getai(),90);
+
+	        	   ScreenCenter.stopmusic();
+	        	   ScreenCenter.setscreen(4);
+	           }
+	           @Override
+	           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) 
+	           {
+
+	        	  if (OK()) return true;else return false;
+	           }
+		});
 	}
+	
 
 	boolean OK()
 	{
 		boolean temp=false;
 		for (int i=0;i<fieldcheckbox.length;++i) if (fieldcheckbox[i].isChecked()) temp=true;
-		if (temp)
+		if (temp&&(getme()!=-1))
 		{
-			int[][] temp1=getai();
-			if (temp1.length>0) return true;else return false;
+			return true;
 		}else return false;
 	}
 	
 	int getme()
 	{
-		for (int i=0;i<6;++i) if (playercheckbox[i][0].isChecked()&&playercheckbox[i][1].isChecked()) return i;
-		return 0;
+		for (int i=0;i<6;++i) if (playercheckbox[i].isChecked()&&(playerselectbox[i].getSelected()=="Player")) return i;
+		return -1;
 	}
 	
 	int[][] getai()
 	{
 		int m=0;
-		
 		for (int i=0;i<6;++i)
 		{
-			if (playercheckbox[i][0].isChecked())
+			if (playercheckbox[i].isChecked())
 			{
-				
-				int temp=-1;
-				for (int j=0;j<3;++j)
+				if (playerselectbox[i].getSelected()=="Easy AI")
 				{
-					if (playercheckbox[i][j+2].isChecked())
-					{
-						temp=j;
-					}
+					
+					++m;
 				}
-				if (temp!=-1)
+				if (playerselectbox[i].getSelected()=="Normal AI")
+				{
+					++m;
+				}
+				if (playerselectbox[i].getSelected()=="Hard AI")
 				{
 					++m;
 				}
 			}
 		}
 		int[][] res=new int[m][2];
-		m=0;
-		for (int i=0;i<6;++i)
+		m=0;for (int i=0;i<6;++i)
 		{
-			if (playercheckbox[i][0].isChecked())
+			if (playercheckbox[i].isChecked())
 			{
-				
-				int temp=-1;
-				for (int j=0;j<3;++j)
-				{
-					if (playercheckbox[i][j+2].isChecked())
-					{
-						temp=j;
-					}
-				}
-				if (temp!=-1)
+				if (playerselectbox[i].getSelected()=="Easy AI")
 				{
 					res[m][0]=i;
-					res[m][1]=temp;
+					res[m][1]=0;
+					++m;
+				}
+				if (playerselectbox[i].getSelected()=="Normal AI")
+				{
+
+					res[m][0]=i;
+					res[m][1]=1;
+					++m;
+				}
+				if (playerselectbox[i].getSelected()=="Hard AI")
+				{
+
+					res[m][0]=i;
+					res[m][1]=2;
 					++m;
 				}
 			}
-		}
-		return res;
+		}	return res;
 	}
 	
 	int getchoose(CheckBox[] checkone)
