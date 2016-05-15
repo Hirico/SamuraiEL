@@ -32,8 +32,7 @@ public class AIProgramCenter {
 	public void update() {
 		for(PlayerAI ai: AIs) {
 			ai.update();
-		}
-		
+		}		
 	}
 
 	/**To avoid loop nested error, this is called later after ai's creating */

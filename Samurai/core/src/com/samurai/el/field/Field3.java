@@ -22,6 +22,18 @@ public class Field3 extends Field {
 				new Vector2(3,9), new Vector2(4,6), new Vector2(6,3), new Vector2(8,4), 
 				new Vector2(7,8), new Vector2(6,10) 
 		};
+		
+		planetPositions = new Vector2[] {
+				new Vector2(3,2), new Vector2(6,6), new Vector2(8,9)
+		};
+		planets = new Block[] {
+				blocks[3][2], blocks[6][6], blocks[8][9]
+		};
+		
+		
+		for(int i = 0; i < planets.length; i++) {
+			planets[i].setPlanet(2, planetPositions[i]);
+		}
 		for(int i = 0; i < 5; i++) {
 			blocks[(int) homePositions[i].x][(int) homePositions[i].y].isHome = true;
 		}

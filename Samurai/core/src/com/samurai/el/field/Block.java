@@ -3,6 +3,7 @@ package com.samurai.el.field;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector2;
 import com.samurai.el.maingame.GameInstance;
 import com.samurai.el.player.Player;
 import com.samurai.el.resource.Resources;
@@ -15,10 +16,13 @@ public class Block extends Sprite{
 	public int playerIdOn;
 	public int viewerNum;
 	public boolean isHome;
+	public boolean isPlanet;
 	public Player playerOn;
 	public Texture block6; // invisible block
 	public Texture block7; // neutral block
+	public Texture planetTexture;
 	public int size;
+	public Vector2 planetPosition; // only useful when it's a planet
 	
 	public Block(int size) {
 		super();
@@ -34,6 +38,31 @@ public class Block extends Sprite{
 		block7 = Resources.getInstance().block7;
 		this.set(new Sprite(block6));
 		isHome = false;
+		isPlanet = false;
+	}
+	
+	/**set it to be a planet, with texture id */
+	public void setPlanet(int planetId, Vector2 position) {
+		switch(planetId) {
+		case 0:
+			planetTexture = Resources.getInstance().planet0;
+			break;
+		case 1:
+			planetTexture = Resources.getInstance().planet1;
+			break;
+		case 2:
+			planetTexture = Resources.getInstance().planet2;
+			break;
+		case 3:
+			planetTexture = Resources.getInstance().planet3;
+			break;
+		case 4:
+			planetTexture = Resources.getInstance().planet4;
+			break;
+		}
+		this.planetPosition = position;
+		this.setTexture(planetTexture);
+		isPlanet = true;
 	}
 	
 	public void playerArrive(Player player) {
@@ -108,8 +137,16 @@ public class Block extends Sprite{
 		}
 		
 		//implements to set texture
-		if(isVisible) {
+		if(isVisible && !isPlanet) {
 			this.setTexture(owner.specBlockTexture);
+		}
+		else if(isVisible && isPlanet) {
+			if(side == 0) {
+				planetTexture = Resources.getInstance().planet0;
+			} else {
+				planetTexture = Resources.getInstance().planet1;
+			}
+			this.setTexture(planetTexture);
 		}
 		
 	}
@@ -135,10 +172,18 @@ public class Block extends Sprite{
 			if(playerOn != null) {
 				playerOn.isVisible = true;
 			}
-			if(owner != null) {
-				this.setTexture(owner.specBlockTexture);
+			if(!isPlanet) {
+				if(owner != null) {
+					this.setTexture(owner.specBlockTexture);
+				} else {
+					this.setTexture(block7);
+				}
 			} else {
-				this.setTexture(block7);
+				if(owner == null) {
+					this.setTexture(Resources.getInstance().planet2);
+				} else {
+					this.setTexture(planetTexture);
+				}
 			}
 		}
 		viewerNum += 1;

@@ -3,6 +3,7 @@ package com.samurai.el.ai;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
+import com.samurai.el.field.Block;
 import com.samurai.el.maingame.GameInstance;
 import com.samurai.el.player.Player;
 
@@ -12,18 +13,20 @@ public abstract class PlayerAI {
 	public double totalMoveCooldown;
 	public Player player;
 	public Player target;
-	public Vector2 wanderTarget;
 	public GameInstance gameInstance;
 	public int stuckState;
 	public Array<Player> enemies;
+	public Block[] planets;
+	public Vector2 targetPlanetPosition;
 	
 	public PlayerAI(Player player) {
 		this.player = player;		
 		gameInstance = GameInstance.getInstance();
-		wanderTarget = new Vector2();
 		stuckState = 0;
 		moveCooldown = 0.2f;
 		totalMoveCooldown = 0.2f;
+		planets = gameInstance.field.planets;
+		targetPlanetPosition = new Vector2();
 
 	}
 	
@@ -40,21 +43,20 @@ public abstract class PlayerAI {
 
 		if(!player.isRecovering) {	
 		//move
-			boolean wanderFlag = true;
-			for(Player p: enemies) {
-				if(!p.isRecovering) {
-					wanderFlag = false;
-					break;
-				}
-			}
-			if(wanderFlag) {
-				wander();
+			Block targetPlanet = Targeting.getNearestPlanet(player, planets);
+			
+			if(targetPlanet != null) {
+				targetPlanetPosition.set(targetPlanet.planetPosition);
+				occupyPlanet();
 			} else {
-				pursue();
+				target = gameInstance.field.checkVision(player, player.position);
+				if(target != null) {
+					pursue();
+				}
 			}
 			
 		//occupy
-			if(player.occupiable() && player.fireSafe()) {
+			if(player.occupiableForAI()) {
 				player.occupy();
 			}
 		}
@@ -73,14 +75,6 @@ public abstract class PlayerAI {
 	
 	/**pursue move strategy, chase a random enemy */
 	public void pursue() {
-		
-		//find target
-		if(target == null) {
-			getRandomTarget();
-		}
-		if(target.isRecovering || target.isHidden) {
-			changeTarget();
-		}
 		
 		if(moveCooldown >= 0) {
 			moveCooldown -= Gdx.graphics.getDeltaTime();
@@ -102,38 +96,38 @@ public abstract class PlayerAI {
 	/** horizontal first*/
 	public void pursueMove1() {
 		if(target.position.x < player.position.x) {
-			player.move(2);
+			player.moveForAI(2);
 		}
 		else if(target.position.x > player.position.x) {
-			player.move(3);
+			player.moveForAI(3);
 		}
 		else if(target.position.y < player.position.y) {
-			player.move(1);
+			player.moveForAI(1);
 		}
 		else if(target.position.y > player.position.y) {
-			player.move(0);
+			player.moveForAI(0);
 		}
 	}
 	
 	/** vertical first*/
 	public void pursueMove2() {		
 		if(target.position.y < player.position.y) {
-			player.move(1);
+			player.moveForAI(1);
 		}
 		else if(target.position.y > player.position.y) {
-			player.move(0);
+			player.moveForAI(0);
 		}
 		else if(target.position.x < player.position.x) {
-			player.move(2);
+			player.moveForAI(2);
 		}
 		else if(target.position.x > player.position.x) {
-			player.move(3);
+			player.moveForAI(3);
 		}
 	}
 	
-	/**move to a random position, called when all enemies are recovering */
-	public void wander() {
-		wanderTarget.set((int)(Math.random()*gameInstance.field.size.x), (int)(Math.random()*gameInstance.field.size.y));
+	/**move to a planet position*/
+	public void occupyPlanet() {
+		targetPlanetPosition.set((int)(Math.random()*gameInstance.field.size.x), (int)(Math.random()*gameInstance.field.size.y));
 		
 		if(moveCooldown >= 0) {
 			moveCooldown -= Gdx.graphics.getDeltaTime();
@@ -142,9 +136,9 @@ public abstract class PlayerAI {
 				resolveStuck();
 			} else {
 				if(Math.random() < 0.5f) {
-					wanderMove1();
+					occupyMove1();
 				} else {
-					wanderMove2();
+					occupyMove2();
 				}				
 			}
 			
@@ -153,44 +147,44 @@ public abstract class PlayerAI {
 	}
 	
 	/** horizontal first*/
-	public void wanderMove1() {
-		if(wanderTarget.x < player.position.x) {
-			player.move(2);
+	public void occupyMove1() {
+		if(targetPlanetPosition.x < player.position.x) {
+			player.moveForAI(2);
 		}
-		else if(wanderTarget.x > player.position.x) {
-			player.move(3);
+		else if(targetPlanetPosition.x > player.position.x) {
+			player.moveForAI(3);
 		}
-		else if(wanderTarget.y < player.position.y) {
-			player.move(1);
+		else if(targetPlanetPosition.y < player.position.y) {
+			player.moveForAI(1);
 		}
-		else if(wanderTarget.y > player.position.y) {
-			player.move(0);
+		else if(targetPlanetPosition.y > player.position.y) {
+			player.moveForAI(0);
 		}
 	}
 	
 	/** vertical first*/
-	public void wanderMove2() {		
-		if(wanderTarget.y < player.position.y) {
-			player.move(1);
+	public void occupyMove2() {		
+		if(targetPlanetPosition.y < player.position.y) {
+			player.moveForAI(1);
 		}
-		else if(wanderTarget.y > player.position.y) {
-			player.move(0);
+		else if(targetPlanetPosition.y > player.position.y) {
+			player.moveForAI(0);
 		}
-		else if(wanderTarget.x < player.position.x) {
-			player.move(2);
+		else if(targetPlanetPosition.x < player.position.x) {
+			player.moveForAI(2);
 		}
-		else if(wanderTarget.x > player.position.x) {
-			player.move(3);
+		else if(targetPlanetPosition.x > player.position.x) {
+			player.moveForAI(3);
 		}
 	}
 	
 	public void resolveStuck() {
 		if(stuckState == 0) {
-			player.move((player.direction+2)%4);
+			player.moveForAI((player.direction+2)%4);
 			stuckState = 1;
 		}
 		else if(stuckState == 1) {
-			player.move((player.direction+2)%4);
+			player.moveForAI((player.direction+2)%4);
 			stuckState = 0;
 			player.isStuck = false;
 		}

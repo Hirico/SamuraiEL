@@ -15,6 +15,8 @@ public abstract class Field implements Disposable{
 	public Block[][] blocks;
 	public int blockSize;
 	public Vector2[] homePositions;
+	public Vector2[] planetPositions;
+	public Block[] planets;
 	
 	public Field() {
 		//this is initialized before player, so player reference is not accessible here
@@ -109,6 +111,42 @@ public abstract class Field implements Disposable{
 			}
 		}
 		
+	}
+	
+	/**return an enemy inside vision, null if no enemy in vision. Use for AI*/
+	public Player checkVision(Player player, Vector2 position) {
+		Vector2 targetPosition = new Vector2();
+		
+		for(int i = 1; i <= 6; i++) {
+			for(int j = 1; j <= (2*i-1); j++) {
+				targetPosition.set(position.x+i-6, position.y+j-i);
+				if(targetPosition.x >= 0 && targetPosition.x <= size.x
+						&& targetPosition.y >= 0 && targetPosition.y <= size.y) {
+					Player checkedPlayer = blocks[(int)targetPosition.x][(int)targetPosition.y].playerOn;
+					if(checkedPlayer != null) {
+						if(!checkedPlayer.isRecovering && checkedPlayer.side != player.side) {
+							return checkedPlayer; 
+						}
+					}
+				}
+			}
+		}
+		
+		for(int i = 7; i <= 11; i++) {
+			for(int j = (2*i-11); j <= 11; j++) {
+				targetPosition.set(position.x+i-6, position.y+j-i);
+				if(targetPosition.x >= 0 && targetPosition.x <= size.x
+						&& targetPosition.y >= 0 && targetPosition.y <= size.y) {
+					Player checkedPlayer = blocks[(int)targetPosition.x][(int)targetPosition.y].playerOn;
+					if(checkedPlayer != null) {
+						if(!checkedPlayer.isRecovering && checkedPlayer.side != player.side) {
+							return checkedPlayer; 
+						}
+					}
+				}
+			}
+		}
+		return null;
 	}
 	
 	public void homeInitialize(int i) {
@@ -292,7 +330,9 @@ public abstract class Field implements Disposable{
 		
 	}
 
-
+	public Block getSpefBlock(Vector2 position) {
+		return blocks[(int)position.x][(int)position.y];
+	}
 
 	public boolean isOthersHome(Player player, Vector2 targetPosition) {
 		for(int i = 0; i <= 5; i++) {

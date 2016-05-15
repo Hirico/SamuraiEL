@@ -62,6 +62,7 @@ public class GameloadScreen implements Screen{
 			fadeBatch.end();
 			if (fade >= 1) {
 				game.setScreen(new GameScreen(game));
+				dispose();
 			}
 		}
 	}
