@@ -70,12 +70,11 @@ public class GameInstance implements Disposable{
 				
 	}
 	
-	public void initializePlayer(int humanid, int[] AIid, int difficulty) {
+	public void initializePlayer(int humanid, int[][]AI) {
 		//initialize players
 		players = new Array<Player>();
 		
-		//add player
-		aiProgram.setDifficulty(difficulty);		
+		//add player	
 		switch(humanid) {
 		case 0:
 			players.add(redSpear = new RedSpear(field.homePositions[0]));
@@ -109,8 +108,8 @@ public class GameInstance implements Disposable{
 			break;
 		}
 		
-		for(int i = 0; i < AIid.length; i++) {
-			switch(AIid[i]) {
+		for(int i = 0; i < AI.length; i++) {
+			switch(AI[i][0]) {
 			case 0:
 				players.add(redSpear = new RedSpear(field.homePositions[0]));
 				redSpear.isHuman = false;
@@ -136,12 +135,10 @@ public class GameInstance implements Disposable{
 				blueAxe.isHuman = false;
 				break;
 			}
+			aiProgram.setAI(players.get(players.size-1), AI[i][1]);
 		}
 		
 		for(Player p : players) {
-			if(p.isHuman == false) {
-				aiProgram.setAI(p);
-			}
 			if(p.side == human.side) {
 				p.isAllied = true;
 				p.isVisible = true;
@@ -162,9 +159,9 @@ public class GameInstance implements Disposable{
 		return instance;
 	}
 	
-	public static void setInstance(int mapid, int human, int[]AIid, int time, int difficulty) {
+	public static void setInstance(int mapid, int human, int[][]AI, int time) {
 			instance = new GameInstance(mapid, time);
-			instance.initializePlayer(human, AIid, difficulty);
+			instance.initializePlayer(human, AI);
 	}
 	
 	public void render() {

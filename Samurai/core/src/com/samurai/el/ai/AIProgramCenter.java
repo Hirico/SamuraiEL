@@ -5,7 +5,6 @@ import com.samurai.el.player.Player;
 
 public class AIProgramCenter {
 	
-	public int difficulty;
 	public Array<PlayerAI> AIs;
 	
 	public AIProgramCenter() {
@@ -13,7 +12,7 @@ public class AIProgramCenter {
 	}
 	
      
-    public void setAI(Player player) {
+    public void setAI(Player player, int difficulty) {
     	switch(difficulty) {
     	case 0:
     		AIs.add(new EasyAI(player));
@@ -28,12 +27,6 @@ public class AIProgramCenter {
     		AIs.add(new EasyAI(player));
     	}
 	}
-
-
-	public void setDifficulty(int difficulty) {
-		this.difficulty = difficulty;
-	}
-	
 
 
 	public void update() {

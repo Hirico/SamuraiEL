@@ -30,20 +30,27 @@ public class SettingScreen implements Screen{
 	Screen mainmenuscreen;
 	Stage stage;
 	ImageButton returnbutton;
-	CheckBox ismusic;
+	CheckBox setwindowed;
+	CheckBox setfullscreen;
 	SpriteBatch batch;
 	Sprite background;
 	BitmapFont font;
-	Slider volume;
-	Label volume_label;
+	Slider musicvolume;
+	Label musicvolume_label;
+	Slider soundvolume;
+	Label soundvolume_label;	
+
 	
 	public SettingScreen() {
 		font=new BitmapFont(Gdx.files.internal("foxwel_temp/choose/1.fnt"),Gdx.files.internal("foxwel_temp/choose/1.png"), false);
-		
 		batch=new SpriteBatch();
+		stage = new Stage(new StretchViewport(1280,720));
+		
+		
+		
 		background=new Sprite(new Texture("img/background/setting.png"));
 		
-		stage = new Stage(new StretchViewport(1280,720));
+		
 		
 		
 		Sprite returnbutton0=new Sprite(new Texture("foxwel_temp/return0.png"));
@@ -60,7 +67,8 @@ public class SettingScreen implements Screen{
 		Sprite tt=new Sprite(new Texture("img/setting/tA.png"));
 		Slider.SliderStyle volumestyle=new Slider.SliderStyle(new SpriteDrawable(bar),new SpriteDrawable(tt)); 
 		
-		volume=new Slider(0,1000,1,false,volumestyle);
+		musicvolume=new Slider(0,1000,1,false,volumestyle);
+		soundvolume=new Slider(0,1000,1,false,volumestyle);
 		
 		
 		
@@ -75,33 +83,51 @@ public class SettingScreen implements Screen{
 		checkstyle.font=font;
 		checkstyle.fontColor=new Color(Color.YELLOW);
 		
-		ismusic=new CheckBox("   Music",checkstyle);
+		setwindowed=new CheckBox("   windowed",checkstyle);
+		setfullscreen=new CheckBox("   fullscreen",checkstyle);
+		
 		
 		
 		Label.LabelStyle labelstyle =new Label.LabelStyle(font, Color.YELLOW);
 		
-		volume_label=new Label("volume",labelstyle);
+		musicvolume_label=new Label("Music Volume",labelstyle);
+		soundvolume_label=new Label("Sound Volume",labelstyle);
 	}
 	
 	@Override
 	public void show() {
 		Gdx.input.setInputProcessor(stage);
 		
-		stage.addActor(volume);
-		volume.setBounds(640-700/2, 450, 700, 35);
-		volume.setValue(1000*Gdx.app.getPreferences("volumePref").getFloat("musicVolume", 0.5f));
-	
+		stage.addActor(musicvolume);
+		stage.addActor(soundvolume);
+		musicvolume.setBounds(640-700/2+100, 500, 700, 35);
+		musicvolume.setValue(1000*Gdx.app.getPreferences("volumePref").getFloat("musicVolume", 0.5f));
+		soundvolume.setBounds(640-700/2+100, 400, 700, 35);
+		soundvolume.setValue(1000*Gdx.app.getPreferences("volumePref").getFloat("soundVolume", 0.5f));
 		
-		stage.addActor(ismusic);
-		ismusic.setX(640-65/2);
-		ismusic.setY(300);
-		ismusic.setChecked(true);
+		stage.addActor(musicvolume_label);
+		stage.addActor(soundvolume_label);
+		musicvolume_label.setX(100);
+		musicvolume_label.setY(500);
+		soundvolume_label.setX(100);
+		soundvolume_label.setY(400);
 		
 		
 		
-		stage.addActor(volume_label);
-		volume_label.setX(150);
-		volume_label.setY(450);
+		stage.addActor(setwindowed);
+		stage.addActor(setfullscreen);
+		setwindowed.setX(640-65/2-300);
+		setwindowed.setY(250);
+		setwindowed.setChecked(true);
+		
+		setfullscreen.setX(640-65/2+100);
+		setfullscreen.setY(250);
+		setfullscreen.setChecked(false);
+		
+		
+		
+		
+
 		
 		stage.addActor(returnbutton);
 		returnbutton.setPosition(1280-128, 0);
@@ -126,36 +152,67 @@ public class SettingScreen implements Screen{
 	           }
 		});
 		
-		ismusic.addListener(new InputListener(){
-	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-	        	   if (!ismusic.isChecked())
-	        	   {
-	        		   volume.setDisabled(true);
-	        		   ScreenCenter.stopmusic();
-	        	   }else{
-	        		   volume.setDisabled(false);
-	        		   ScreenCenter.startmusic();
-	        	   }
-	           }
-	           @Override
-	           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) {
-	        	 
-
-						return true;  
-	           }
+		
+		setwindowed.addListener(new InputListener(){
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) 
+			{
+				if (setwindowed.isChecked())
+				{
+					setfullscreen.setChecked(false);
+					//Gdx.graphics.setWindowedMode(1280,720);
+				}else
+				{
+					setfullscreen.setChecked(true);
+					//Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+				}	   
+			}
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) {
+				return true;  
+			}
+		});
+		
+		setfullscreen.addListener(new InputListener(){
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) 
+			{
+				if (setfullscreen.isChecked())
+				{
+					setwindowed.setChecked(false);
+					//Gdx.graphics.setFullscreenMode(Gdx.graphics.getDisplayMode());
+				}else
+				{
+					setwindowed.setChecked(true);
+					//Gdx.graphics.setWindowedMode(1280,720);
+					
+				}	   
+			}
+			@Override
+			public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) {
+				return true;  
+			}
 		});
 		
 
-		
-		
-		volume.addListener(new ChangeListener(){
-			 public void changed (ChangeEvent event, Actor actor) {
-				 //ScreenCenter.music.setVolume((float) (volume.getValue()/1000.0));
-				 Gdx.app.getPreferences("volumePref").putFloat("musicVolume", (float) (volume.getValue()/1000.0));
+		musicvolume.addListener(new ChangeListener()
+		{
+			 public void changed (ChangeEvent event, Actor actor) 
+			 {
+				 Gdx.app.getPreferences("volumePref").putFloat("musicVolume", (float) (musicvolume.getValue()/1000.0));
 				 Gdx.app.getPreferences("volumePref").flush();
 				 ScreenCenter.changeVolume();
-	           }
+			 }
 		});
+		
+		soundvolume.addListener(new ChangeListener()
+		{
+			 public void changed (ChangeEvent event, Actor actor) 
+			 {
+				 Gdx.app.getPreferences("volumePref").putFloat("soundVolume", (float) (soundvolume.getValue()/1000.0));
+				 Gdx.app.getPreferences("volumePref").flush();
+			 }
+		});
+		
+		
 	}
 
 	@Override

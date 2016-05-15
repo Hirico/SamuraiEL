@@ -73,6 +73,7 @@ public class ScreenCenter
 				game.setScreen(new AchievementScreen());
 				break;
 			case 4:
+				game.getScreen().dispose();
 				game.setScreen(new GameloadScreen(game));
 		}
 	}
