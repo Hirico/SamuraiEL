@@ -4,6 +4,7 @@ package com.samurai.el.maingame;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.samurai.el.mainmenu.ScreenCenter;
@@ -17,6 +18,7 @@ public class GameScreen implements Screen {
 	private double gameOverCountDown;
 	private int[][] result;
 	public boolean paused;
+	public Music endMusic;
 
 	public GameScreen(Game game) {
 		result = new int[6][3];
@@ -48,6 +50,14 @@ public class GameScreen implements Screen {
 	        	result = gameInstance.gameOver(); 
 	        	gameInstance.stop();
 	        	stage.stop();
+	        	gameInstance.field.background.music.stop();
+	        	if(gameInstance.winFlag == 1 || gameInstance.winFlag == -1) {
+	        		endMusic = Resources.getInstance().bgm06;
+	        	} else {
+	        		endMusic = Resources.getInstance().bgm07;
+	        	}
+	        	endMusic.setLooping(true);
+	        	endMusic.play();	        	
 	        }
 	        else if(gameInstance.currentTime <= 0 && gameInstance.stoped) { 
 	        	if(gameOverCountDown >= 0) {
@@ -55,7 +65,7 @@ public class GameScreen implements Screen {
 	        	} else {
 					//result[6][3] contains each samurai's score(territory+killNum), killNum, killedNum
 					//winFlag: 1:win 0:lose -1:tied  
-	        		game.setScreen(new OverScreen(result, gameInstance.winFlag));        	
+	        		game.setScreen(new OverScreen(result, gameInstance.winFlag, endMusic));        	
 					dispose();				
 					GameInstance.closeInstance();
 					Resources.getInstance().reInit(); 
@@ -68,8 +78,7 @@ public class GameScreen implements Screen {
 	
 	/**End the game and back to main menu  */
 	public void exit() {
-		ScreenCenter.setscreen(0);
-		ScreenCenter.startmusic();// dispose() is in this method        					
+		ScreenCenter.setscreen(0);// dispose() is in this method        					
 		GameInstance.closeInstance();
 		Resources.getInstance().reInit();
 	}

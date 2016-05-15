@@ -72,10 +72,11 @@ public class GameStage extends Stage{
 				human.occupy();
 			}
 			if(keycode == Input.Keys.K) {
-				human.hide();
-			}
-			if(keycode == Input.Keys.L) {
-				human.show();
+				if(!human.isHidden) {
+					human.hide();
+				} else {
+					human.show();
+				}
 			}
 			if(keycode == Input.Keys.Q) {
 				human.turn(false);

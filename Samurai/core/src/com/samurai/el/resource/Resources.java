@@ -3,6 +3,9 @@ package com.samurai.el.resource;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Cursor;
+import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
@@ -38,10 +41,13 @@ public class Resources {
 	public Music bgm03 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm03.mp3"));
 	public Music bgm04 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm04.mp3"));
 	public Music bgm05 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm05.mp3"));
+	public Music bgm06 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm05.mp3"));
+	public Music bgm07 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm05.mp3"));
 	public Sound attack0 = Gdx.audio.newSound(Gdx.files.internal(("sound/attack0.wav")));
 	public Sound attack1 = Gdx.audio.newSound(Gdx.files.internal(("sound/attack1.wav")));
 	public Sound attack2 = Gdx.audio.newSound(Gdx.files.internal(("sound/attack2.wav")));
 	public Sound hover = Gdx.audio.newSound(Gdx.files.internal(("sound/hoverSound.wav")));
+	public Cursor cursor = Gdx.graphics.newCursor(new Pixmap(Gdx.files.internal("img/ui/cursor.png")), 0, 0);
 	
 	public static Resources instance;
 	
@@ -89,6 +95,8 @@ public class Resources {
 		bgm03 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm03.mp3"));
 		bgm04 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm04.mp3"));
 		bgm05 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm05.mp3"));
+		bgm06 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm06.mp3"));
+		bgm07 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm07.mp3"));
 		attack0 = Gdx.audio.newSound(Gdx.files.internal(("sound/attack0.wav")));
 		attack1 = Gdx.audio.newSound(Gdx.files.internal(("sound/attack1.wav")));
 		attack2 = Gdx.audio.newSound(Gdx.files.internal(("sound/attack2.wav")));

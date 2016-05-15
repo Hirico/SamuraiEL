@@ -2,6 +2,7 @@ package com.samurai.el.maingame;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -32,9 +33,10 @@ public class OverScreen implements Screen
 	Label[] scorelabel=new Label[6];
 	SpriteBatch batch;
 	Sprite background;
+	Music endMusic;
 	
 	
-	public OverScreen(int[][] result,int winflag)
+	public OverScreen(int[][] result,int winflag, Music endMusic)
 	{
 		font=new BitmapFont(Gdx.files.internal("foxwel_temp/choose/1.fnt"),Gdx.files.internal("foxwel_temp/choose/1.png"), false);
 		labelstyle=new LabelStyle(font, font.getColor());
@@ -44,6 +46,7 @@ public class OverScreen implements Screen
 		
 		this.result=result;
 		this.winflag=winflag;
+		this.endMusic = endMusic;
 		stage = new Stage(new StretchViewport(1280,720));
 		
 		for (int i=0;i<6;++i) scorelabel[i]=new Label(String.valueOf(result[i][0]),labelstyle);
@@ -64,7 +67,6 @@ public class OverScreen implements Screen
 		Timer.clearInstances();
 		System.gc();
 		Gdx.input.setInputProcessor(stage);
-		ScreenCenter.startmusic();
 		stage.addActor(returnbutton);
 		for (int i=0;i<6;++i) stage.addActor(scorelabel[i]);
 		returnbutton.setPosition(1280-128, 0);
@@ -86,6 +88,7 @@ public class OverScreen implements Screen
 	           @Override
 	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 	        	   ScreenCenter.setscreen(0);
+	        	   ScreenCenter.startmusic();
 	           }
 	           @Override
 	           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) {
@@ -140,6 +143,7 @@ public class OverScreen implements Screen
 		batch.dispose();
 		stage.dispose();
 		font.dispose();
+		endMusic.dispose();
 	}
 
 }
