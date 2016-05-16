@@ -34,10 +34,6 @@ public class Field2 extends Field {
 		for(int i = 0; i < planets.length; i++) {
 			planets[i].setPlanet(2, planetPositions[i]);
 		}
-		
-		for(int i = 0; i < 5; i++) {
-			blocks[(int) homePositions[i].x][(int) homePositions[i].y].isHome = true;
-		}
 	
 		
 		

@@ -9,114 +9,114 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Resources {
-	
+
 	public Texture block0 = new Texture(Gdx.files.internal("img/field/block0.png"));
 	public Texture block1 = new Texture(Gdx.files.internal("img/field/block1.png"));
 	//public Texture block2 = new Texture(Gdx.files.internal("img/field/block2.png"));
 	//public Texture block3 = new Texture(Gdx.files.internal("img/field/block3.png"));
 	//public Texture block4 = new Texture(Gdx.files.internal("img/field/block4.png"));
 	//public Texture block5 = new Texture(Gdx.files.internal("img/field/block5.png"));
-	public Texture block6 = new Texture(Gdx.files.internal("img/field/block6.png")); 
+	public Texture block6 = new Texture(Gdx.files.internal("img/field/block6.png"));
 	public Texture block7 = new Texture(Gdx.files.internal("img/field/block7.png"));
 	public Texture planet0 = new Texture(Gdx.files.internal("img/field/planet0.png"));
 	public Texture planet1 = new Texture(Gdx.files.internal("img/field/planet1.png"));
 	public Texture planet2 = new Texture(Gdx.files.internal("img/field/planet2.png"));
 	public Texture planet3 = new Texture(Gdx.files.internal("img/field/planet3.png"));
 	public Texture planet4 = new Texture(Gdx.files.internal("img/field/planet4.png"));
-	
+
 	public Sprite stand0_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_0.png")));
 	public Sprite stand1_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_0.png")));
 	public Sprite stand2_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_0.png")));
 	public Sprite stand3_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand3_0.png")));
-	public Sprite stand0_1 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_0.png")));
-	public Sprite stand1_1 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_0.png")));
-	public Sprite stand2_1 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_0.png")));
-	public Sprite stand3_1 = new Sprite(new Texture(Gdx.files.internal("img/character/stand3_0.png")));
-	public Sprite stand0_2 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_0.png")));
-	public Sprite stand1_2 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_0.png")));
-	public Sprite stand2_2 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_0.png")));
-	public Sprite stand3_2 = new Sprite(new Texture(Gdx.files.internal("img/character/stand3_0.png")));
-	public Sprite stand0_3 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_0.png")));
-	public Sprite stand1_3 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_0.png")));
-	public Sprite stand2_3 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_0.png")));
-	public Sprite stand3_3 = new Sprite(new Texture(Gdx.files.internal("img/character/stand3_0.png")));
-	public Sprite stand0_4 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_0.png")));
-	public Sprite stand1_4 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_0.png")));
-	public Sprite stand2_4 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_0.png")));
-	public Sprite stand3_4 = new Sprite(new Texture(Gdx.files.internal("img/character/stand3_0.png")));
-	public Sprite stand0_5 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_0.png")));
-	public Sprite stand1_5 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_0.png")));
-	public Sprite stand2_5 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_0.png")));
-	public Sprite stand3_5 = new Sprite(new Texture(Gdx.files.internal("img/character/stand3_0.png")));
-	public Sprite move0_0 = new Sprite(new Texture(Gdx.files.internal("img/character/move0_0.png")));
-	public Sprite move1_0 = new Sprite(new Texture(Gdx.files.internal("img/character/move1_0.png")));
-	public Sprite move2_0 = new Sprite(new Texture(Gdx.files.internal("img/character/move2_0.png")));
-	public Sprite move3_0 = new Sprite(new Texture(Gdx.files.internal("img/character/move3_0.png")));
-	public Sprite move0_1 = new Sprite(new Texture(Gdx.files.internal("img/character/move0_0.png")));
-	public Sprite move1_1 = new Sprite(new Texture(Gdx.files.internal("img/character/move1_0.png")));
-	public Sprite move2_1 = new Sprite(new Texture(Gdx.files.internal("img/character/move2_0.png")));
-	public Sprite move3_1 = new Sprite(new Texture(Gdx.files.internal("img/character/move3_0.png")));
-	public Sprite move0_2 = new Sprite(new Texture(Gdx.files.internal("img/character/move0_0.png")));
-	public Sprite move1_2 = new Sprite(new Texture(Gdx.files.internal("img/character/move1_0.png")));
-	public Sprite move2_2 = new Sprite(new Texture(Gdx.files.internal("img/character/move2_0.png")));
-	public Sprite move3_2 = new Sprite(new Texture(Gdx.files.internal("img/character/move3_0.png")));
-	public Sprite move0_3 = new Sprite(new Texture(Gdx.files.internal("img/character/move0_0.png")));
-	public Sprite move1_3 = new Sprite(new Texture(Gdx.files.internal("img/character/move1_0.png")));
-	public Sprite move2_3 = new Sprite(new Texture(Gdx.files.internal("img/character/move2_0.png")));
-	public Sprite move3_3 = new Sprite(new Texture(Gdx.files.internal("img/character/move3_0.png")));
-	public Sprite move0_4 = new Sprite(new Texture(Gdx.files.internal("img/character/move0_0.png")));
-	public Sprite move1_4 = new Sprite(new Texture(Gdx.files.internal("img/character/move1_0.png")));
-	public Sprite move2_4 = new Sprite(new Texture(Gdx.files.internal("img/character/move2_0.png")));
-	public Sprite move3_4 = new Sprite(new Texture(Gdx.files.internal("img/character/move3_0.png")));
-	public Sprite move0_5 = new Sprite(new Texture(Gdx.files.internal("img/character/move0_0.png")));
-	public Sprite move1_5 = new Sprite(new Texture(Gdx.files.internal("img/character/move1_0.png")));
-	public Sprite move2_5 = new Sprite(new Texture(Gdx.files.internal("img/character/move2_0.png")));
-	public Sprite move3_5 = new Sprite(new Texture(Gdx.files.internal("img/character/move3_0.png")));
-	
+	public Sprite stand0_1 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_1.png")));
+	public Sprite stand1_1 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_1.png")));
+	public Sprite stand2_1 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_1.png")));
+	public Sprite stand3_1 = new Sprite(new Texture(Gdx.files.internal("img/character/stand3_1.png")));
+	public Sprite stand0_2 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_2.png")));
+	public Sprite stand1_2 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_2.png")));
+	public Sprite stand2_2 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_2.png")));
+	public Sprite stand3_2 = new Sprite(new Texture(Gdx.files.internal("img/character/stand3_2.png")));
+	public Sprite stand0_3 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_3.png")));
+	public Sprite stand1_3 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_3.png")));
+	public Sprite stand2_3 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_3.png")));
+	public Sprite stand3_3 = new Sprite(new Texture(Gdx.files.internal("img/character/stand3_3.png")));
+	public Sprite stand0_4 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_4.png")));
+	public Sprite stand1_4 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_4.png")));
+	public Sprite stand2_4 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_4.png")));
+	public Sprite stand3_4 = new Sprite(new Texture(Gdx.files.internal("img/character/stand3_4.png")));
+	public Sprite stand0_5 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_5.png")));
+	public Sprite stand1_5 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_5.png")));
+	public Sprite stand2_5 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_5.png")));
+	public Sprite stand3_5 = new Sprite(new Texture(Gdx.files.internal("img/character/stand3_5.png")));
+	public Sprite move0_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_0.png")));
+	public Sprite move1_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_0.png")));
+	public Sprite move2_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_0.png")));
+	public Sprite move3_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand3_0.png")));
+	public Sprite move0_1 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_1.png")));
+	public Sprite move1_1 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_1.png")));
+	public Sprite move2_1 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_1.png")));
+	public Sprite move3_1 = new Sprite(new Texture(Gdx.files.internal("img/character/stand3_1.png")));
+	public Sprite move0_2 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_2.png")));
+	public Sprite move1_2 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_2.png")));
+	public Sprite move2_2 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_2.png")));
+	public Sprite move3_2 = new Sprite(new Texture(Gdx.files.internal("img/character/stand3_2.png")));
+	public Sprite move0_3 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_3.png")));
+	public Sprite move1_3 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_3.png")));
+	public Sprite move2_3 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_3.png")));
+	public Sprite move3_3 = new Sprite(new Texture(Gdx.files.internal("img/character/stand3_3.png")));
+	public Sprite move0_4 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_4.png")));
+	public Sprite move1_4 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_4.png")));
+	public Sprite move2_4 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_4.png")));
+	public Sprite move3_4 = new Sprite(new Texture(Gdx.files.internal("img/character/stand3_4.png")));
+	public Sprite move0_5 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_5.png")));
+	public Sprite move1_5 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_5.png")));
+	public Sprite move2_5 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_5.png")));
+	public Sprite move3_5 = new Sprite(new Texture(Gdx.files.internal("img/character/stand3_5.png")));
+
 	public Sprite background0 = new Sprite(new Texture(Gdx.files.internal("img/field/bg0.jpeg")));
 	public Sprite background1 = new Sprite(new Texture(Gdx.files.internal("img/field/bg0.jpeg")));
 	public Sprite background2 = new Sprite(new Texture(Gdx.files.internal("img/field/bg0.jpeg")));
 	public Sprite background3 = new Sprite(new Texture(Gdx.files.internal("img/field/bg0.jpeg")));
 	public Sprite gameload = new Sprite(new Texture(Gdx.files.internal("img/background/gameload.jpg")));
 	public Sprite blackFade = new Sprite(new Texture(Gdx.files.internal("img/background/blackfade.png")));
-	
+
 	public Music bgm02 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm02.mp3"));
 	public Music bgm03 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm03.mp3"));
 	public Music bgm04 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm04.mp3"));
 	public Music bgm05 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm05.mp3"));
-	public Music bgm06 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm05.mp3"));
-	public Music bgm07 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm05.mp3"));
-	
+	public Music bgm06 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm06.mp3"));
+	public Music bgm07 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm07.mp3"));
+
 	public Sound attack0 = Gdx.audio.newSound(Gdx.files.internal(("sound/attack0.wav")));
 	public Sound attack1 = Gdx.audio.newSound(Gdx.files.internal(("sound/attack1.wav")));
 	public Sound attack2 = Gdx.audio.newSound(Gdx.files.internal(("sound/attack2.wav")));
 	public Sound hover = Gdx.audio.newSound(Gdx.files.internal(("sound/hoverSound.wav")));
-	
+
 	public Cursor cursor = Gdx.graphics.newCursor(new Pixmap(Gdx.files.internal("img/ui/cursor.png")), 0, 0);
-	
+
 	public static Resources instance;
-	
+
 	public static Resources getInstance() {
 		if (instance == null) {
 			instance = new Resources();
 		}
 		return instance;
 	}
-	
+
 	private Resources() {
 		reInit();
 	}
-	
+
 	public void reInit() {
 		dispose();
-		
+
 		block0 = new Texture(Gdx.files.internal("img/field/block0.png"));
 		block1 = new Texture(Gdx.files.internal("img/field/block1.png"));
 		//block2 = new Texture(Gdx.files.internal("img/field/block2.png"));
 		//block3 = new Texture(Gdx.files.internal("img/field/block3.png"));
 		//block4 = new Texture(Gdx.files.internal("img/field/block4.png"));
 		//block5 = new Texture(Gdx.files.internal("img/field/block5.png"));
-		block6 = new Texture(Gdx.files.internal("img/field/block6.png")); 
+		block6 = new Texture(Gdx.files.internal("img/field/block6.png"));
 		block7 = new Texture(Gdx.files.internal("img/field/block7.png"));
 		planet0 = new Texture(Gdx.files.internal("img/field/planet0.png"));
 		planet1 = new Texture(Gdx.files.internal("img/field/planet1.png"));
@@ -127,50 +127,50 @@ public class Resources {
 		stand1_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_0.png")));
 		stand2_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_0.png")));
 		stand3_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand3_0.png")));
-		stand0_1 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_0.png")));
-		stand1_1 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_0.png")));
-		stand2_1 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_0.png")));
-		stand3_1 = new Sprite(new Texture(Gdx.files.internal("img/character/stand3_0.png")));
-		stand0_2 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_0.png")));
-		stand1_2 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_0.png")));
-		stand2_2 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_0.png")));
-		stand3_2 = new Sprite(new Texture(Gdx.files.internal("img/character/stand3_0.png")));
-		stand0_3 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_0.png")));
-		stand1_3 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_0.png")));
-		stand2_3 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_0.png")));
-		stand3_3 = new Sprite(new Texture(Gdx.files.internal("img/character/stand3_0.png")));
-		stand0_4 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_0.png")));
-		stand1_4 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_0.png")));
-		stand2_4 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_0.png")));
-		stand3_4 = new Sprite(new Texture(Gdx.files.internal("img/character/stand3_0.png")));
-		stand0_5 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_0.png")));
-		stand1_5 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_0.png")));
-		stand2_5 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_0.png")));
-		stand3_5 = new Sprite(new Texture(Gdx.files.internal("img/character/stand3_0.png")));
-		move0_0 = new Sprite(new Texture(Gdx.files.internal("img/character/move0_0.png")));
-		move1_0 = new Sprite(new Texture(Gdx.files.internal("img/character/move1_0.png")));
-		move2_0 = new Sprite(new Texture(Gdx.files.internal("img/character/move2_0.png")));
-		move3_0 = new Sprite(new Texture(Gdx.files.internal("img/character/move3_0.png")));
-		move0_1 = new Sprite(new Texture(Gdx.files.internal("img/character/move0_0.png")));
-		move1_1 = new Sprite(new Texture(Gdx.files.internal("img/character/move1_0.png")));
-		move2_1 = new Sprite(new Texture(Gdx.files.internal("img/character/move2_0.png")));
-		move3_1 = new Sprite(new Texture(Gdx.files.internal("img/character/move3_0.png")));
-		move0_2 = new Sprite(new Texture(Gdx.files.internal("img/character/move0_0.png")));
-		move1_2 = new Sprite(new Texture(Gdx.files.internal("img/character/move1_0.png")));
-		move2_2 = new Sprite(new Texture(Gdx.files.internal("img/character/move2_0.png")));
-		move3_2 = new Sprite(new Texture(Gdx.files.internal("img/character/move3_0.png")));
-		move0_3 = new Sprite(new Texture(Gdx.files.internal("img/character/move0_0.png")));
-		move1_3 = new Sprite(new Texture(Gdx.files.internal("img/character/move1_0.png")));
-		move2_3 = new Sprite(new Texture(Gdx.files.internal("img/character/move2_0.png")));
-		move3_3 = new Sprite(new Texture(Gdx.files.internal("img/character/move3_0.png")));
-		move0_4 = new Sprite(new Texture(Gdx.files.internal("img/character/move0_0.png")));
-		move1_4 = new Sprite(new Texture(Gdx.files.internal("img/character/move1_0.png")));
-		move2_4 = new Sprite(new Texture(Gdx.files.internal("img/character/move2_0.png")));
-		move3_4 = new Sprite(new Texture(Gdx.files.internal("img/character/move3_0.png")));
-		move0_5 = new Sprite(new Texture(Gdx.files.internal("img/character/move0_0.png")));
-		move1_5 = new Sprite(new Texture(Gdx.files.internal("img/character/move1_0.png")));
-		move2_5 = new Sprite(new Texture(Gdx.files.internal("img/character/move2_0.png")));
-		move3_5 = new Sprite(new Texture(Gdx.files.internal("img/character/move3_0.png")));
+		stand0_1 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_1.png")));
+		stand1_1 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_1.png")));
+		stand2_1 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_1.png")));
+		stand3_1 = new Sprite(new Texture(Gdx.files.internal("img/character/stand3_1.png")));
+		stand0_2 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_2.png")));
+		stand1_2 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_2.png")));
+		stand2_2 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_2.png")));
+		stand3_2 = new Sprite(new Texture(Gdx.files.internal("img/character/stand3_2.png")));
+		stand0_3 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_3.png")));
+		stand1_3 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_3.png")));
+		stand2_3 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_3.png")));
+		stand3_3 = new Sprite(new Texture(Gdx.files.internal("img/character/stand3_3.png")));
+		stand0_4 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_4.png")));
+		stand1_4 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_4.png")));
+		stand2_4 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_4.png")));
+		stand3_4 = new Sprite(new Texture(Gdx.files.internal("img/character/stand3_4.png")));
+		stand0_5 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_5.png")));
+		stand1_5 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_5.png")));
+		stand2_5 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_5.png")));
+		stand3_5 = new Sprite(new Texture(Gdx.files.internal("img/character/stand3_5.png")));
+		move0_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_0.png")));
+		move1_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_0.png")));
+		move2_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_0.png")));
+		move3_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand3_0.png")));
+		move0_1 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_1.png")));
+		move1_1 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_1.png")));
+		move2_1 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_1.png")));
+		move3_1 = new Sprite(new Texture(Gdx.files.internal("img/character/stand3_1.png")));
+		move0_2 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_2.png")));
+		move1_2 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_2.png")));
+		move2_2 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_2.png")));
+		move3_2 = new Sprite(new Texture(Gdx.files.internal("img/character/stand3_2.png")));
+		move0_3 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_3.png")));
+		move1_3 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_3.png")));
+		move2_3 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_3.png")));
+		move3_3 = new Sprite(new Texture(Gdx.files.internal("img/character/stand3_3.png")));
+		move0_4 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_4.png")));
+		move1_4 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_4.png")));
+		move2_4 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_4.png")));
+		move3_4 = new Sprite(new Texture(Gdx.files.internal("img/character/stand3_4.png")));
+		move0_5 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_5.png")));
+		move1_5 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_5.png")));
+		move2_5 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_5.png")));
+		move3_5 = new Sprite(new Texture(Gdx.files.internal("img/character/stand3_5.png")));
 		background0 = new Sprite(new Texture(Gdx.files.internal("img/field/bg0.jpeg")));
 		background1 = new Sprite(new Texture(Gdx.files.internal("img/field/bg0.jpeg")));
 		background2 = new Sprite(new Texture(Gdx.files.internal("img/field/bg0.jpeg")));
@@ -188,7 +188,7 @@ public class Resources {
 		attack2 = Gdx.audio.newSound(Gdx.files.internal(("sound/attack2.wav")));
 		hover = Gdx.audio.newSound(Gdx.files.internal(("sound/hoverSound.wav")));
 	}
-	
+
 	public void dispose() {
 		block0.dispose();
 		block1.dispose();

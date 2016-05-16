@@ -36,5 +36,22 @@ public class EasyAI extends PlayerAI{
 		}
 	}
 	
+	@Override
+	/**move to a planet position linearly*/
+	public void occupyPlanet() {
+		
+		if(moveCooldown >= 0) {
+			moveCooldown -= Gdx.graphics.getDeltaTime();
+		} else {
+			if(player.isStuck) {
+				resolveStuck();
+			} else {
+				occupyMove1();			
+			}
+			
+			moveCooldown = totalMoveCooldown;
+		}
+	}
+	
 
 }

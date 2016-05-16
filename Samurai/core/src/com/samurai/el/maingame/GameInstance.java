@@ -139,14 +139,13 @@ public class GameInstance implements Disposable{
 		}
 		
 		for(Player p : players) {
+			field.homeInitialize(p.id);	
+			
 			if(p.side == human.side) {
 				p.isAllied = true;
 				p.isVisible = true;
-				field.openVision(p.position);				
-			}
-			
-			field.blocks[(int) field.homePositions[p.id].x][(int) field.homePositions[p.id].y].playerArrive(p.id);
-			field.homeInitialize(p.id);			
+				field.openVision(p.homePosition);				
+			}	
 		}
 		
 		aiProgram.initializeEnemies();

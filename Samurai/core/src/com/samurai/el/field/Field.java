@@ -1,5 +1,7 @@
 package com.samurai.el.field;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -17,10 +19,17 @@ public abstract class Field implements Disposable{
 	public Vector2[] homePositions;
 	public Vector2[] planetPositions;
 	public Block[] planets;
+	public ParticleEffect[] homeEffects;
 	
 	public Field() {
 		//this is initialized before player, so player reference is not accessible here
 		fieldBatch = new SpriteBatch();
+		
+		//due to a problem of particle, must create a maximum array even if useless
+		homeEffects = new ParticleEffect[] {
+				new ParticleEffect(), new ParticleEffect(), new ParticleEffect(),
+				new ParticleEffect(), new ParticleEffect(), new ParticleEffect()
+		};
 		
 	}
 	
@@ -52,6 +61,9 @@ public abstract class Field implements Disposable{
 			for(int j = 0; j < blocks[0].length; j++) {
 				blocks[i][j].dispose();
 			}
+		}
+		for(int i = 0; i < homeEffects.length; i++) {
+			homeEffects[i].dispose();
 		}
 		fieldBatch.dispose();
 	}
@@ -160,6 +172,14 @@ public abstract class Field implements Disposable{
 	
 	public void homeInitialize(int i) {
 		blocks[(int) homePositions[i].x][(int) homePositions[i].y].occupy(i);
+		blocks[(int) homePositions[i].x][(int) homePositions[i].y].playerArrive(i);
+		blocks[(int) homePositions[i].x][(int) homePositions[i].y].isHome = true;
+		if(i <= 2) {
+			homeEffects[i].load(Gdx.files.internal("img/field/red.p"), Gdx.files.internal("img/field"));
+		} else {
+			homeEffects[i].load(Gdx.files.internal("img/field/blue.p"), Gdx.files.internal("img/field"));
+		}
+		blocks[(int) homePositions[i].x][(int) homePositions[i].y].effectInitialize(homeEffects[i]);
 	}
 
 	public void executeOccupation(Player player, Vector2 position, int direction) {
@@ -344,8 +364,9 @@ public abstract class Field implements Disposable{
 	}
 
 	public boolean isOthersHome(Player player, Vector2 targetPosition) {
-		for(int i = 0; i <= 5; i++) {
-			if((player.id != i) && targetPosition.equals(homePositions[i])) {
+		Array<Player> players = GameInstance.getInstance().players;
+		for(Player p: players) {
+			if((player != p) && targetPosition.equals(p.homePosition)) {
 				return true;
 			}
 		}
