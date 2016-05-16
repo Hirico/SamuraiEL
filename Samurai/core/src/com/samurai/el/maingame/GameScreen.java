@@ -78,7 +78,8 @@ public class GameScreen implements Screen {
 	
 	/**End the game and back to main menu  */
 	public void exit() {
-		ScreenCenter.setscreen(0);// dispose() is in this method        					
+		ScreenCenter.setscreen(0);// dispose() is in this method   
+		ScreenCenter.startmusic();
 		GameInstance.closeInstance();
 		Resources.getInstance().reInit();
 	}

@@ -127,7 +127,6 @@ public abstract class PlayerAI {
 	
 	/**move to a planet position*/
 	public void occupyPlanet() {
-		targetPlanetPosition.set((int)(Math.random()*gameInstance.field.size.x), (int)(Math.random()*gameInstance.field.size.y));
 		
 		if(moveCooldown >= 0) {
 			moveCooldown -= Gdx.graphics.getDeltaTime();

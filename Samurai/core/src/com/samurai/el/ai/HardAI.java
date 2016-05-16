@@ -44,7 +44,6 @@ public class HardAI extends PlayerAI {
 			
 			//move
 			target = gameInstance.field.checkVision(player, player.position);
-			
 			if(target == null) {
 				Block targetPlanet = Targeting.getNearestPlanet(player, planets);
 				

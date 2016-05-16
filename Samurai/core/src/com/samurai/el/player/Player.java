@@ -187,7 +187,7 @@ public abstract class Player extends Sprite implements Disposable{
 			//execute move if the move follows regulation 
 			if(((!isHidden && field.blocks[(int) targetPosition.x][(int) targetPosition.y].playerIdOn == -1) 
 					|| (isHidden && field.isOwnSide(this, targetPosition) && !targetPosition.equals(position))) 
-					&& !field.isOthersHome(this,targetPosition)) {
+					&& !field.isOthersHome(this,targetPosition) && !field.isPlanet(targetPosition)) {
 				isMoving = true;
 				
 				if(!isHidden) {
@@ -301,7 +301,7 @@ public abstract class Player extends Sprite implements Disposable{
 			//execute move if the move follows regulation 
 			if(((!isHidden && field.blocks[(int) targetPosition.x][(int) targetPosition.y].playerIdOn == -1) 
 					|| (isHidden && field.isOwnSide(this, targetPosition) && !targetPosition.equals(position))) 
-					&& !field.isOthersHome(this,targetPosition)) {
+					&& !field.isOthersHome(this,targetPosition) && !field.isPlanet(targetPosition)) {
 				isMoving = true;
 				
 				if(!isHidden) {

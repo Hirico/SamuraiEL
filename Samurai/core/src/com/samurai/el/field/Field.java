@@ -65,6 +65,15 @@ public abstract class Field implements Disposable{
 			
 	}
 	
+	public boolean isPlanet(Vector2 targetPosition) {
+		for(Vector2 p: planetPositions) {
+			if(p.equals(targetPosition)) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public void closeVision(Vector2 position , Player player) {
 		Vector2 targetPosition = new Vector2();
 		for(int i = 1; i <= 6; i++) {

@@ -113,39 +113,41 @@ public class Block extends Sprite{
 		case 0:
 			owner = tempInstance.redSpear;
 			side = 0;
+			planetTexture = Resources.getInstance().planet0;
 			break;
 		case 1:
 			owner = tempInstance.redSword;
 			side = 0;
+			planetTexture = Resources.getInstance().planet0;
 			break;
 		case 2:
 			owner = tempInstance.redAxe;
 			side = 0;
+			planetTexture = Resources.getInstance().planet0;
 			break;
 		case 3:
 			owner = tempInstance.blueSpear;
 			side = 1;
+			planetTexture = Resources.getInstance().planet1;
 			break;
 		case 4:
 			owner = tempInstance.blueSword;
 			side = 1;
+			planetTexture = Resources.getInstance().planet1;
 			break;
 		case 5:
 			owner = tempInstance.blueAxe;
 			side = 1;
+			planetTexture = Resources.getInstance().planet1;
 			break;
 		}
+		
 		
 		//implements to set texture
 		if(isVisible && !isPlanet) {
 			this.setTexture(owner.specBlockTexture);
 		}
 		else if(isVisible && isPlanet) {
-			if(side == 0) {
-				planetTexture = Resources.getInstance().planet0;
-			} else {
-				planetTexture = Resources.getInstance().planet1;
-			}
 			this.setTexture(planetTexture);
 		}
 		
