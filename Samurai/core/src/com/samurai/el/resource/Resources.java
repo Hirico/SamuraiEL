@@ -73,11 +73,12 @@ public class Resources {
 	public Sprite move2_5 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_5.png")));
 	public Sprite move3_5 = new Sprite(new Texture(Gdx.files.internal("img/character/stand3_5.png")));
 
-	public Sprite background0 = new Sprite(new Texture(Gdx.files.internal("img/field/bg0.jpeg")));
-	public Sprite background1 = new Sprite(new Texture(Gdx.files.internal("img/field/bg0.jpeg")));
-	public Sprite background2 = new Sprite(new Texture(Gdx.files.internal("img/field/bg0.jpeg")));
-	public Sprite background3 = new Sprite(new Texture(Gdx.files.internal("img/field/bg0.jpeg")));
+	public Sprite background0 = new Sprite(new Texture(Gdx.files.internal("img/field/bg0.jpg")));
+	public Sprite background1 = new Sprite(new Texture(Gdx.files.internal("img/field/bg1.jpg")));
+	public Sprite background2 = new Sprite(new Texture(Gdx.files.internal("img/field/bg2.jpg")));
+	public Sprite background3 = new Sprite(new Texture(Gdx.files.internal("img/field/bg3.jpg")));
 	public Sprite gameload = new Sprite(new Texture(Gdx.files.internal("img/background/gameload.jpg")));
+	public Sprite gameload2 = new Sprite(new Texture(Gdx.files.internal("img/background/gameload2.jpg")));
 	public Sprite blackFade = new Sprite(new Texture(Gdx.files.internal("img/background/blackfade.png")));
 
 	public Music bgm02 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm02.mp3"));
@@ -171,12 +172,13 @@ public class Resources {
 		move1_5 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_5.png")));
 		move2_5 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_5.png")));
 		move3_5 = new Sprite(new Texture(Gdx.files.internal("img/character/stand3_5.png")));
-		background0 = new Sprite(new Texture(Gdx.files.internal("img/field/bg0.jpeg")));
-		background1 = new Sprite(new Texture(Gdx.files.internal("img/field/bg0.jpeg")));
-		background2 = new Sprite(new Texture(Gdx.files.internal("img/field/bg0.jpeg")));
-		background3 = new Sprite(new Texture(Gdx.files.internal("img/field/bg0.jpeg")));
+		background0 = new Sprite(new Texture(Gdx.files.internal("img/field/bg0.jpg")));
+		background1 = new Sprite(new Texture(Gdx.files.internal("img/field/bg1.jpg")));
+		background2 = new Sprite(new Texture(Gdx.files.internal("img/field/bg2.jpg")));
+		background3 = new Sprite(new Texture(Gdx.files.internal("img/field/bg3.jpg")));
 		blackFade = new Sprite(new Texture(Gdx.files.internal("img/background/blackfade.png")));
 		gameload = new Sprite(new Texture(Gdx.files.internal("img/background/gameload.jpg")));
+		gameload2 = new Sprite(new Texture(Gdx.files.internal("img/background/gameload2.jpg")));
 		bgm02 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm02.mp3"));
 		bgm03 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm03.mp3"));
 		bgm04 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm04.mp3"));

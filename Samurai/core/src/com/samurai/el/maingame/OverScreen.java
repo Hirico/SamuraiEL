@@ -53,6 +53,10 @@ public class OverScreen implements Screen
 		this.endMusic = endMusic;
 		stage = new Stage(new StretchViewport(1280,720));
 		
+		if(winflag == 1) {
+			Gdx.app.getPreferences("challenge").putInteger("winNum", Gdx.app.getPreferences("challenge").getInteger("winNum", 0)+1);
+		}
+		
 		fadeBatch = new SpriteBatch();
 		fadeBatch.getProjectionMatrix().setToOrtho2D(0, 0, 2, 2);
 		blackFade = Resources.getInstance().blackFade;
