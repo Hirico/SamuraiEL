@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.samurai.el.mainmenu.ScreenCenter;
 import com.samurai.el.resource.Resources;
@@ -19,6 +20,11 @@ public class GameScreen implements Screen {
 	private int[][] result;
 	public boolean paused;
 	public Music endMusic;
+	
+	Sprite blackFade;
+	SpriteBatch fadeBatch;
+	public float fade;
+	public boolean finished;
 
 	public GameScreen(Game game) {
 		result = new int[6][3];
@@ -28,10 +34,17 @@ public class GameScreen implements Screen {
 		uiBatch = new SpriteBatch();		
 		gameOverCountDown = 3f;
 		paused = false;
+		
+		fadeBatch = new SpriteBatch();
+		fadeBatch.getProjectionMatrix().setToOrtho2D(0, 0, 2, 2);
+		blackFade = Resources.getInstance().blackFade;
+		finished = false;
 	}
 	
 	@Override
 	public void show() {
+		fade = 0f;
+		finished = false;
 		Gdx.input.setInputProcessor(stage);
 		uiBatch = new SpriteBatch();	
 	}
@@ -65,13 +78,24 @@ public class GameScreen implements Screen {
 	        		gameOverCountDown -= Gdx.graphics.getDeltaTime();
 	        	} else {
 					//result[6][3] contains each samurai's score(territory+killNum), killNum, killedNum
-					//winFlag: 1:win 0:lose -1:tied  
-	        		game.setScreen(new OverScreen(result, gameInstance.winFlag, endMusic));        	
+					//winFlag: 1:win 0:lose -1:tied
+	        		finished = true;
+	        	}
+	        }
+	        
+	        if (finished) {
+				fade = Math.min(fade + Gdx.graphics.getDeltaTime() / 2.f, 1);
+				fadeBatch.begin();
+				blackFade.setColor(blackFade.getColor().r, blackFade.getColor().g, blackFade.getColor().b, fade);
+				blackFade.draw(fadeBatch);
+				fadeBatch.end();
+				if (fade >= 1) {
+					game.setScreen(new OverScreen(result, gameInstance.winFlag, endMusic));        	
 					dispose();				
 					GameInstance.closeInstance();
 					Resources.getInstance().reInit(); 
-	        	}
-	        }
+				}
+			}
 		}
         
 		
@@ -110,6 +134,7 @@ public class GameScreen implements Screen {
 		uiBatch.dispose();
 		gameInstance.dispose();
 		stage.dispose();
+		fadeBatch.dispose();
 	}
 
 	

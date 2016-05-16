@@ -39,6 +39,10 @@ public class SettingScreen implements Screen{
 	Label musicvolume_label;
 	Slider soundvolume;
 	Label soundvolume_label;	
+	
+	Sprite blackFade;
+	SpriteBatch fadeBatch;
+	public float fade;
 
 	
 	public SettingScreen() {
@@ -46,6 +50,9 @@ public class SettingScreen implements Screen{
 		batch=new SpriteBatch();
 		stage = new Stage(new StretchViewport(1280,720));
 		
+		fadeBatch = new SpriteBatch();
+		fadeBatch.getProjectionMatrix().setToOrtho2D(0, 0, 2, 2);
+		blackFade = Resources.getInstance().blackFade;
 		
 		
 		background=new Sprite(new Texture("img/background/setting.png"));
@@ -96,6 +103,7 @@ public class SettingScreen implements Screen{
 	
 	@Override
 	public void show() {
+		fade = 1.0f;
 		Gdx.input.setInputProcessor(stage);
 		
 		stage.addActor(musicvolume);
@@ -225,6 +233,14 @@ public class SettingScreen implements Screen{
 		batch.end();
 		stage.act();
 		stage.draw();
+		
+		if (fade > 0) {
+			fade = Math.max(fade - Gdx.graphics.getDeltaTime() / 2.f, 0);
+			fadeBatch.begin();
+			blackFade.setColor(blackFade.getColor().r, blackFade.getColor().g, blackFade.getColor().b, fade);
+			blackFade.draw(fadeBatch);
+			fadeBatch.end();
+		}
 	}
 
 	@Override
@@ -256,6 +272,7 @@ public class SettingScreen implements Screen{
 		// TODO Auto-generated method stub
 		stage.dispose();
 		batch.dispose();
+		fadeBatch.dispose();
 	}
 
 }
