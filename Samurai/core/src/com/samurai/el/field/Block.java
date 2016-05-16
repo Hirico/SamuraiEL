@@ -1,7 +1,9 @@
 package com.samurai.el.field;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.samurai.el.maingame.GameInstance;
@@ -21,8 +23,9 @@ public class Block extends Sprite{
 	public Texture block6; // invisible block
 	public Texture block7; // neutral block
 	public Texture planetTexture;
+	public ParticleEffect homeEffect;
 	public int size;
-	public Vector2 planetPosition; // only useful when it's a planet
+	public Vector2 planetPosition;// only useful when it's a planet
 	
 	public Block(int size) {
 		super();
@@ -61,8 +64,15 @@ public class Block extends Sprite{
 			break;
 		}
 		this.planetPosition = position;
-		this.setTexture(planetTexture);
+		if(isVisible) {
+			this.setTexture(planetTexture);
+		}
 		isPlanet = true;
+	}
+	
+	public void effectInitialize(ParticleEffect homeEffect) {
+		this.homeEffect = homeEffect;
+		this.homeEffect.setPosition(this.getX()+this.size/2, this.getY()+this.size/2);
 	}
 	
 	public void playerArrive(Player player) {
@@ -168,7 +178,8 @@ public class Block extends Sprite{
 		}
 	}
 	
-	public void show() {		
+	public void show() {
+		
 		if(viewerNum == 0) {
 			isVisible = true;
 			if(playerOn != null) {
@@ -176,7 +187,11 @@ public class Block extends Sprite{
 			}
 			if(!isPlanet) {
 				if(owner != null) {
-					this.setTexture(owner.specBlockTexture);
+					if(!isHome) {
+						this.setTexture(owner.specBlockTexture);
+					} else {
+						this.setTexture(block7);
+					}
 				} else {
 					this.setTexture(block7);
 				}
@@ -196,6 +211,12 @@ public class Block extends Sprite{
 	public void draw(Batch batch) {
 		this.setSize(size, size);
 		super.draw(batch);
+		
+		if(homeEffect != null) {
+			homeEffect.draw(batch);
+			homeEffect.update(Gdx.graphics.getDeltaTime());
+		}
+		
 	}
 	
 	public void dispose() {

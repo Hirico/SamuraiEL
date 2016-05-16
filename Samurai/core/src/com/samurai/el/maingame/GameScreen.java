@@ -57,6 +57,7 @@ public class GameScreen implements Screen {
 	        		endMusic = Resources.getInstance().bgm07;
 	        	}
 	        	endMusic.setLooping(true);
+	        	endMusic.setVolume(Gdx.app.getPreferences("volumePref").getFloat("musicVolume",0.5f));
 	        	endMusic.play();	        	
 	        }
 	        else if(gameInstance.currentTime <= 0 && gameInstance.stoped) { 
