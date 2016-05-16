@@ -35,6 +35,10 @@ public class OverScreen implements Screen
 	Sprite background;
 	Music endMusic;
 	
+	Sprite blackFade;
+	SpriteBatch fadeBatch;
+	public float fade;
+	
 	
 	public OverScreen(int[][] result,int winflag, Music endMusic)
 	{
@@ -48,6 +52,10 @@ public class OverScreen implements Screen
 		this.winflag=winflag;
 		this.endMusic = endMusic;
 		stage = new Stage(new StretchViewport(1280,720));
+		
+		fadeBatch = new SpriteBatch();
+		fadeBatch.getProjectionMatrix().setToOrtho2D(0, 0, 2, 2);
+		blackFade = Resources.getInstance().blackFade;
 		
 		for (int i=0;i<6;++i) scorelabel[i]=new Label(String.valueOf(result[i][0]),labelstyle);
 		
@@ -66,6 +74,7 @@ public class OverScreen implements Screen
 	public void show() {
 		Timer.clearInstances();
 		System.gc();
+		fade = 1.0f;
 		Gdx.input.setInputProcessor(stage);
 		stage.addActor(returnbutton);
 		for (int i=0;i<6;++i) stage.addActor(scorelabel[i]);
@@ -111,6 +120,14 @@ public class OverScreen implements Screen
 		
 		stage.act();
 		stage.draw();
+		
+		if (fade > 0) {
+			fade = Math.max(fade - Gdx.graphics.getDeltaTime() / 2.f, 0);
+			fadeBatch.begin();
+			blackFade.setColor(blackFade.getColor().r, blackFade.getColor().g, blackFade.getColor().b, fade);
+			blackFade.draw(fadeBatch);
+			fadeBatch.end();
+		}
 	}
 
 	@Override
@@ -144,6 +161,7 @@ public class OverScreen implements Screen
 		stage.dispose();
 		font.dispose();
 		endMusic.dispose();
+		fadeBatch.dispose();
 	}
 
 }

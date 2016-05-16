@@ -7,6 +7,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -22,8 +23,17 @@ public class AchievementScreen implements Screen{
 	Stage stage;
 	ImageButton returnbutton;
 	Screen mainmenuscreen;
+	
+	Sprite blackFade;
+	SpriteBatch fadeBatch;
+	public float fade;
+	
 	public AchievementScreen() {
 		stage = new Stage(new StretchViewport(1280,720));
+		
+		fadeBatch = new SpriteBatch();
+		fadeBatch.getProjectionMatrix().setToOrtho2D(0, 0, 2, 2);
+		blackFade = Resources.getInstance().blackFade;
 		
 		Sprite returnbutton0=new Sprite(new Texture("foxwel_temp/return0.png"));
 		Sprite returnbutton1=new Sprite(new Texture("foxwel_temp/return1.png"));
@@ -38,6 +48,7 @@ public class AchievementScreen implements Screen{
 	
 	@Override
 	public void show() {
+		fade = 1.0f;
 		
 		Gdx.input.setInputProcessor(stage);
 		stage.addActor(returnbutton);
@@ -71,6 +82,14 @@ public class AchievementScreen implements Screen{
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		stage.act();
 		stage.draw();
+		
+		if (fade > 0) {
+			fade = Math.max(fade - Gdx.graphics.getDeltaTime() / 2.f, 0);
+			fadeBatch.begin();
+			blackFade.setColor(blackFade.getColor().r, blackFade.getColor().g, blackFade.getColor().b, fade);
+			blackFade.draw(fadeBatch);
+			fadeBatch.end();
+		}
 	}
 
 	@Override
@@ -100,7 +119,7 @@ public class AchievementScreen implements Screen{
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
-		
+		fadeBatch.dispose();
 	}
 
 }

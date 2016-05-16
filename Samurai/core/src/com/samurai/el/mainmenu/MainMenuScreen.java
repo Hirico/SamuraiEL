@@ -256,5 +256,6 @@ public class MainMenuScreen implements Screen{
 		// TODO Auto-generated method stub
 		batch.dispose();
 		stage.dispose();
+		fadeBatch.dispose();
 	}
 }
