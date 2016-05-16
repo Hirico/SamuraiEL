@@ -53,8 +53,8 @@ public class SettingScreen implements Screen{
 		
 		
 		
-		Sprite returnbutton0=new Sprite(new Texture("foxwel_temp/return0.png"));
-		Sprite returnbutton1=new Sprite(new Texture("foxwel_temp/return1.png"));
+		Sprite returnbutton0=new Sprite(new Texture("img/button/mainmenu/return0.png"));
+		Sprite returnbutton1=new Sprite(new Texture("img/button/mainmenu/return1.png"));
 		ImageButton.ImageButtonStyle returnbuttonstyle=new ImageButton.ImageButtonStyle();
 		
 		returnbuttonstyle.imageUp=new SpriteDrawable(returnbutton0);
@@ -100,28 +100,28 @@ public class SettingScreen implements Screen{
 		
 		stage.addActor(musicvolume);
 		stage.addActor(soundvolume);
-		musicvolume.setBounds(640-700/2+100, 500, 700, 35);
+		musicvolume.setBounds(640-700/2+100, 400, 700, 35);
 		musicvolume.setValue(1000*Gdx.app.getPreferences("volumePref").getFloat("musicVolume", 0.5f));
-		soundvolume.setBounds(640-700/2+100, 400, 700, 35);
+		soundvolume.setBounds(640-700/2+100, 300, 700, 35);
 		soundvolume.setValue(1000*Gdx.app.getPreferences("volumePref").getFloat("soundVolume", 0.5f));
 		
 		stage.addActor(musicvolume_label);
 		stage.addActor(soundvolume_label);
 		musicvolume_label.setX(100);
-		musicvolume_label.setY(500);
+		musicvolume_label.setY(400);
 		soundvolume_label.setX(100);
-		soundvolume_label.setY(400);
+		soundvolume_label.setY(300);
 		
 		
 		
 		stage.addActor(setwindowed);
 		stage.addActor(setfullscreen);
 		setwindowed.setX(640-65/2-300);
-		setwindowed.setY(250);
+		setwindowed.setY(150);
 		setwindowed.setChecked(true);
 		
 		setfullscreen.setX(640-65/2+100);
-		setfullscreen.setY(250);
+		setfullscreen.setY(150);
 		setfullscreen.setChecked(false);
 		
 		
@@ -130,7 +130,7 @@ public class SettingScreen implements Screen{
 
 		
 		stage.addActor(returnbutton);
-		returnbutton.setPosition(1280-128, 0);
+		returnbutton.setPosition(40,30);
 	
 		returnbutton.addListener(new InputListener(){
 			 @Override

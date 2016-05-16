@@ -59,8 +59,8 @@ public class MainMenuScreen implements Screen{
 		buttonC1=new Sprite(new Texture(Gdx.files.internal("img/button/mainmenu/buttonC1.png")));
 		
 		
-		Sprite returnbutton0=new Sprite(new Texture("foxwel_temp/return0.png"));
-		Sprite returnbutton1=new Sprite(new Texture("foxwel_temp/return1.png"));
+		Sprite returnbutton0=new Sprite(new Texture("img/button/mainmenu/return0.png"));
+		Sprite returnbutton1=new Sprite(new Texture("img/button/mainmenu/return1.png"));
 		
 		ImageButton.ImageButtonStyle button1style=new ImageButton.ImageButtonStyle();
 		ImageButton.ImageButtonStyle button2style=new ImageButton.ImageButtonStyle();
@@ -114,7 +114,7 @@ public class MainMenuScreen implements Screen{
 		button2.setPosition(850,300);
 		button1.setPosition(850,180);
 		button3.setPosition(850,60);
-		button4.setPosition(0, 0);
+		button4.setPosition(40, 30);
 		
 		button1.addListener(new InputListener()
 		{

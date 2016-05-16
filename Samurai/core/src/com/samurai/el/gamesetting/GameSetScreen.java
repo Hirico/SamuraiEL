@@ -63,8 +63,8 @@ public class GameSetScreen implements Screen{
 		
 		
 		
-		Sprite returnbuttonp0=new Sprite(new Texture("foxwel_temp/return0.png"));
-		Sprite returnbuttonp1=new Sprite(new Texture("foxwel_temp/return1.png"));
+		Sprite returnbuttonp0=new Sprite(new Texture("img/button/mainmenu/return0.png"));
+		Sprite returnbuttonp1=new Sprite(new Texture("img/button/mainmenu/return1.png"));
 		ImageButton.ImageButtonStyle returnbuttonstyle=new ImageButton.ImageButtonStyle();
 		
 		returnbuttonstyle.imageUp=new SpriteDrawable(returnbuttonp0);
@@ -76,8 +76,8 @@ public class GameSetScreen implements Screen{
 		
 		
 		
-		Sprite enterbuttonp0=new Sprite(new Texture("foxwel_temp/choose/enter0.png"));
-		Sprite enterbuttonp1=new Sprite(new Texture("foxwel_temp/choose/enter1.png"));
+		Sprite enterbuttonp0=new Sprite(new Texture("img/button/go.png"));
+		Sprite enterbuttonp1=new Sprite(new Texture("img/button/go.png"));
 		ImageButton.ImageButtonStyle enterbuttonstyle=new ImageButton.ImageButtonStyle();
 		
 		enterbuttonstyle.imageUp=new SpriteDrawable(enterbuttonp0);
@@ -139,10 +139,10 @@ public class GameSetScreen implements Screen{
 		Gdx.input.setInputProcessor(stage);
 		
 		stage.addActor(returnbutton);
-		returnbutton.setPosition(1280-128, 0);
+		returnbutton.setPosition(40, 30);
 		
 		stage.addActor(enterbutton);
-		enterbutton.setPosition(720-enterbutton.getWidth()-50, 20);
+		enterbutton.setPosition(720-enterbutton.getWidth()-50, 10);
 
 		
 		int filedstartX=160;

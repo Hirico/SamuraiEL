@@ -51,8 +51,8 @@ public class OverScreen implements Screen
 		
 		for (int i=0;i<6;++i) scorelabel[i]=new Label(String.valueOf(result[i][0]),labelstyle);
 		
-		Sprite returnbutton0=new Sprite(new Texture("foxwel_temp/return0.png"));
-		Sprite returnbutton1=new Sprite(new Texture("foxwel_temp/return1.png"));
+		Sprite returnbutton0=new Sprite(new Texture("img/button/mainmenu/return0.png"));
+		Sprite returnbutton1=new Sprite(new Texture("img/button/mainmenu/return1.png"));
 		ImageButton.ImageButtonStyle returnbuttonstyle=new ImageButton.ImageButtonStyle();
 		
 		returnbuttonstyle.imageUp=new SpriteDrawable(returnbutton0);
@@ -69,7 +69,7 @@ public class OverScreen implements Screen
 		Gdx.input.setInputProcessor(stage);
 		stage.addActor(returnbutton);
 		for (int i=0;i<6;++i) stage.addActor(scorelabel[i]);
-		returnbutton.setPosition(1280-128, 0);
+		returnbutton.setPosition(40,30);
 		for (int i=0;i<6;++i)
 		{
 			scorelabel[i].setY(360);

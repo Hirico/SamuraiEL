@@ -25,8 +25,8 @@ public class AchievementScreen implements Screen{
 	public AchievementScreen() {
 		stage = new Stage(new StretchViewport(1280,720));
 		
-		Sprite returnbutton0=new Sprite(new Texture("foxwel_temp/return0.png"));
-		Sprite returnbutton1=new Sprite(new Texture("foxwel_temp/return1.png"));
+		Sprite returnbutton0=new Sprite(new Texture("img/button/mainmenu/return0.png"));
+		Sprite returnbutton1=new Sprite(new Texture("img/button/mainmenu/return1.png"));
 		ImageButton.ImageButtonStyle returnbuttonstyle=new ImageButton.ImageButtonStyle();
 		
 		returnbuttonstyle.imageUp=new SpriteDrawable(returnbutton0);
@@ -41,7 +41,7 @@ public class AchievementScreen implements Screen{
 		
 		Gdx.input.setInputProcessor(stage);
 		stage.addActor(returnbutton);
-		returnbutton.setPosition(1280-128, 0);
+		returnbutton.setPosition(40,30);
 		
 		returnbutton.addListener(new InputListener(){
 			 @Override
