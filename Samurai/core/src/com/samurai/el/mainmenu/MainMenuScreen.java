@@ -49,7 +49,7 @@ public class MainMenuScreen implements Screen{
 		fadeBatch = new SpriteBatch();
 		fadeBatch.getProjectionMatrix().setToOrtho2D(0, 0, 2, 2);
 		blackFade = Resources.getInstance().blackFade;
-		background=new Sprite(new Texture(Gdx.files.internal("img/background/setting.png")));
+		background=new Sprite(new Texture(Gdx.files.internal("img/background/mainmenu.jpg")));
 
 		buttonA0=new Sprite(new Texture(Gdx.files.internal("img/button/mainmenu/buttonA0.png")));
 		buttonA1=new Sprite(new Texture(Gdx.files.internal("img/button/mainmenu/buttonA1.png")));
@@ -110,11 +110,11 @@ public class MainMenuScreen implements Screen{
 		button3.setHeight(81);
 		button3.setWidth(238);
 		
-		int std=(1280-238)/2;
-		button1.setPosition(std-300, 360-200);
-		button2.setPosition(std, 360-200);
-		button3.setPosition(std+300, 360-200);
-		button4.setPosition(1280-128, 0);
+		int std=400;
+		button2.setPosition(850,300);
+		button1.setPosition(850,180);
+		button3.setPosition(850,60);
+		button4.setPosition(0, 0);
 		
 		button1.addListener(new InputListener()
 		{
