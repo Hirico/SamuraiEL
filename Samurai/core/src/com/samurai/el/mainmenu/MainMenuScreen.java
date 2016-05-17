@@ -6,6 +6,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -15,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.samurai.el.resource.Resources;
 
@@ -41,12 +43,20 @@ public class MainMenuScreen implements Screen{
 	Sprite background;
 	public Music music;
 	
+	public Array<ParticleEffect> explosions;
+	public SpriteBatch explosionBatch;
+	public float explosionInterval;
+	public ParticleEffect currentParticle;
+	
 	public MainMenuScreen()
 	{
 		stage=new Stage(new StretchViewport(1280,720));
 		
+		explosions = new Array<ParticleEffect>();
+		explosionBatch = new SpriteBatch();
+		currentParticle = null;
 		batch=new SpriteBatch();
-		fadeBatch = new SpriteBatch();
+		fadeBatch = new SpriteBatch();		
 		fadeBatch.getProjectionMatrix().setToOrtho2D(0, 0, 2, 2);
 		blackFade = Resources.getInstance().blackFade;
 		background=new Sprite(new Texture(Gdx.files.internal("img/background/mainmenu.jpg")));
@@ -93,6 +103,7 @@ public class MainMenuScreen implements Screen{
 	@Override
 	public void show() {
 		fade = 1.0f;
+		explosionInterval = 0f;
 		// TODO Auto-generated method stub
 		Gdx.input.setInputProcessor(stage);
 		
@@ -207,14 +218,25 @@ public class MainMenuScreen implements Screen{
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
-		
-		
 		batch.begin();
 		batch.draw(background, 0, 0,1280,720);
 		batch.end();
 		
 		stage.act();
 		stage.draw();
+		
+		if(explosionInterval > 0) {
+			explosionInterval -= delta;
+		} else {			
+			currentParticle = explosionSpawner();
+			explosionInterval = 0.3f + 1.7f * (float)Math.random();			
+		}
+		if(currentParticle != null) {
+			explosionBatch.begin();
+			currentParticle.draw(explosionBatch, delta);
+			currentParticle.update(delta);
+			explosionBatch.end();
+		}
 		
 		if (fade > 0) {
 			fade = Math.max(fade - Gdx.graphics.getDeltaTime() / 2.f, 0);
@@ -225,6 +247,23 @@ public class MainMenuScreen implements Screen{
 		}
 		
 		
+	}
+	
+	public ParticleEffect explosionSpawner() {
+		ParticleEffect particle;
+		if(explosions.size != 0) {
+			particle = explosions.pop();			
+			particle.reset();			
+		} else {
+			particle = new ParticleEffect();
+			particle.load(Gdx.files.internal("img/field/explosion.p"), Gdx.files.internal("img/field"));
+			particle.scaleEffect(0.4f);
+		}
+		
+		explosions.add(particle);
+		
+		particle.setPosition(1280*(float)Math.random(), 720*(float)Math.random());
+		return particle;
 	}
 
 	@Override
@@ -257,5 +296,8 @@ public class MainMenuScreen implements Screen{
 		batch.dispose();
 		stage.dispose();
 		fadeBatch.dispose();
+		for(ParticleEffect p: explosions) {
+			p.dispose();
+		}
 	}
 }
