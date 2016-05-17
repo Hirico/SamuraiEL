@@ -8,7 +8,7 @@ public class DesktopLauncher {
 	public static void main (String[] args) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.resizable=false;
-		config.title = "Samurai";
+		config.title = "Colony";
 		config.width = 1280;
 		config.height = 720;
 		config.fullscreen = true;

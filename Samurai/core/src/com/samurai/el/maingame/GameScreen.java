@@ -25,6 +25,9 @@ public class GameScreen implements Screen {
 	SpriteBatch fadeBatch;
 	public float fade;
 	public boolean finished;
+	
+	public Sprite endBackground;
+	public SpriteBatch endBatch;
 
 	public GameScreen(Game game) {
 		result = new int[6][3];
@@ -39,6 +42,8 @@ public class GameScreen implements Screen {
 		fadeBatch.getProjectionMatrix().setToOrtho2D(0, 0, 2, 2);
 		blackFade = Resources.getInstance().blackFade;
 		finished = false;
+		
+		endBatch = new SpriteBatch();
 	}
 	
 	@Override
@@ -66,8 +71,26 @@ public class GameScreen implements Screen {
 	        	gameInstance.field.background.music.stop();
 	        	if(gameInstance.winFlag == 1 || gameInstance.winFlag == -1) {
 	        		endMusic = Resources.getInstance().bgm06;
+	        		
+	        		if(gameInstance.human.side == 0 && gameInstance.winFlag != -1) {
+	        			endBackground = Resources.getInstance().redWin;
+	        		} 
+	        		else if(gameInstance.human.side == 1 && gameInstance.winFlag != -1) {
+	        			endBackground = Resources.getInstance().blueWin;
+	        		}
+	        		else {
+	        			endBackground = Resources.getInstance().draw;
+	        		}
+	        		
 	        	} else {
 	        		endMusic = Resources.getInstance().bgm07;
+	        		
+	        		if(gameInstance.human.side == 0) {
+	        			endBackground = Resources.getInstance().redLose;
+	        		} 
+	        		else if(gameInstance.human.side == 1) {
+	        			endBackground = Resources.getInstance().blueLose;
+	        		}
 	        	}
 	        	endMusic.setLooping(true);
 	        	endMusic.setVolume(Gdx.app.getPreferences("volumePref").getFloat("musicVolume",0.5f));
@@ -96,6 +119,12 @@ public class GameScreen implements Screen {
 					Resources.getInstance().reInit(); 
 				}
 			}
+	        
+	        if(endBackground != null && fade < 1) {
+		        endBatch.begin();
+	        	endBackground.draw(endBatch);
+	        	endBatch.end();
+	        }
 		}
         
 		
@@ -103,6 +132,7 @@ public class GameScreen implements Screen {
 	
 	/**End the game and back to main menu  */
 	public void exit() {
+		endMusic.stop();
 		ScreenCenter.setscreen(0);// dispose() is in this method   
 		ScreenCenter.startmusic();
 		GameInstance.closeInstance();
@@ -135,6 +165,7 @@ public class GameScreen implements Screen {
 		gameInstance.dispose();
 		stage.dispose();
 		fadeBatch.dispose();
+		endBatch.dispose();
 	}
 
 	

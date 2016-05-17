@@ -6,12 +6,15 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Cursor;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 
 public class Resources {
 
 	public Texture block0 = new Texture(Gdx.files.internal("img/field/block0.png"));
 	public Texture block1 = new Texture(Gdx.files.internal("img/field/block1.png"));
+	public ParticleEffect block0P = new ParticleEffect();
+	public ParticleEffect block1P = new ParticleEffect();
 	//public Texture block2 = new Texture(Gdx.files.internal("img/field/block2.png"));
 	//public Texture block3 = new Texture(Gdx.files.internal("img/field/block3.png"));
 	//public Texture block4 = new Texture(Gdx.files.internal("img/field/block4.png"));
@@ -23,6 +26,12 @@ public class Resources {
 	public Texture planet2 = new Texture(Gdx.files.internal("img/field/planet2.png"));
 	public Texture planet3 = new Texture(Gdx.files.internal("img/field/planet3.png"));
 	public Texture planet4 = new Texture(Gdx.files.internal("img/field/planet4.png"));
+	
+	public Sprite redWin = new Sprite(new Texture(Gdx.files.internal("img/field/redwin.png")));
+	public Sprite redLose = new Sprite(new Texture(Gdx.files.internal("img/field/redlose.png")));
+	public Sprite blueWin = new Sprite(new Texture(Gdx.files.internal("img/field/bluewin.png")));
+	public Sprite blueLose = new Sprite(new Texture(Gdx.files.internal("img/field/bluelose.png")));
+	public Sprite draw = new Sprite(new Texture(Gdx.files.internal("img/field/draw.png")));
 
 	public Sprite stand0_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_0.png")));
 	public Sprite stand1_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_0.png")));
@@ -113,6 +122,8 @@ public class Resources {
 
 		block0 = new Texture(Gdx.files.internal("img/field/block0.png"));
 		block1 = new Texture(Gdx.files.internal("img/field/block1.png"));
+		block0P.load(Gdx.files.internal("img/field/block0.p"), Gdx.files.internal("img/field"));;
+		block1P.load(Gdx.files.internal("img/field/block1.p"), Gdx.files.internal("img/field"));;
 		//block2 = new Texture(Gdx.files.internal("img/field/block2.png"));
 		//block3 = new Texture(Gdx.files.internal("img/field/block3.png"));
 		//block4 = new Texture(Gdx.files.internal("img/field/block4.png"));
@@ -124,6 +135,12 @@ public class Resources {
 		planet2 = new Texture(Gdx.files.internal("img/field/planet2.png"));
 		planet3 = new Texture(Gdx.files.internal("img/field/planet3.png"));
 		planet4 = new Texture(Gdx.files.internal("img/field/planet4.png"));
+		
+		redWin = new Sprite(new Texture(Gdx.files.internal("img/field/redwin.png")));
+		redLose = new Sprite(new Texture(Gdx.files.internal("img/field/redlose.png")));
+		blueWin = new Sprite(new Texture(Gdx.files.internal("img/field/bluewin.png")));
+		blueLose = new Sprite(new Texture(Gdx.files.internal("img/field/bluelose.png")));
+		draw = new Sprite(new Texture(Gdx.files.internal("img/field/draw.png")));
 		stand0_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_0.png")));
 		stand1_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_0.png")));
 		stand2_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_0.png")));
