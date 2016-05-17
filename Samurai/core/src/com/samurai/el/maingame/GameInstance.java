@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.samurai.el.ai.AIProgramCenter;
+import com.samurai.el.field.Block;
 import com.samurai.el.field.Field;
 import com.samurai.el.field.Field0;
 import com.samurai.el.field.Field1;
@@ -22,6 +23,7 @@ import com.samurai.el.player.RedSword;
 public class GameInstance implements Disposable{
 	
 	public static GameInstance instance;
+	public int mode; // 0 is planet mode, 1 is battle mode 
 	public int totalTime;
 	public double currentTime;
 	public RedSpear redSpear;
@@ -35,33 +37,36 @@ public class GameInstance implements Disposable{
 	public Field field;
 	public SpriteBatch playerBatch;
 	public int winFlag;
+	public int[] teamScores;
 	public AIProgramCenter aiProgram;
 	public MessageDispatcher messageDispatcher;
 	public boolean stoped;
 	
-	private GameInstance(int mapid, int time) {
+	private GameInstance(int mapid, int time, int mode) {
 		totalTime = time;
 		currentTime = totalTime;
+		this.mode = mode;
 		winFlag = -1;
 		aiProgram = new AIProgramCenter();
 		stoped = false;
+		teamScores = new int[2];
 		
 		//setMap
 		switch(mapid) {
 		case 0:
-			field = new Field0();
+			field = new Field0(mode);
 			break;
 		case 1:
-			field = new Field1();
+			field = new Field1(mode);
 			break;
 		case 2:
-			field = new Field2();
+			field = new Field2(mode);
 			break;
 		case 3:
-			field = new Field3();
+			field = new Field3(mode);
 			break;
 		default:
-			field = new Field0();
+			field = new Field0(mode);
 			break;
 		}
 		
@@ -135,7 +140,7 @@ public class GameInstance implements Disposable{
 				blueAxe.isHuman = false;
 				break;
 			}
-			aiProgram.setAI(players.get(players.size-1), AI[i][1]);
+			aiProgram.setAI(players.get(players.size-1), AI[i][1], this.mode);
 		}
 		
 		for(Player p : players) {
@@ -159,8 +164,13 @@ public class GameInstance implements Disposable{
 	}
 	
 	public static void setInstance(int mapid, int human, int[][]AI, int time) {
-			instance = new GameInstance(mapid, time);
+			instance = new GameInstance(mapid, time, 0);
 			instance.initializePlayer(human, AI);
+	}
+	
+	public static void setInstance(int mapid, int human, int[][]AI, int time, int mode) {
+		instance = new GameInstance(mapid, time, mode);
+		instance.initializePlayer(human, AI);
 	}
 	
 	public void render() {
@@ -188,15 +198,30 @@ public class GameInstance implements Disposable{
 			result[p.id][0] = scores[p.id] = p.score;
 			result[p.id][1] = p.killNum;
 			result[p.id][2] = p.killedNum;
+			result[p.id][3] = p.planetOccupyNum;
 		}
 		int redScore = scores[0] + scores[1] + scores[2];
 		int blueScore = scores[3] + scores[4] + scores[5];
+		
+		if(field.planets != null) {
+			for(Block b: field.planets) {
+				if(b.side == 0) {
+					redScore += 30;
+				}
+				else if(b.side == 1) {
+					blueScore += 30;
+				}
+			}
+		}
 		
 		if((human.side == 0 && redScore > blueScore) || (human.side == 1 && blueScore > redScore)) {
 			winFlag = 1;
 		} else if((human.side == 0 && redScore < blueScore) || (human.side == 1 && blueScore < redScore)) {
 			winFlag = 0;
 		}
+		
+		teamScores[0] = redScore;
+		teamScores[1] = blueScore;
 		
 		return result;
 	}

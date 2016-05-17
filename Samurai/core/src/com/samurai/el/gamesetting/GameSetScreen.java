@@ -21,6 +21,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
@@ -47,9 +48,12 @@ public class GameSetScreen implements Screen{
 	SelectBox[] playerselectbox=new SelectBox[6];
 	Object[] disitemlist={"","Player","Easy AI","Normal AI","Hard AI"};
 	Object[] itemlist={"Player","Easy AI","Normal AI","Hard AI"};
-	
+	String[] name={"Advancer","Tracker","Reaper"};
 	SpriteBatch batch;
 	Sprite background;
+	Sprite republic;
+	Sprite union;
+	Slider timeset;
 	
 	public GameSetScreen() {
 		flag=true;
@@ -61,7 +65,7 @@ public class GameSetScreen implements Screen{
 		
 		stage = new Stage(new StretchViewport(1280,720));
 		
-		
+			
 		
 		Sprite returnbuttonp0=new Sprite(new Texture("img/button/mainmenu/return0.png"));
 		Sprite returnbuttonp1=new Sprite(new Texture("img/button/mainmenu/return1.png"));
@@ -101,33 +105,54 @@ public class GameSetScreen implements Screen{
 		checkstyle.font=font;
 		checkstyle.fontColor=new Color(Color.YELLOW);
 		
-		Sprite checkB0=new Sprite(new Texture("img/setting/checkB0.png"));
-		Sprite checkB1=new Sprite(new Texture("img/setting/checkB1.png"));
-		Sprite checkB2=new Sprite(new Texture("img/setting/checkB2.png"));
 
-		
-		CheckBox.CheckBoxStyle checkstyleB=new CheckBox.CheckBoxStyle();
-		checkstyleB.checkboxOver=new SpriteDrawable(checkB1);
-		checkstyleB.checkboxOn=new SpriteDrawable(checkB2);
-		checkstyleB.checkboxOff=new SpriteDrawable(checkB0);
-		checkstyleB.font=font;
-		checkstyleB.fontColor=new Color(Color.YELLOW);
 	
 		fieldcheckbox[0]=new CheckBox("  map0",checkstyle);
 		fieldcheckbox[1]=new CheckBox("  map1",checkstyle);
 		fieldcheckbox[2]=new CheckBox("  map2",checkstyle);
 		fieldcheckbox[3]=new CheckBox("  map3",checkstyle);
 
-		playercheckbox[0]=new CheckBox("  redSpear",checkstyleB);
-		playercheckbox[1]=new CheckBox("  redSword",checkstyleB);
-		playercheckbox[2]=new CheckBox("  redAxe",checkstyleB);
-		playercheckbox[3]=new CheckBox("  blueSpear",checkstyleB);
-		playercheckbox[4]=new CheckBox("  blueSword",checkstyleB);
-		playercheckbox[5]=new CheckBox("  blueAxe",checkstyleB);
+		
+		
+
+
+
+		
+		
+		
+		for (int i=0;i<6;++i)
+		{
+			Sprite checkB0=new Sprite(new Texture("img/gameset/r"+i+".png"));
+			Sprite checkB1=new Sprite(new Texture("img/gameset/h"+i+".png"));
+			Sprite checkB2=new Sprite(new Texture("img/gameset/r"+i+".png"));
+			
+			checkB0.setSize(80, 80);
+			checkB0.setAlpha(0.2f);
+			checkB2.setAlpha(95);
+			
+			CheckBox.CheckBoxStyle playercheckstyle=new CheckBox.CheckBoxStyle();
+			playercheckstyle.checkboxOver=new SpriteDrawable(checkB1);
+			playercheckstyle.checkboxOn=new SpriteDrawable(checkB2);
+			playercheckstyle.checkboxOff=new SpriteDrawable(checkB0);
+			playercheckstyle.font=font;
+			playercheckstyle.fontColor=new Color(Color.YELLOW);
+			playercheckbox[i]=new CheckBox("  "+name[i%3],playercheckstyle);
+			
+		}
 		
 		
 		skin = new Skin(Gdx.files.internal("test.json"));
 		for (int i=0;i<6;++i) playerselectbox[i]=new SelectBox(skin);
+		
+		republic=new Sprite(new Texture("img/gameset/republic.png"));
+		union=new Sprite(new Texture("img/gameset/union.png"));
+		
+		
+		Sprite bar=new Sprite(new Texture("img/setting/barA.png"));
+		Sprite tt=new Sprite(new Texture("img/setting/tA.png"));
+		Slider.SliderStyle volumestyle=new Slider.SliderStyle(new SpriteDrawable(bar),new SpriteDrawable(tt)); 
+		
+		timeset=new Slider(200,3000,1,false,volumestyle);
 
 	}
 		
@@ -145,41 +170,41 @@ public class GameSetScreen implements Screen{
 		enterbutton.setPosition(720-enterbutton.getWidth()-50, 10);
 
 		
+		stage.addActor(timeset);
+		timeset.setBounds(640-700/2, 640,700, 35);
+		//if (Gdx.app.getPreferences("challenge").getInteger("winNum", 0)<=20) timeset.setVisible(false); 
+		
 		int filedstartX=160;
 		for (int i=0;i<4;++i)
 		{
 			stage.addActor(fieldcheckbox[i]);
-			fieldcheckbox[i].setY(520);
+			fieldcheckbox[i].setY(540);
 			fieldcheckbox[i].setX(filedstartX+i*260);
 		}
 		
-		for (int i=0;i<6;++i)
-		{
-			playerselectbox[i].setItems(disitemlist);
-			playerselectbox[i].setSelected("");
-			playerselectbox[i].setSize(160, 30);
-			playerselectbox[i].getScrollPane().setScrollingDisabled(false, false);
-			stage.addActor(playerselectbox[i]);
-		}
+		
 		
 		for (int i=0;i<6;++i)
 		{
 			int tempx=0;
 			int tempy=0;
 			stage.addActor(playercheckbox[i]);
+			stage.addActor(playerselectbox[i]);
 			
-			if (i<3) tempx=280;else tempx=750;
-			tempy=400-(i%3)*130;
+			if (i<3) tempx=260;else tempx=730;
+			tempy=350-(i%3)*110;
 			
 			playercheckbox[i].setX(tempx);
 			playercheckbox[i].setY(tempy);
 			
 			tempx+=120;
 			
-			playerselectbox[i].setDisabled(true);
+			playerselectbox[i].setItems(disitemlist);
 			playerselectbox[i].setSelected("");
-			playerselectbox[i].setPosition(tempx-40,tempy-17);
-			
+			playerselectbox[i].setDisabled(true);
+			playerselectbox[i].getScrollPane().setScrollingDisabled(false, false);
+			playerselectbox[i].setPosition(tempx-30,tempy-17);
+			playerselectbox[i].setSize(160, 33);
 		}
 
 		for (int i=0;i<4;++i)
@@ -322,7 +347,7 @@ public class GameSetScreen implements Screen{
 	        		   testt[i][0]=i+1;
 	        		   testt[i][1]=1;
 	        	   }
-	        	   GameInstance.setInstance(getchoose(fieldcheckbox),getme(),getai(),90);
+	        	   GameInstance.setInstance(getchoose(fieldcheckbox),getme(),getai(),5);
 
 	        	   ScreenCenter.stopmusic();
 	        	   ScreenCenter.setscreen(4);
@@ -418,6 +443,8 @@ public class GameSetScreen implements Screen{
 		
 		batch.begin();
 		batch.draw(background,0,0);
+		batch.draw(republic,280,450);
+		batch.draw(union,750,450);
 		batch.end();
 		
 		stage.act();

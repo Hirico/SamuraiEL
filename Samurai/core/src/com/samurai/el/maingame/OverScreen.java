@@ -36,6 +36,8 @@ public class OverScreen implements Screen
 	Music endMusic;
 	
 	Sprite blackFade;
+	Sprite republic;
+	Sprite union;
 	SpriteBatch fadeBatch;
 	public float fade;
 	
@@ -45,8 +47,12 @@ public class OverScreen implements Screen
 		font=new BitmapFont(Gdx.files.internal("foxwel_temp/choose/1.fnt"),Gdx.files.internal("foxwel_temp/choose/1.png"), false);
 		labelstyle=new LabelStyle(font, font.getColor());
 		
-		background=new Sprite(new Texture(Gdx.files.internal("foxwel_temp/photo.jpg")));
+		background=new Sprite(new Texture(Gdx.files.internal("img/background/over.png")));
 		batch=new SpriteBatch();
+		
+		republic=new Sprite(new Texture(Gdx.files.internal("img/gameset/republic.png")));
+		union=new Sprite(new Texture(Gdx.files.internal("img/gameset/union.png")));
+		
 		
 		this.result=result;
 		this.winflag=winflag;
@@ -61,7 +67,8 @@ public class OverScreen implements Screen
 		fadeBatch.getProjectionMatrix().setToOrtho2D(0, 0, 2, 2);
 		blackFade = Resources.getInstance().blackFade;
 		
-		for (int i=0;i<6;++i) scorelabel[i]=new Label(String.valueOf(result[i][0]),labelstyle);
+		for (int i=0;i<6;++i) scorelabel[i]=new Label(String.valueOf(result[i][0]+"/"+result[i][1]+"/"+result[i][2]),labelstyle);
+		
 		
 		Sprite returnbutton0=new Sprite(new Texture("img/button/mainmenu/return0.png"));
 		Sprite returnbutton1=new Sprite(new Texture("img/button/mainmenu/return1.png"));
@@ -83,12 +90,16 @@ public class OverScreen implements Screen
 		stage.addActor(returnbutton);
 		for (int i=0;i<6;++i) stage.addActor(scorelabel[i]);
 		returnbutton.setPosition(40,30);
-		for (int i=0;i<6;++i)
+		for (int i=0;i<3;++i)
 		{
-			scorelabel[i].setY(360);
-			scorelabel[i].setX(100+100*i);
+			scorelabel[i].setY(500-i*120);
+			scorelabel[i].setX(200);
 		}
-		
+		for (int i=3;i<6;++i)
+		{
+			scorelabel[i].setY(500-(i-3)*120);
+			scorelabel[i].setX(700);
+		}
 		returnbutton.addListener(new InputListener(){
 			
 			 @Override
@@ -120,6 +131,8 @@ public class OverScreen implements Screen
 		
 		batch.begin();
 		batch.draw(background,0,0);
+		batch.draw(republic,300,640);
+		batch.draw(union,800,640);
 		batch.end();
 		
 		stage.act();
