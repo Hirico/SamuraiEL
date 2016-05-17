@@ -8,28 +8,28 @@ public class Field1 extends Field {
 		//this is initialized before player, so player reference is not accessible here
 		super();
 		background = new Background1();
-		size = new Vector2(60, 33);
-		blockSize = 16;
+		size = new Vector2(20, 11);
+		blockSize = 48;
 		blocks = new Block[(int) size.x+1][(int) size.y+1];
-		for(int i = 0; i <= 60; i++) {
-			for(int j = 0; j <= 33; j++) {
+		for(int i = 0; i <= 20; i++) {
+			for(int j = 0; j <= 11; j++) {
 				blocks[i][j] = new Block(blockSize);
 				blocks[i][j].setPosition(getBottomLeftCorner().x + i*blockSize, 
 						getBottomLeftCorner().y + j*blockSize);
 			}
 		}
 		homePositions = new Vector2[] {
-				new Vector2(18,24), new Vector2(30,27), new Vector2(42,24), new Vector2(18,9), 
-				new Vector2(30,6), new Vector2(42,9) 
+				new Vector2(6,8), new Vector2(10,9), new Vector2(14,8), new Vector2(6,3), 
+				new Vector2(10,2), new Vector2(14,3) 
 		};
 		
 		planetPositions = new Vector2[] {
-				new Vector2(12,24), new Vector2(12,9), new Vector2(15,15), new Vector2(48,24),
-				new Vector2(48,9), new Vector2(48,18)
+				new Vector2(4,8), new Vector2(4,3), new Vector2(5,5), new Vector2(16,8),
+				new Vector2(16,3), new Vector2(16,6)
 		};
 		planets = new Block[] {
-				blocks[12][24], blocks[12][9], blocks[15][15], blocks[48][24],
-				blocks[48][9], blocks[48][18]
+				blocks[4][8], blocks[4][3], blocks[5][5], blocks[16][8],
+				blocks[16][3], blocks[16][6]
 		};
 		
 		
@@ -43,6 +43,6 @@ public class Field1 extends Field {
 	@Override
 	public Vector2 getBottomLeftCorner() {
 		
-		return new Vector2(152, 88);
+		return new Vector2(144, 40);
 	}
 }

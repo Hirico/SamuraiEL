@@ -88,6 +88,7 @@ public class Resources {
 	public Sprite background3 = new Sprite(new Texture(Gdx.files.internal("img/field/bg3.jpg")));
 	public Sprite gameload = new Sprite(new Texture(Gdx.files.internal("img/background/gameload.jpg")));
 	public Sprite gameload2 = new Sprite(new Texture(Gdx.files.internal("img/background/gameload2.jpg")));
+	public Sprite help = new Sprite(new Texture(Gdx.files.internal("img/background/help.png")));
 	public Sprite blackFade = new Sprite(new Texture(Gdx.files.internal("img/background/blackfade.png")));
 
 	public Music bgm02 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm02.mp3"));
@@ -193,6 +194,7 @@ public class Resources {
 		background1 = new Sprite(new Texture(Gdx.files.internal("img/field/bg1.jpg")));
 		background2 = new Sprite(new Texture(Gdx.files.internal("img/field/bg2.jpg")));
 		background3 = new Sprite(new Texture(Gdx.files.internal("img/field/bg3.jpg")));
+		help = new Sprite(new Texture(Gdx.files.internal("img/background/help.png")));
 		blackFade = new Sprite(new Texture(Gdx.files.internal("img/background/blackfade.png")));
 		gameload = new Sprite(new Texture(Gdx.files.internal("img/background/gameload.jpg")));
 		gameload2 = new Sprite(new Texture(Gdx.files.internal("img/background/gameload2.jpg")));
