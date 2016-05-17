@@ -2,9 +2,9 @@ package com.samurai.el.ai;
 
 import com.samurai.el.player.Player;
 
-public class NormalAI extends PlayerAI{
+public class PlanetNormalAI extends PlanetAI{
 
-	public NormalAI(Player player) {
+	public PlanetNormalAI(Player player) {
 		super(player);
 		
 	}

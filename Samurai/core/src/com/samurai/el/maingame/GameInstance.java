@@ -192,7 +192,7 @@ public class GameInstance implements Disposable{
 	
 	/**only return the game data to overScreen, no influence in the current game */
 	public int[][] gameOver() {
-		int[][] result = new int[6][4];
+		int[][] result = new int[6][3];
 		int[] scores = new int[6];
 		for(Player p: players) {
 			result[p.id][0] = scores[p.id] = p.score;

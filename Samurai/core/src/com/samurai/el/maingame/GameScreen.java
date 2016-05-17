@@ -15,6 +15,9 @@ public class GameScreen implements Screen {
 	Game game;
 	private GameInstance gameInstance;
 	private SpriteBatch uiBatch;
+	public Sprite[] timeBlocks;
+	public int[] timeChecks;
+	
 	private GameStage stage;
 	private double gameOverCountDown;
 	private int[][] result;
@@ -34,7 +37,20 @@ public class GameScreen implements Screen {
 		this.game = game;
 		gameInstance = GameInstance.getInstance();	
 		stage = new GameStage(gameInstance, this);
-		uiBatch = new SpriteBatch();		
+		uiBatch = new SpriteBatch();
+		timeBlocks = new Sprite[18];
+		for(int i = 0; i < timeBlocks.length; i++) {
+			timeBlocks[i] = new Sprite();
+			timeBlocks[i].set(Resources.getInstance().time);
+			timeBlocks[i].setPosition(163 + 53*i, 682.5f);
+		}
+		
+		timeChecks = new int[18];		
+		int timeStep = gameInstance.totalTime / 18;
+		for(int i = 0; i < timeChecks.length; i++) {
+			timeChecks[i] = timeStep * (i + 1);
+		}
+		
 		gameOverCountDown = 3f;
 		paused = false;
 		
@@ -63,6 +79,11 @@ public class GameScreen implements Screen {
 	        gameInstance.render();
 	        uiBatch.begin();
 	        stage.act();
+	        for(int i = 0; i < timeBlocks.length; i++) {
+	        	if(gameInstance.currentTime > timeChecks[i]) {
+	        		timeBlocks[i].draw(uiBatch);
+	        	}
+	        }
 	        uiBatch.end();
 	        if(gameInstance.currentTime <= 0 && !gameInstance.stoped) {
 	        	result = gameInstance.gameOver(); 
@@ -113,7 +134,7 @@ public class GameScreen implements Screen {
 				blackFade.draw(fadeBatch);
 				fadeBatch.end();
 				if (fade >= 1) {
-					game.setScreen(new OverScreen(result, gameInstance.winFlag, endMusic));        	
+					game.setScreen(new OverScreen(result, gameInstance.winFlag, endMusic, gameInstance.teamScores));        	
 					dispose();				
 					GameInstance.closeInstance();
 					Resources.getInstance().reInit(); 
@@ -132,7 +153,9 @@ public class GameScreen implements Screen {
 	
 	/**End the game and back to main menu  */
 	public void exit() {
-		endMusic.stop();
+		if(endMusic != null) {
+			endMusic.stop();
+		}
 		ScreenCenter.setscreen(0);// dispose() is in this method   
 		ScreenCenter.startmusic();
 		GameInstance.closeInstance();
