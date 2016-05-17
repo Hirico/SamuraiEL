@@ -8,8 +8,7 @@ public class Targeting {
 
 	/**return a nearest enemy/neutral planet, null if all planets are friend-side */
 	public static Block getNearestPlanet(Player p, Block[] planets) {
-		
-		
+				
 		Array<Block> targetPlanets = new Array<Block>();
 		for(int i = 0; i < planets.length; i++) {
 			if(planets[i].side != p.side) {
@@ -32,7 +31,6 @@ public class Targeting {
 			}
 			return targetPlanets.get(minId);
 			
-		}
-			
+		}			
 	} 
 }

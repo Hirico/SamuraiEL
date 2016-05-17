@@ -32,6 +32,7 @@ public class Resources {
 	public Sprite blueWin = new Sprite(new Texture(Gdx.files.internal("img/field/bluewin.png")));
 	public Sprite blueLose = new Sprite(new Texture(Gdx.files.internal("img/field/bluelose.png")));
 	public Sprite draw = new Sprite(new Texture(Gdx.files.internal("img/field/draw.png")));
+	public Sprite time = new Sprite(new Texture(Gdx.files.internal("img/ui/time.png")));
 
 	public Sprite stand0_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_0.png")));
 	public Sprite stand1_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_0.png")));
@@ -142,6 +143,7 @@ public class Resources {
 		blueWin = new Sprite(new Texture(Gdx.files.internal("img/field/bluewin.png")));
 		blueLose = new Sprite(new Texture(Gdx.files.internal("img/field/bluelose.png")));
 		draw = new Sprite(new Texture(Gdx.files.internal("img/field/draw.png")));
+		time = new Sprite(new Texture(Gdx.files.internal("img/ui/time.png")));
 		stand0_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_0.png")));
 		stand1_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_0.png")));
 		stand2_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_0.png")));

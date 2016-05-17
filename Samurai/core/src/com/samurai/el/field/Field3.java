@@ -4,7 +4,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Field3 extends Field {
 	
-	public Field3() {
+	public Field3(int mode) {
 		//this is initialized before player, so player reference is not accessible here
 		super();
 		background = new Background3();
@@ -23,19 +23,25 @@ public class Field3 extends Field {
 				new Vector2(7,8), new Vector2(6,10) 
 		};
 		
-		planetPositions = new Vector2[] {
-				new Vector2(3,2), new Vector2(6,6), new Vector2(8,9)
-		};
-		planets = new Block[] {
-				blocks[3][2], blocks[6][6], blocks[8][9]
-		};
-		
-		
-		for(int i = 0; i < planets.length; i++) {
-			planets[i].setPlanet(2, planetPositions[i]);
+		if(mode == 0) {
+			planetPositions = new Vector2[] {
+					new Vector2(3,2), new Vector2(6,6), new Vector2(8,9)
+			};
+			planets = new Block[] {
+					blocks[3][2], blocks[6][6], blocks[8][9]
+			};
+			
+			
+			for(int i = 0; i < planets.length; i++) {
+				planets[i].setPlanet(2, planetPositions[i]);
+			}
 		}
 		
 		
+	}
+	
+	public Field3() {
+		this(0);
 	}
 	
 	@Override

@@ -78,9 +78,11 @@ public abstract class Field implements Disposable{
 	}
 	
 	public boolean isPlanet(Vector2 targetPosition) {
-		for(Vector2 p: planetPositions) {
-			if(p.equals(targetPosition)) {
-				return true;
+		if(planetPositions != null) {
+			for(Vector2 p: planetPositions) {
+				if(p.equals(targetPosition)) {
+					return true;
+				}
 			}
 		}
 		return false;

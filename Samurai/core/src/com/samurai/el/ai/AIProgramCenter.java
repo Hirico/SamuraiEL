@@ -12,19 +12,36 @@ public class AIProgramCenter {
 	}
 	
      
-    public void setAI(Player player, int difficulty) {
-    	switch(difficulty) {
-    	case 0:
-    		AIs.add(new EasyAI(player));
-    		break;
-    	case 1:
-    		AIs.add(new NormalAI(player));
-    		break;
-    	case 2:
-    		AIs.add(new HardAI(player));
-    		break;
-    	default:
-    		AIs.add(new EasyAI(player));
+    public void setAI(Player player, int difficulty, int mode) {
+    	if(mode == 0) {
+	    	switch(difficulty) {
+	    	case 0:
+	    		AIs.add(new PlanetEasyAI(player));
+	    		break;
+	    	case 1:
+	    		AIs.add(new PlanetNormalAI(player));
+	    		break;
+	    	case 2:
+	    		AIs.add(new PlanetHardAI(player));
+	    		break;
+	    	default:
+	    		AIs.add(new PlanetEasyAI(player));
+	    	}
+    	} 
+    	else if(mode == 1) {
+    		switch(difficulty) {
+	    	case 0:
+	    		AIs.add(new BattleEasyAI(player));
+	    		break;
+	    	case 1:
+	    		AIs.add(new BattleNormalAI(player));
+	    		break;
+	    	case 2:
+	    		AIs.add(new BattleHardAI(player));
+	    		break;
+	    	default:
+	    		AIs.add(new BattleEasyAI(player));
+	    	}
     	}
 	}
 

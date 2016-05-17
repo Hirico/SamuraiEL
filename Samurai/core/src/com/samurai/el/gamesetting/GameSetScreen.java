@@ -57,7 +57,7 @@ public class GameSetScreen implements Screen{
 		// TODO Auto-generated method stub
 		
 		batch=new SpriteBatch();
-		background=new Sprite(new Texture(Gdx.files.internal("img/background/gameset.png")));
+		background=new Sprite(new Texture(Gdx.files.internal("img/background/set.png")));
 		
 		stage = new Stage(new StretchViewport(1280,720));
 		
@@ -322,7 +322,7 @@ public class GameSetScreen implements Screen{
 	        		   testt[i][0]=i+1;
 	        		   testt[i][1]=1;
 	        	   }
-	        	   GameInstance.setInstance(getchoose(fieldcheckbox),getme(),getai(),90);
+	        	   GameInstance.setInstance(getchoose(fieldcheckbox),getme(),getai(),90, 1);
 
 	        	   ScreenCenter.stopmusic();
 	        	   ScreenCenter.setscreen(4);

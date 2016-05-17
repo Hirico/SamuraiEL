@@ -3,9 +3,9 @@ package com.samurai.el.ai;
 import com.samurai.el.field.Block;
 import com.samurai.el.player.Player;
 
-public class HardAI extends PlayerAI {
+public class PlanetHardAI extends PlanetAI {
 
-	public HardAI(Player player) {
+	public PlanetHardAI(Player player) {
 		super(player);
 		totalMoveCooldown = 0.1f;
 		

@@ -26,6 +26,7 @@ public class OverScreen implements Screen
 {
 	int[][] result;
 	int winflag;
+	int[] teamScores;
 	Stage stage;
 	ImageButton returnbutton;
 	BitmapFont font;
@@ -40,7 +41,8 @@ public class OverScreen implements Screen
 	public float fade;
 	
 	
-	public OverScreen(int[][] result,int winflag, Music endMusic)
+	
+	public OverScreen(int[][] result,int winflag, Music endMusic, int[] teamScores)
 	{
 		font=new BitmapFont(Gdx.files.internal("foxwel_temp/choose/1.fnt"),Gdx.files.internal("foxwel_temp/choose/1.png"), false);
 		labelstyle=new LabelStyle(font, font.getColor());
@@ -51,6 +53,7 @@ public class OverScreen implements Screen
 		this.result=result;
 		this.winflag=winflag;
 		this.endMusic = endMusic;
+		this.teamScores = teamScores;
 		stage = new Stage(new StretchViewport(1280,720));
 		
 		if(winflag == 1) {
