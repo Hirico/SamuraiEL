@@ -237,24 +237,24 @@ public abstract class Player extends Sprite implements Disposable{
 					public void run() {
 						if(GameInstance.getInstance() != null && !isRecovering) {
 							if(currentPosition.y < GameInstance.getInstance().field.getSize().y && direction == 0) {
-								drawPosition.y += 0.05;
+								drawPosition.y += 0.02;
 							}
 								
 							if(currentPosition.y > 0 && direction == 1) {
-								drawPosition.y -= 0.05;
+								drawPosition.y -= 0.02;
 							}
 								
 							if(currentPosition.x > 0 && direction == 2) {
-								drawPosition.x -= 0.05;
+								drawPosition.x -= 0.02;
 							}
 								
 							if(currentPosition.x < GameInstance.getInstance().field.getSize().x && direction == 3) {
-								drawPosition.x += 0.05;
+								drawPosition.x += 0.02;
 							}
 						}
 					}
 				}
-				, 0, 0.01f, 19);
+				, 0, 0.004f, 49);
 				
 				slowMoveTimer.scheduleTask(new Timer.Task() {
 					@Override

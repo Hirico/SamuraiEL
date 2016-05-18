@@ -27,6 +27,10 @@ public class Block extends Sprite{
 	public int size;
 	public Vector2 planetPosition;// only useful when it's a planet
 	
+	public float[] alpha;
+	public int alphaPointer;
+	public int alphaDelay;
+	
 	public Block(int size) {
 		super();
 		this.size = size;
@@ -42,6 +46,13 @@ public class Block extends Sprite{
 		this.set(new Sprite(block6));
 		isHome = false;
 		isPlanet = false;
+		
+		alpha = new float[]{
+		0.4f, 0.45f, 0.5f, 0.55f, 0.6f, 0.65f, 0.7f, 0.75f, 0.8f, 0.85f, 0.9f,
+		0.85f, 0.8f, 0.75f, 0.7f, 0.65f, 0.6f, 0.55f, 0.5f, 0.45f
+		};
+		alphaPointer = 0;
+		alphaDelay = 0;
 	}
 	
 	/**set it to be a planet, with texture id */
@@ -205,11 +216,30 @@ public class Block extends Sprite{
 		}
 		viewerNum += 1;
 	}
-		
+	
+	/**use for block alpha animation, call inside draw every time */
+	public float getNextAlpha() {
+		float temp = alpha[alphaPointer];
+		if(alphaDelay == 0) {
+			alphaPointer += 1;
+			alphaDelay = 3;
+		} else {
+			alphaDelay -=1;
+		}
+		if(alphaPointer >= alpha.length) {
+			alphaPointer = 0;
+		}
+		return temp;
+	}
 	
 	@Override
 	public void draw(Batch batch) {
 		this.setSize(size, size);
+		
+		float temp = getNextAlpha();
+		if(isVisible && !isPlanet) {
+			this.setColor(this.getColor().r, this.getColor().g, this.getColor().b, temp);
+		}
 		super.draw(batch);
 		
 		if(homeEffect != null) {

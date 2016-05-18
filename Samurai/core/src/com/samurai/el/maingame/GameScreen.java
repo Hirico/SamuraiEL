@@ -6,7 +6,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.samurai.el.mainmenu.ScreenCenter;
@@ -24,6 +23,9 @@ public class GameScreen implements Screen {
 	private int[][] result;
 	public boolean paused;
 	public Music endMusic;
+	
+	public Sprite attackIcon;
+	public Sprite attackFade;
 	
 	Sprite blackFade;
 	SpriteBatch fadeBatch;
@@ -58,12 +60,17 @@ public class GameScreen implements Screen {
 			timeChecks[i] = timeStep * (i + 1);
 		}
 		
+		attackIcon = new Sprite();
+		attackFade = new Sprite();
+		attackFade.set(Resources.getInstance().attackFade);
+		
 		gameOverCountDown = 3f;
 		paused = false;
 		
 		fadeBatch = new SpriteBatch();
 		fadeBatch.getProjectionMatrix().setToOrtho2D(0, 0, 2, 2);
-		blackFade = Resources.getInstance().blackFade;
+		blackFade = new Sprite();
+		blackFade.set(Resources.getInstance().blackFade);
 		finished = false;
 		
 		endBatch = new SpriteBatch();
@@ -74,7 +81,14 @@ public class GameScreen implements Screen {
 		fade = 0f;
 		finished = false;
 		Gdx.input.setInputProcessor(stage);
-		uiBatch = new SpriteBatch();	
+		uiBatch = new SpriteBatch();
+		if(gameInstance.human.side == 0) {
+			attackIcon.set(Resources.getInstance().attack0Icon);
+		} else {
+			attackIcon.set(Resources.getInstance().attack1Icon);
+		}
+		attackIcon.setPosition(640 - 24, 20);
+		attackFade.setPosition(640 - 24, 20);
 	}
 
 	@Override
@@ -92,6 +106,17 @@ public class GameScreen implements Screen {
 	        		timeBlocks[i].draw(uiBatch);
 	        	}
 	        }
+	        
+	        float attackPercent = (float)(gameInstance.human.cooldownTime/gameInstance.human.totalCooldownTime);
+	        if(attackPercent != 0) {
+	        	attackIcon.setAlpha(0.6f);
+	        } else {
+	        	attackIcon.setAlpha(1f);	        	
+	        }
+	        attackIcon.draw(uiBatch);
+	        attackFade.setSize(48, 48 * attackPercent);
+	        attackFade.draw(uiBatch);
+	        
 	        uiBatch.end();
 	        if(gameInstance.currentTime <= 0 && !gameInstance.stoped) {
 	        	result = gameInstance.gameOver(); 

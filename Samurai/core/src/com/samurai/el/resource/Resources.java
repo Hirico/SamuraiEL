@@ -34,7 +34,10 @@ public class Resources {
 	public Sprite draw = new Sprite(new Texture(Gdx.files.internal("img/field/draw.png")));
 	public Sprite time0 = new Sprite(new Texture(Gdx.files.internal("img/ui/time0.png")));
 	public Sprite time1 = new Sprite(new Texture(Gdx.files.internal("img/ui/time1.png")));
-
+	public Sprite attack0Icon = new Sprite(new Texture(Gdx.files.internal("img/ui/attack0.png")));
+	public Sprite attack1Icon = new Sprite(new Texture(Gdx.files.internal("img/ui/attack1.png")));
+	public Sprite attackFade = new Sprite(new Texture(Gdx.files.internal("img/ui/attackFade.png")));
+	
 	public Sprite stand0_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_0.png")));
 	public Sprite stand1_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_0.png")));
 	public Sprite stand2_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_0.png")));
@@ -149,6 +152,9 @@ public class Resources {
 		draw = new Sprite(new Texture(Gdx.files.internal("img/field/draw.png")));
 		time0 = new Sprite(new Texture(Gdx.files.internal("img/ui/time0.png")));
 		time1 = new Sprite(new Texture(Gdx.files.internal("img/ui/time1.png")));
+		attack0Icon = new Sprite(new Texture(Gdx.files.internal("img/ui/attack0.png")));
+		attack1Icon = new Sprite(new Texture(Gdx.files.internal("img/ui/attack1.png")));
+		attackFade = new Sprite(new Texture(Gdx.files.internal("img/ui/attackFade.png")));
 		stand0_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_0.png")));
 		stand1_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_0.png")));
 		stand2_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_0.png")));

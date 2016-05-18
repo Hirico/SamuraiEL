@@ -55,7 +55,7 @@ public class GameInstance implements Disposable{
 		teamScores = new int[2];
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 1280, 720);
-		
+				
 		//setMap
 		switch(mapid) {
 		case 0:
@@ -184,7 +184,7 @@ public class GameInstance implements Disposable{
 			aiProgram.update();
 		}
 		
-			float lerp = 0.7f;
+			float lerp = 0.6f;
 			Vector3 position = camera.position;
 			position.x += (human.getX() - position.x) * lerp * Gdx.graphics.getDeltaTime();
 			position.y += (human.getY() - position.y) * lerp * Gdx.graphics.getDeltaTime();

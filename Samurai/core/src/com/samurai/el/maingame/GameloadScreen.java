@@ -32,7 +32,8 @@ public class GameloadScreen implements Screen{
 		} else {
 			background = Resources.getInstance().gameload2;
 		}
-		blackFade = Resources.getInstance().blackFade;
+		blackFade = new Sprite();
+		blackFade.set(Resources.getInstance().blackFade);
 		
 	}
 	@Override
