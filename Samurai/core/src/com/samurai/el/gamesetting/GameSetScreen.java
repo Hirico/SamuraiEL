@@ -367,7 +367,7 @@ public class GameSetScreen implements Screen{
 	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
 	        	   
 	        	   int time=90;
-	        	   time=(int) (timeset.getValue()/10);
+	        	   //time=(int) (timeset.getValue()/10);
 	        	   if (Gdx.app.getPreferences("challenge").getInteger("winNum", 0)>20) time=(int) (timeset.getValue()/10);
 	        	   GameInstance.setInstance(getchoose(fieldcheckbox),getme(),getai(),time,0);
 
