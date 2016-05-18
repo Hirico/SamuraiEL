@@ -39,7 +39,8 @@ public class AchievementScreen implements Screen{
 	public AchievementScreen() {
 		stage = new Stage(new StretchViewport(1280,720));
 		font=new BitmapFont(Gdx.files.internal("foxwel_temp/choose/1.fnt"),Gdx.files.internal("foxwel_temp/choose/1.png"), false);
-		background = new Sprite(new Texture(Gdx.files.internal("img/background/achievement.png")));
+		if (Gdx.app.getPreferences("challenge").getInteger("winNum", 0)>20) background = new Sprite(new Texture(Gdx.files.internal("img/background/achieve1.png")));
+		else background = new Sprite(new Texture(Gdx.files.internal("img/background/achieve0.png")));
 		batch = new SpriteBatch();
 		
 		fadeBatch = new SpriteBatch();		
@@ -71,7 +72,7 @@ public class AchievementScreen implements Screen{
 		returnbutton.setPosition(40,30);
 		
 		stage.addActor(wintime);
-		wintime.setPosition(50, 50);
+		wintime.setPosition(500, 400);
 		
 		returnbutton.addListener(new InputListener(){
 			 @Override

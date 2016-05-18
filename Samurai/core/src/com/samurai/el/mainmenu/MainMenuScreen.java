@@ -70,12 +70,12 @@ public class MainMenuScreen implements Screen{
 		buttonC1=new Sprite(new Texture(Gdx.files.internal("img/button/mainmenu/buttonC1.png")));
 		
 		
-		Sprite returnbutton0=new Sprite(new Texture("img/button/mainmenu/return0.png"));
-		Sprite returnbutton1=new Sprite(new Texture("img/button/mainmenu/return1.png"));
+		Sprite returnbutton0=new Sprite(new Texture("img/button/mainmenu/exit0.png"));
+		Sprite returnbutton1=new Sprite(new Texture("img/button/mainmenu/exit1.png"));
 		
-		Sprite helpbutton=new Sprite(new Texture("img/button/help.png"));
+		Sprite helpbutton0=new Sprite(new Texture("img/button/mainmenu/help0.png"));
+		Sprite helpbutton1=new Sprite(new Texture("img/button/mainmenu/help1.png"));
 		
-		helpbutton.setSize(64, 64);
 		
 		ImageButton.ImageButtonStyle button1style=new ImageButton.ImageButtonStyle();
 		ImageButton.ImageButtonStyle button2style=new ImageButton.ImageButtonStyle();
@@ -99,9 +99,9 @@ public class MainMenuScreen implements Screen{
 		button4style.imageDown=new SpriteDrawable(returnbutton0);
 		button4style.imageOver=new SpriteDrawable(returnbutton1);
 		
-		button5style.imageUp=new SpriteDrawable(helpbutton);
-		button5style.imageDown=new SpriteDrawable(helpbutton);
-		button5style.imageOver=new SpriteDrawable(helpbutton);
+		button5style.imageUp=new SpriteDrawable(helpbutton0);
+		button5style.imageDown=new SpriteDrawable(helpbutton0);
+		button5style.imageOver=new SpriteDrawable(helpbutton1);
 		
 		button1=new ImageButton(button1style);
 		button2=new ImageButton(button2style);
@@ -126,22 +126,15 @@ public class MainMenuScreen implements Screen{
 		stage.addActor(button3);
 		stage.addActor(button4);
 		stage.addActor(button5);
-		
-		button1.setHeight(81);
-		button1.setWidth(238);
-		
-		button2.setHeight(81);
-		button2.setWidth(238);
-		
-		button3.setHeight(81);
-		button3.setWidth(238);
+
 		
 		int std=400;
-		button2.setPosition(850,300);
-		button1.setPosition(850,180);
-		button3.setPosition(850,60);
-		button4.setPosition(40, 30);
-		button5.setPosition(1000, 600);
+		button2.setPosition(850,380);
+		button1.setPosition(850,300);
+		button3.setPosition(850,220);
+		button5.setPosition(850,140);
+		button4.setPosition(850,60);
+		
 		button1.addListener(new InputListener()
 		{
 			    @Override

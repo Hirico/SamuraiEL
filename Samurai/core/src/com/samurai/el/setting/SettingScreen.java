@@ -120,7 +120,7 @@ public class SettingScreen implements Screen{
 		soundvolume_label.setX(100);
 		soundvolume_label.setY(300);
 		
-		
+		/*
 		
 		stage.addActor(setwindowed);
 		stage.addActor(setfullscreen);
@@ -132,7 +132,7 @@ public class SettingScreen implements Screen{
 		setfullscreen.setY(150);
 		setfullscreen.setChecked(false);
 		
-		
+		*/
 		
 		
 

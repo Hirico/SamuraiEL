@@ -47,6 +47,8 @@ public class GameSetScreen implements Screen{
 	Skin skin;
 	List list;
 	SelectBox[] playerselectbox=new SelectBox[6];
+	CheckBox mood0;
+	CheckBox mood1;
 	Object[] disitemlist={"","Player","Easy AI","Normal AI","Hard AI"};
 	Object[] itemlist={"Player","Easy AI","Normal AI","Hard AI"};
 	String[] name={"Advancer","Tracker","Reaper"};
@@ -58,6 +60,7 @@ public class GameSetScreen implements Screen{
 	int icon;
 	int[][] position=new int[6][2];
 	Label timeset_label;
+	Label mood_label;
 	Sprite[] playername=new Sprite[6];
 	
 	public GameSetScreen() {
@@ -94,8 +97,8 @@ public class GameSetScreen implements Screen{
 		
 		
 		
-		Sprite enterbuttonp0=new Sprite(new Texture("img/button/go.png"));
-		Sprite enterbuttonp1=new Sprite(new Texture("img/button/go.png"));
+		Sprite enterbuttonp0=new Sprite(new Texture("img/button/go0.png"));
+		Sprite enterbuttonp1=new Sprite(new Texture("img/button/go1.png"));
 		ImageButton.ImageButtonStyle enterbuttonstyle=new ImageButton.ImageButtonStyle();
 		
 		enterbuttonstyle.imageUp=new SpriteDrawable(enterbuttonp0);
@@ -126,7 +129,8 @@ public class GameSetScreen implements Screen{
 		fieldcheckbox[2]=new CheckBox("  map2",checkstyle);
 		fieldcheckbox[3]=new CheckBox("  map3",checkstyle);
 
-		
+		mood0=new CheckBox("  planet",checkstyle);
+		mood1=new CheckBox("  encounter",checkstyle);
 		
 
 
@@ -174,6 +178,8 @@ public class GameSetScreen implements Screen{
 		Label.LabelStyle labelstyle =new Label.LabelStyle(font, Color.YELLOW);
 		
 		timeset_label=new Label("90S",labelstyle);
+		
+		mood_label=new Label("Mood",labelstyle);
 	}
 		
 
@@ -184,13 +190,16 @@ public class GameSetScreen implements Screen{
 		Gdx.input.setInputProcessor(stage);
 		
 		stage.addActor(returnbutton);
-		returnbutton.setPosition(40, 30);
+		returnbutton.setPosition(30, 8);
 		
 		stage.addActor(enterbutton);
-		enterbutton.setPosition(720-enterbutton.getWidth()-50, 5);
+		enterbutton.setPosition(1020, 8);
 
 		stage.addActor(timeset_label);
 		timeset_label.setPosition(1000, 90);
+		
+		stage.addActor(mood_label);
+		mood_label.setPosition(300, 12);
 		
 		stage.addActor(timeset);
 		timeset.setBounds(640-700/2, 90,700, 35);
@@ -209,6 +218,17 @@ public class GameSetScreen implements Screen{
 			fieldcheckbox[i].setX(filedstartX+i*260);
 		}
 
+		stage.addActor(mood0);
+		stage.addActor(mood1);
+		
+		mood0.setX(640-mood0.getWidth()/2-150+30);
+		mood0.setY(14);
+		mood1.setX(640-mood0.getWidth()/2+150-30);
+		mood1.setY(14);
+		
+		mood0.setChecked(true);
+		//mood0.setPosition(640-mood0.getWidth()/2, 400);
+		//mood1.setPosition(640-mood0.getWidth()/2, 300);
 		
 		
 		for (int i=0;i<6;++i)
@@ -259,6 +279,52 @@ public class GameSetScreen implements Screen{
 	           }
 			});
 		}
+		
+		mood0.addListener(new InputListener()
+		{
+			 @Override                                                                                                                                                       
+		        public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+		            super.enter(event, x, y, pointer, fromActor);
+		
+		            Sound sound = Resources.getInstance().hover;
+		            sound.play(Gdx.app.getPreferences("volumePref").getFloat("soundVolume", 1f));
+		        
+		        }
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) 
+			{
+				mood1.setChecked(false);
+			}
+           @Override
+           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) 
+           {
+					return true;
+           }
+		});
+		
+		
+		
+		mood1.addListener(new InputListener()
+		{
+			 @Override                                                                                                                                                       
+		        public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+		            super.enter(event, x, y, pointer, fromActor);
+		
+		            Sound sound = Resources.getInstance().hover;
+		            sound.play(Gdx.app.getPreferences("volumePref").getFloat("soundVolume", 1f));
+		        
+		        }
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) 
+			{
+				mood0.setChecked(false);
+			}
+           @Override
+           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) 
+           {
+					return true;
+           }
+		});
 		
 		for (int i=0;i<6;++i)
 		{
@@ -369,7 +435,8 @@ public class GameSetScreen implements Screen{
 	        	   int time=90;
 	        	   //time=(int) (timeset.getValue()/10);
 	        	   if (Gdx.app.getPreferences("challenge").getInteger("winNum", 0)>20) time=(int) (timeset.getValue()/10);
-	        	   GameInstance.setInstance(getchoose(fieldcheckbox),getme(),getai(),time,0);
+	        	   if (mood0.isChecked()) GameInstance.setInstance(getchoose(fieldcheckbox),getme(),getai(),time,0);
+	        	   else GameInstance.setInstance(getchoose(fieldcheckbox),getme(),getai(),time,1);
 
 	        	   ScreenCenter.stopmusic();
 	        	   ScreenCenter.setscreen(4);
