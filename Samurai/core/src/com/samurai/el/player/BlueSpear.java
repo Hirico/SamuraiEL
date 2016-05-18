@@ -17,6 +17,7 @@ public class BlueSpear extends Player {
 		attackSound = Resources.getInstance().attack0;
 		this.set(Resources.getInstance().stand1_3);
 		totalCooldownTime = 60;
+		playerHint.set(Resources.getInstance().player1);
 	}
 	
 	@Override
@@ -82,6 +83,10 @@ public class BlueSpear extends Player {
 		}
 		
 		if(isAllied || (isVisible && !isHidden)) {
+			if(isHuman) {
+				playerHint.setPosition(this.getX(), this.getY());
+				playerHint.draw(batch);
+			}
 			super.draw(batch);
 		}
 	}

@@ -17,6 +17,7 @@ public class RedSpear extends Player {
 		attackSound = Resources.getInstance().attack0;
 		this.set(Resources.getInstance().stand1_0);
 		totalCooldownTime = 55;
+		playerHint.set(Resources.getInstance().player0);
 	}
 	
 	@Override
@@ -82,6 +83,10 @@ public class RedSpear extends Player {
 		}
 		
 		if(isAllied || (isVisible && !isHidden)) {
+			if(isHuman) {
+				playerHint.setPosition(this.getX(), this.getY());
+				playerHint.draw(batch);
+			}
 			super.draw(batch);
 		}
 	}

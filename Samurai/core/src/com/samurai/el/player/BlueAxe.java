@@ -16,6 +16,7 @@ public class BlueAxe extends Player {
 		attackSound = Resources.getInstance().attack2;
 		this.set(Resources.getInstance().stand1_5);
 		totalCooldownTime = 65;
+		playerHint.set(Resources.getInstance().player1);
 	}
 	
 	@Override
@@ -81,6 +82,10 @@ public class BlueAxe extends Player {
 		}
 		
 		if(isAllied || (isVisible && !isHidden)) {
+			if(isHuman) {
+				playerHint.setPosition(this.getX(), this.getY());
+				playerHint.draw(batch);
+			}
 			super.draw(batch);
 		}
 	}

@@ -1,6 +1,7 @@
 package com.samurai.el.field;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -20,6 +21,7 @@ public abstract class Field implements Disposable{
 	public Vector2[] planetPositions;
 	public Block[] planets;
 	public ParticleEffect[] homeEffects;
+	public OrthographicCamera camera;
 	
 	public Field() {
 		//this is initialized before player, so player reference is not accessible here
@@ -31,12 +33,15 @@ public abstract class Field implements Disposable{
 				new ParticleEffect(), new ParticleEffect(), new ParticleEffect()
 		};
 		
+		
 	}
 	
 	
 	public void render() {
 		background.render();
 		
+		camera = GameInstance.getInstance().camera;
+		fieldBatch.setProjectionMatrix(camera.combined);
 		fieldBatch.begin();
 		for(int i = 0; i < blocks.length; i++) {
 			for(int j = 0; j < blocks[0].length; j++) {

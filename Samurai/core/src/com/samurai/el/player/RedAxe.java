@@ -17,6 +17,7 @@ public class RedAxe extends Player {
 		attackSound = Resources.getInstance().attack2;
 		this.set(Resources.getInstance().stand1_2);
 		totalCooldownTime = 65;
+		playerHint.set(Resources.getInstance().player0);
 	}
 	
 	@Override
@@ -82,6 +83,10 @@ public class RedAxe extends Player {
 		}
 		
 		if(isAllied || (isVisible && !isHidden)) {
+			if(isHuman) {
+				playerHint.setPosition(this.getX(), this.getY());
+				playerHint.draw(batch);
+			}
 			super.draw(batch);
 		}
 	}

@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.samurai.el.mainmenu.ScreenCenter;
@@ -31,10 +32,12 @@ public class GameScreen implements Screen {
 	
 	public Sprite endBackground;
 	public SpriteBatch endBatch;
+	
 
 	public GameScreen(Game game) {
-		result = new int[6][3];
+		result = new int[6][4];
 		this.game = game;
+		
 		gameInstance = GameInstance.getInstance();	
 		stage = new GameStage(gameInstance, this);
 		uiBatch = new SpriteBatch();
@@ -80,6 +83,7 @@ public class GameScreen implements Screen {
 			Gdx.gl20.glViewport(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	        Gdx.gl20.glClearColor(255, 255, 255, 1);
 	        Gdx.gl20.glClear(GL20.GL_COLOR_BUFFER_BIT);
+	        
 	        gameInstance.render();
 	        uiBatch.begin();
 	        stage.act();

@@ -17,6 +17,7 @@ public class RedSword extends Player {
 		attackSound = Resources.getInstance().attack1;
 		this.set(Resources.getInstance().stand1_1);
 		totalCooldownTime = 50;
+		playerHint.set(Resources.getInstance().player0);
 	}
 	
 	@Override
@@ -82,6 +83,10 @@ public class RedSword extends Player {
 		}
 		
 		if(isAllied || (isVisible && !isHidden)) {
+			if(isHuman) {
+				playerHint.setPosition(this.getX(), this.getY());
+				playerHint.draw(batch);
+			}
 			super.draw(batch);
 		}
 	}

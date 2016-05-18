@@ -36,6 +36,7 @@ public abstract class Player extends Sprite implements Disposable{
 	public Resources resource;
 	public int size;
 	public Sound attackSound;
+	public Sprite playerHint;
 	
 	public Player(Vector2 homePosition) {
 		
@@ -60,6 +61,7 @@ public abstract class Player extends Sprite implements Disposable{
 		size = GameInstance.getInstance().field.blockSize;
 		
 		resource = Resources.getInstance();
+		playerHint = new Sprite();
 		
 	}
 	

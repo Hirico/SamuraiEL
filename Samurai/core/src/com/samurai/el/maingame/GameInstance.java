@@ -2,7 +2,10 @@ package com.samurai.el.maingame;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ai.msg.MessageDispatcher;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.samurai.el.ai.AIProgramCenter;
@@ -35,12 +38,12 @@ public class GameInstance implements Disposable{
 	public Player human;
 	public Array<Player> players;
 	public Field field;
-	public SpriteBatch playerBatch;
+	public SpriteBatch batch; // draw field and player
 	public int winFlag;
 	public int[] teamScores;
 	public AIProgramCenter aiProgram;
-	public MessageDispatcher messageDispatcher;
 	public boolean stoped;
+	public OrthographicCamera camera;
 	
 	private GameInstance(int mapid, int time, int mode) {
 		totalTime = time;
@@ -50,6 +53,8 @@ public class GameInstance implements Disposable{
 		aiProgram = new AIProgramCenter();
 		stoped = false;
 		teamScores = new int[2];
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false, 1280, 720);
 		
 		//setMap
 		switch(mapid) {
@@ -71,7 +76,7 @@ public class GameInstance implements Disposable{
 		}
 		
 				
-		playerBatch = new SpriteBatch();
+		batch = new SpriteBatch();
 				
 	}
 	
@@ -179,15 +184,23 @@ public class GameInstance implements Disposable{
 			aiProgram.update();
 		}
 		
-			field.render();
+			float lerp = 0.7f;
+			Vector3 position = camera.position;
+			position.x += (human.getX() - position.x) * lerp * Gdx.graphics.getDeltaTime();
+			position.y += (human.getY() - position.y) * lerp * Gdx.graphics.getDeltaTime();
 			
-			playerBatch.begin();
+			camera.position.set(position.x, position.y, 0);
+			camera.update();
+		
+			batch.setProjectionMatrix(camera.combined);
+			
+			field.render();	
+			batch.begin();		
 			for(Player p: players) {
-				p.draw(playerBatch);
+				p.draw(batch);
 			}						
-			playerBatch.end();
-			
-			
+			batch.end();
+						
 	}
 	
 	/**only return the game data to overScreen, no influence in the current game */
@@ -227,7 +240,7 @@ public class GameInstance implements Disposable{
 	}
 	
 	public void dispose() {
-		playerBatch.dispose();
+		batch.dispose();
 		for(Player p: players) {
 			p.dispose();
 		}
