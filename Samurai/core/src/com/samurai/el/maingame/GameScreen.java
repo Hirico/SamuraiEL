@@ -41,7 +41,11 @@ public class GameScreen implements Screen {
 		timeBlocks = new Sprite[18];
 		for(int i = 0; i < timeBlocks.length; i++) {
 			timeBlocks[i] = new Sprite();
-			timeBlocks[i].set(Resources.getInstance().time);
+			if(gameInstance.human.side == 0) {
+				timeBlocks[i].set(Resources.getInstance().time0);
+			} else {
+				timeBlocks[i].set(Resources.getInstance().time1);
+			}
 			timeBlocks[i].setPosition(163 + 53*i, 682.5f);
 		}
 		

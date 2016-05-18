@@ -75,6 +75,11 @@ public class ScreenCenter
 			case 4:
 				game.getScreen().dispose();
 				game.setScreen(new GameloadScreen(game));
+				break;
+			case 5:
+				game.getScreen().dispose();
+				game.setScreen(new HelpScreen());
+				break;
 		}
 	}
 }

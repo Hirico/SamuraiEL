@@ -17,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
 import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
@@ -54,8 +55,21 @@ public class GameSetScreen implements Screen{
 	Sprite republic;
 	Sprite union;
 	Slider timeset;
+	int icon;
+	int[][] position=new int[6][2];
+	Label timeset_label;
+	Sprite[] playername=new Sprite[6];
 	
 	public GameSetScreen() {
+		
+		
+		icon=535;
+		for (int i=0;i<6;++i)
+		{
+			if (i<3) position[i][0]=260;else position[i][0]=735;
+			position[i][1]=icon-(i%3)*125;
+		}
+		
 		flag=true;
 		font=new BitmapFont(Gdx.files.internal("foxwel_temp/choose/1.fnt"),Gdx.files.internal("foxwel_temp/choose/1.png"), false);
 		// TODO Auto-generated method stub
@@ -127,8 +141,7 @@ public class GameSetScreen implements Screen{
 			Sprite checkB2=new Sprite(new Texture("img/gameset/r"+i+".png"));
 			
 			checkB0.setSize(80, 80);
-			checkB0.setAlpha(0.2f);
-			checkB2.setAlpha(95);
+			checkB0.setAlpha(0.4f);
 			
 			CheckBox.CheckBoxStyle playercheckstyle=new CheckBox.CheckBoxStyle();
 			playercheckstyle.checkboxOver=new SpriteDrawable(checkB1);
@@ -136,10 +149,14 @@ public class GameSetScreen implements Screen{
 			playercheckstyle.checkboxOff=new SpriteDrawable(checkB0);
 			playercheckstyle.font=font;
 			playercheckstyle.fontColor=new Color(Color.YELLOW);
-			playercheckbox[i]=new CheckBox("  "+name[i%3],playercheckstyle);
+			playercheckbox[i]=new CheckBox("",playercheckstyle);
 			
 		}
 		
+		for (int i=0;i<6;++i)
+		{
+			playername[i]=new Sprite(new Texture("img/gameset/f"+i+".png"));
+		}
 		
 		skin = new Skin(Gdx.files.internal("test.json"));
 		for (int i=0;i<6;++i) playerselectbox[i]=new SelectBox(skin);
@@ -154,6 +171,9 @@ public class GameSetScreen implements Screen{
 		
 		timeset=new Slider(200,3000,1,false,volumestyle);
 
+		Label.LabelStyle labelstyle =new Label.LabelStyle(font, Color.YELLOW);
+		
+		timeset_label=new Label("90S",labelstyle);
 	}
 		
 
@@ -167,21 +187,28 @@ public class GameSetScreen implements Screen{
 		returnbutton.setPosition(40, 30);
 		
 		stage.addActor(enterbutton);
-		enterbutton.setPosition(720-enterbutton.getWidth()-50, 10);
+		enterbutton.setPosition(720-enterbutton.getWidth()-50, 5);
 
+		stage.addActor(timeset_label);
+		timeset_label.setPosition(1000, 90);
 		
 		stage.addActor(timeset);
-		timeset.setBounds(640-700/2, 640,700, 35);
-		//if (Gdx.app.getPreferences("challenge").getInteger("winNum", 0)<=20) timeset.setVisible(false); 
+		timeset.setBounds(640-700/2, 90,700, 35);
+		timeset.setValue(900);
+		if (Gdx.app.getPreferences("challenge").getInteger("winNum", 0)<=20)
+			{
+			timeset.setVisible(false);
+			timeset_label.setVisible(false);
+			}
 		
 		int filedstartX=160;
 		for (int i=0;i<4;++i)
 		{
 			stage.addActor(fieldcheckbox[i]);
-			fieldcheckbox[i].setY(540);
+			fieldcheckbox[i].setY(165);
 			fieldcheckbox[i].setX(filedstartX+i*260);
 		}
-		
+
 		
 		
 		for (int i=0;i<6;++i)
@@ -191,11 +218,8 @@ public class GameSetScreen implements Screen{
 			stage.addActor(playercheckbox[i]);
 			stage.addActor(playerselectbox[i]);
 			
-			if (i<3) tempx=260;else tempx=730;
-			tempy=350-(i%3)*110;
 			
-			playercheckbox[i].setX(tempx);
-			playercheckbox[i].setY(tempy);
+			playercheckbox[i].setPosition(position[i][0],position[i][1]);
 			
 			tempx+=120;
 			
@@ -203,7 +227,7 @@ public class GameSetScreen implements Screen{
 			playerselectbox[i].setSelected("");
 			playerselectbox[i].setDisabled(true);
 			playerselectbox[i].getScrollPane().setScrollingDisabled(false, false);
-			playerselectbox[i].setPosition(tempx-30,tempy-17);
+			playerselectbox[i].setPosition(position[i][0]+90,position[i][1]-17);
 			playerselectbox[i].setSize(160, 33);
 		}
 
@@ -341,13 +365,11 @@ public class GameSetScreen implements Screen{
 		        }
 	           @Override
 	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-	        	   int[][] testt=new int[5][2];
-	        	   for (int i=0;i<5;++i)
-	        	   {
-	        		   testt[i][0]=i+1;
-	        		   testt[i][1]=1;
-	        	   }
-	        	   GameInstance.setInstance(getchoose(fieldcheckbox),getme(),getai(),5);
+	        	   
+	        	   int time=90;
+	        	   time=(int) (timeset.getValue()/10);
+	        	   if (Gdx.app.getPreferences("challenge").getInteger("winNum", 0)>20) time=(int) (timeset.getValue()/10);
+	        	   GameInstance.setInstance(getchoose(fieldcheckbox),getme(),getai(),time,0);
 
 	        	   ScreenCenter.stopmusic();
 	        	   ScreenCenter.setscreen(4);
@@ -358,6 +380,15 @@ public class GameSetScreen implements Screen{
 
 	        	  if (OK()) return true;else return false;
 	           }
+		});
+		timeset.addListener(new ChangeListener()
+		{
+			 public void changed (ChangeEvent event, Actor actor) 
+			 {
+				 int timetime=(int) (timeset.getValue()/10);
+				 
+				 timeset_label.setText(timetime+"s");
+			 }
 		});
 	}
 	
@@ -443,8 +474,12 @@ public class GameSetScreen implements Screen{
 		
 		batch.begin();
 		batch.draw(background,0,0);
-		batch.draw(republic,280,450);
-		batch.draw(union,750,450);
+		batch.draw(republic,253,icon+100);
+		batch.draw(union,778,icon+100);
+		for (int i=0;i<6;++i)
+		{
+			batch.draw(playername[i],position[i][0]+84,position[i][1]+20);
+		}
 		batch.end();
 		
 		stage.act();

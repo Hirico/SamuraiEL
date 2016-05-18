@@ -27,6 +27,7 @@ public class MainMenuScreen implements Screen{
 	ImageButton button2;
 	ImageButton button3;
 	ImageButton button4;
+	ImageButton button5;
 	Sprite buttonA0;
 	Sprite buttonA1;
 	Sprite buttonB0;
@@ -72,10 +73,15 @@ public class MainMenuScreen implements Screen{
 		Sprite returnbutton0=new Sprite(new Texture("img/button/mainmenu/return0.png"));
 		Sprite returnbutton1=new Sprite(new Texture("img/button/mainmenu/return1.png"));
 		
+		Sprite helpbutton=new Sprite(new Texture("img/button/help.png"));
+		
+		helpbutton.setSize(64, 64);
+		
 		ImageButton.ImageButtonStyle button1style=new ImageButton.ImageButtonStyle();
 		ImageButton.ImageButtonStyle button2style=new ImageButton.ImageButtonStyle();
 		ImageButton.ImageButtonStyle button3style=new ImageButton.ImageButtonStyle();
 		ImageButton.ImageButtonStyle button4style=new ImageButton.ImageButtonStyle();
+		ImageButton.ImageButtonStyle button5style=new ImageButton.ImageButtonStyle();
 		
 		button2style.imageUp=new TextureRegionDrawable(buttonA0);	
 		button2style.imageDown=new TextureRegionDrawable(buttonA0);
@@ -93,10 +99,18 @@ public class MainMenuScreen implements Screen{
 		button4style.imageDown=new SpriteDrawable(returnbutton0);
 		button4style.imageOver=new SpriteDrawable(returnbutton1);
 		
+		button5style.imageUp=new SpriteDrawable(helpbutton);
+		button5style.imageDown=new SpriteDrawable(helpbutton);
+		button5style.imageOver=new SpriteDrawable(helpbutton);
+		
 		button1=new ImageButton(button1style);
 		button2=new ImageButton(button2style);
 		button3=new ImageButton(button3style);
 		button4=new ImageButton(button4style);
+		button5=new ImageButton(button5style);
+		
+		
+		
 	
 	}
 	
@@ -111,6 +125,7 @@ public class MainMenuScreen implements Screen{
 		stage.addActor(button2);
 		stage.addActor(button3);
 		stage.addActor(button4);
+		stage.addActor(button5);
 		
 		button1.setHeight(81);
 		button1.setWidth(238);
@@ -126,7 +141,7 @@ public class MainMenuScreen implements Screen{
 		button1.setPosition(850,180);
 		button3.setPosition(850,60);
 		button4.setPosition(40, 30);
-		
+		button5.setPosition(1000, 600);
 		button1.addListener(new InputListener()
 		{
 			    @Override
@@ -203,6 +218,26 @@ public class MainMenuScreen implements Screen{
 	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) 
 	           {
 	        	   Gdx.app.exit();
+	           }
+	           @Override
+	           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) 
+	           {
+	        	   return true;
+	           }
+		});
+		button5.addListener(new InputListener()
+		{
+			@Override
+	        public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+	            super.enter(event, x, y, pointer, fromActor);
+	            Sound sound = Resources.getInstance().hover;
+	            sound.play(Gdx.app.getPreferences("volumePref").getFloat("soundVolume", 1f));
+	        
+	        }
+	           @Override
+	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) 
+	           {
+	        	 ScreenCenter.setscreen(5);
 	           }
 	           @Override
 	           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) 

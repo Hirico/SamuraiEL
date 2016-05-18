@@ -64,6 +64,7 @@ public class OverScreen implements Screen
 		
 		if(winflag == 1) {
 			Gdx.app.getPreferences("challenge").putInteger("winNum", Gdx.app.getPreferences("challenge").getInteger("winNum", 0)+1);
+			Gdx.app.getPreferences("challenge").flush();
 		}
 		
 		fadeBatch = new SpriteBatch();

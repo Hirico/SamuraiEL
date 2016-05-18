@@ -4,8 +4,10 @@ package com.samurai.el.achievement;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -13,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.samurai.el.mainmenu.ScreenCenter;
@@ -31,9 +34,11 @@ public class AchievementScreen implements Screen{
 	SpriteBatch fadeBatch;
 	public float fade;
 	
+	BitmapFont font;
+	Label wintime;
 	public AchievementScreen() {
 		stage = new Stage(new StretchViewport(1280,720));
-		
+		font=new BitmapFont(Gdx.files.internal("foxwel_temp/choose/1.fnt"),Gdx.files.internal("foxwel_temp/choose/1.png"), false);
 		background = new Sprite(new Texture(Gdx.files.internal("img/background/achievement.png")));
 		batch = new SpriteBatch();
 		
@@ -50,6 +55,11 @@ public class AchievementScreen implements Screen{
 		returnbuttonstyle.imageOver=new SpriteDrawable(returnbutton1);
 		
 		returnbutton=new ImageButton(returnbuttonstyle);
+		
+		
+		Label.LabelStyle labelstyle =new Label.LabelStyle(font, Color.YELLOW);
+		
+		wintime=new Label("Win times: "+Gdx.app.getPreferences("challenge").getInteger("winNum", 0),labelstyle);
 	}
 	
 	@Override
@@ -59,6 +69,9 @@ public class AchievementScreen implements Screen{
 		Gdx.input.setInputProcessor(stage);
 		stage.addActor(returnbutton);
 		returnbutton.setPosition(40,30);
+		
+		stage.addActor(wintime);
+		wintime.setPosition(50, 50);
 		
 		returnbutton.addListener(new InputListener(){
 			 @Override
