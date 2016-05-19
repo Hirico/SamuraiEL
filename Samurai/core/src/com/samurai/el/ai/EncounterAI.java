@@ -1,21 +1,37 @@
 package com.samurai.el.ai;
 
 import com.badlogic.gdx.Gdx;
+import com.samurai.el.field.Block;
 import com.samurai.el.player.Player;
 
-public class BattleEasyAI extends BattleAI {
+public class EncounterAI extends PlayerAI {
 
-	public BattleEasyAI(Player player) {
+	public EncounterAI(Player player) {
 		super(player);
 		// TODO Auto-generated constructor stub
 	}
 	
+	public void update() {
+
+		//move
+		if(!player.isRecovering) {	
+			pursue();
+		}
+			
+		//occupy
+		if(player.occupiableForAI()) {
+			player.occupy();
+		}
+	}
+				
+	
+
 	@Override
 	public void pursue() {
 		if(target == null) {
 			getRandomTarget();
 		} 
-		if(target.isRecovering) {
+		if(target.isRecovering || target.isHidden) {
 			changeTarget();
 		}
 		
@@ -26,11 +42,17 @@ public class BattleEasyAI extends BattleAI {
 				resolveStuck();
 				moveCooldown = totalMoveCooldown;
 			} else {
-				pursueMove1();
+				if(Math.random() < 0.5f) {
+					pursueMove1();
+				} else {
+					pursueMove2();
+				}
 				moveCooldown = totalMoveCooldown;
 			}
 		}
 	}
 	
+	
+
 
 }

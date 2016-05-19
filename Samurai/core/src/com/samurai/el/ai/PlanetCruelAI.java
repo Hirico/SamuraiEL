@@ -3,33 +3,29 @@ package com.samurai.el.ai;
 import com.samurai.el.field.Block;
 import com.samurai.el.player.Player;
 
-public class PlanetHardAI extends PlanetAI {
+public class PlanetCruelAI extends PlanetAI {
 
-	public PlanetHardAI(Player player) {
+	public PlanetCruelAI(Player player) {
 		super(player);
 		totalMoveCooldown = 0.1f;
-		
+		// TODO Auto-generated constructor stub
 	}
-	
-	/* chase fiercely, ignore friend
-	@Override
-	public void update() {
-		if(!player.isRecovering) {	
-		//move
-			pursue();
-		//occupy
-			if(player.occupiable()) {
-				player.occupy();
-			}
-		}
-				
-	}
-	*/
 	
 	/**hide when possible */
 	@Override
 	public void update() {
 		if(!player.isRecovering) {	
+			
+			//hide in self territory
+			if(player.side == gameInstance.field.getSpefBlock(player.position).side) {
+				if(!player.isHidden) {
+					player.hide();
+				}
+				if(player.isHidden && player.occupiableForAI()) {
+					player.show();
+					player.occupy();
+				}
+			}
 			
 			//move
 			target = gameInstance.field.checkVision(player, player.position);
@@ -51,5 +47,5 @@ public class PlanetHardAI extends PlanetAI {
 		}
 				
 	}
-	
+
 }

@@ -2,9 +2,9 @@ package com.samurai.el.ai;
 
 import com.samurai.el.player.Player;
 
-public class BattleNormalAI extends BattleAI {
+public class EncounterNormalAI extends EncounterAI {
 
-	public BattleNormalAI(Player player) {
+	public EncounterNormalAI(Player player) {
 		super(player);
 		// TODO Auto-generated constructor stub
 	}

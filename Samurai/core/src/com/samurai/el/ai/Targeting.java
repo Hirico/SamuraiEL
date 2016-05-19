@@ -2,6 +2,7 @@ package com.samurai.el.ai;
 
 import com.badlogic.gdx.utils.Array;
 import com.samurai.el.field.Block;
+import com.samurai.el.maingame.GameInstance;
 import com.samurai.el.player.Player;
 
 public class Targeting {
@@ -32,5 +33,20 @@ public class Targeting {
 			return targetPlanets.get(minId);
 			
 		}			
-	} 
+	}
+	
+	public static Player getNearestEnemy(Player p) {
+		Array<Player> enemies = p.getEnemies();
+		int[] distances = new int[enemies.size];
+		int minId = 0;
+		
+		for(int i = 0; i < enemies.size; i++) {
+			distances[i] = (int) ((enemies.get(i).position.x-p.position.x) + (enemies.get(i).position.y-p.position.y));
+			if(i > 0 && distances[i] < distances[i-1]) {
+				minId = i;
+			}			
+		}
+		return enemies.get(minId);
+				
+	}
 }

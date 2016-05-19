@@ -24,6 +24,9 @@ public class AIProgramCenter {
 	    	case 2:
 	    		AIs.add(new PlanetHardAI(player));
 	    		break;
+	    	case 3:
+	    		AIs.add(new PlanetCruelAI(player));
+	    		break;
 	    	default:
 	    		AIs.add(new PlanetEasyAI(player));
 	    	}
@@ -31,16 +34,19 @@ public class AIProgramCenter {
     	else if(mode == 1) {
     		switch(difficulty) {
 	    	case 0:
-	    		AIs.add(new BattleEasyAI(player));
+	    		AIs.add(new EncounterEasyAI(player));
 	    		break;
 	    	case 1:
-	    		AIs.add(new BattleNormalAI(player));
+	    		AIs.add(new EncounterNormalAI(player));
 	    		break;
 	    	case 2:
-	    		AIs.add(new BattleHardAI(player));
+	    		AIs.add(new EncounterHardAI(player));
+	    		break;
+	    	case 3:
+	    		AIs.add(new EncounterCruelAI(player));
 	    		break;
 	    	default:
-	    		AIs.add(new BattleEasyAI(player));
+	    		AIs.add(new EncounterEasyAI(player));
 	    	}
     	}
 	}

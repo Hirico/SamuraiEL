@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.samurai.el.maingame.Timer;
 import com.samurai.el.field.Field;
@@ -16,6 +17,7 @@ public abstract class Player extends Sprite implements Disposable{
 	public Vector2 position;
 	public Vector2 homePosition;
 	public Vector2 drawPosition;
+	public Array<Player> enemies;
 	public int direction;
 	public int side;
 	public int id;
@@ -47,6 +49,7 @@ public abstract class Player extends Sprite implements Disposable{
 		isMoving = false;
 		recoverLeftTime = 0;
 		isAllied = false;
+		enemies = new Array<Player>();
 		this.homePosition = new Vector2();
 		this.homePosition.set(homePosition);
 		position = new Vector2();
@@ -441,6 +444,19 @@ public abstract class Player extends Sprite implements Disposable{
 	public void moveEnd() {
 		// use for AI non-continuous move
 		isMoving = false;
+	}
+	
+	public Array<Player> getEnemies() {
+		if(enemies.size != 0) {
+			return enemies;
+		} else {
+			for(Player p: GameInstance.getInstance().players) {
+				if(p.side != this.side) {
+					enemies.add(p);
+				}
+			}
+			return enemies;
+		}
 	}
 	
 	public void setHomePosition(int x, int y) {
