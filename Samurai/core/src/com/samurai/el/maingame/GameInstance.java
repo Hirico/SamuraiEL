@@ -195,8 +195,8 @@ public class GameInstance implements Disposable{
 	}
 	
 	public static void setInstance(int mapid, int human, int[][]AI, int time) {
-			instance = new GameInstance(mapid, time, 0);
-			instance.initializePlayer(human, AI);
+		instance = new GameInstance(mapid, time, 0);
+		instance.initializePlayer(human, AI);
 	}
 	
 	public static void setInstance(int mapid, int human, int[][]AI, int time, int mode) {
@@ -210,22 +210,22 @@ public class GameInstance implements Disposable{
 			aiProgram.update();
 		}
 		
-			float lerp = 0.6f;
-			Vector3 position = camera.position;
-			position.x += (human.getX()+human.getWidth()/2 - position.x) * lerp * Gdx.graphics.getDeltaTime();
-			position.y += (human.getY()+human.getHeight()/2 - position.y) * lerp * Gdx.graphics.getDeltaTime();
+		float lerp = 0.6f;
+		Vector3 position = camera.position;
+		position.x += (human.getX()+human.getWidth()/2 - position.x) * lerp * Gdx.graphics.getDeltaTime();
+		position.y += (human.getY()+human.getHeight()/2 - position.y) * lerp * Gdx.graphics.getDeltaTime();
 			
-			camera.position.set(position.x, position.y, 0);
-			camera.update();
+		camera.position.set(position.x, position.y, 0);
+		camera.update();
 		
-			batch.setProjectionMatrix(camera.combined);
+		batch.setProjectionMatrix(camera.combined);
 			
-			field.render();	
-			batch.begin();		
-			for(Player p: players) {
-				p.draw(batch);
-			}						
-			batch.end();
+		field.render();	
+		batch.begin();		
+		for(Player p: players) {
+			p.draw(batch);
+		}						
+		batch.end();
 						
 	}
 	
@@ -259,8 +259,8 @@ public class GameInstance implements Disposable{
 			winFlag = 0;
 		}
 		
-		teamScores[0] = redScore;
-		teamScores[1] = blueScore;
+		//teamScores[0] = redScore;
+		//teamScores[1] = blueScore;
 		
 		return result;
 	}

@@ -85,6 +85,9 @@ public class GameStage extends Stage{
 				if(keycode == Input.Keys.E) {
 					human.turn(true);
 				}
+				if(keycode == Input.Keys.U) {
+					screen.changeUILayer();
+				}
 			} else {
 				//guideLevel control
 				if(gameInstance.guideLevel == 0) {

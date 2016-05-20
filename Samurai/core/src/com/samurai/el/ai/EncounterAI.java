@@ -38,16 +38,18 @@ public class EncounterAI extends PlayerAI {
 		if(moveCooldown >= 0) {
 			moveCooldown -= Gdx.graphics.getDeltaTime();
 		} else {
-			if(player.isStuck) {
-				resolveStuck();
-				moveCooldown = totalMoveCooldown;
-			} else {
-				if(Math.random() < 0.5f) {
-					pursueMove1();
+			if(!target.isHidden) {
+				if(player.isStuck) {
+					resolveStuck();
+					moveCooldown = totalMoveCooldown;
 				} else {
-					pursueMove2();
+					if(Math.random() < 0.5f) {
+						pursueMove1();
+					} else {
+						pursueMove2();
+					}
+					moveCooldown = totalMoveCooldown;
 				}
-				moveCooldown = totalMoveCooldown;
 			}
 		}
 	}

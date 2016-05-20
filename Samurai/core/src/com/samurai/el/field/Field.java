@@ -257,19 +257,29 @@ public abstract class Field implements Disposable{
 					for(Player p: players) {
 						if(p.position.equals(targetPosition) && !p.isRecovering && !p.isInvincible) {
 							p.attacked();
-							player.getKillBonus();
+							if(p.side != player.side) {
+								player.getKillBonus();
+							}
 						}
 					}
 					
 					//manipulate block
 					Block targetBlock = blocks[(int) targetPosition.x][(int) targetPosition.y];
 					if(targetBlock.owner != player) {
-						if(targetBlock.isHome == false) {
-							if(targetBlock.owner != null) {						
-								targetBlock.owner.loseABlock();							
+						if(!targetBlock.isHome) {
+							if(!targetBlock.isPlanet) {
+								if(targetBlock.owner != null) {						
+									targetBlock.owner.loseABlock();							
+								}
+								targetBlock.occupy(player.id);
+								player.getABlock();
+							} else {
+								if(targetBlock.owner != null) {						
+									targetBlock.owner.loseAPlanet();
+								}
+								targetBlock.occupy(player.id);
+								player.getPlanetBonus();
 							}
-							targetBlock.occupy(player.id);
-							player.getABlock();
 						}
 					}										
 				}

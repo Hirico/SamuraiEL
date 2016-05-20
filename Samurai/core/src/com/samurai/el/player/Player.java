@@ -477,21 +477,29 @@ public abstract class Player extends Sprite implements Disposable{
 	public void getKillBonus() {
 		killNum += 1;
 		score += 2;
+		GameInstance.getInstance().teamScores[side] += 2;
 	}
 	
 	/**count plus every time occupy a planet */
 	public void getPlanetBonus() {
 		planetOccupyNum += 1;
+		GameInstance.getInstance().teamScores[side] += 30;
+	}
+	
+	public void loseAPlanet() {
+		GameInstance.getInstance().teamScores[side] -= 30;
 	}
 
 
 	public void loseABlock() {
-		score -= 1;		
+		score -= 1;	
+		GameInstance.getInstance().teamScores[side] -= 1;
 	}
 
 
 	public void getABlock() {
 		score += 1;
+		GameInstance.getInstance().teamScores[side] += 1;
 		
 	}
 	

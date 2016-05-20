@@ -22,12 +22,14 @@ public class EncounterEasyAI extends EncounterAI {
 		if(moveCooldown >= 0) {
 			moveCooldown -= Gdx.graphics.getDeltaTime();
 		} else {
-			if(player.isStuck) {
-				resolveStuck();
-				moveCooldown = totalMoveCooldown;
-			} else {
-				pursueMove1();
-				moveCooldown = totalMoveCooldown;
+			if(!target.isHidden) {
+				if(player.isStuck) {
+					resolveStuck();
+					moveCooldown = totalMoveCooldown;
+				} else {
+					pursueMove1();
+					moveCooldown = totalMoveCooldown;
+				}
 			}
 		}
 	}

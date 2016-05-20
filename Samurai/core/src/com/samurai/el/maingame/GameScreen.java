@@ -8,7 +8,6 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.samurai.el.mainmenu.MainMenuScreen;
 import com.samurai.el.mainmenu.ScreenCenter;
 import com.samurai.el.resource.Resources;
 
@@ -30,6 +29,8 @@ public class GameScreen implements Screen {
 	
 	public Sprite redScore;
 	public Sprite blueScore;
+	
+	public int UILayerNum;
 	
 	Sprite blackFade;
 	SpriteBatch fadeBatch;
@@ -64,7 +65,7 @@ public class GameScreen implements Screen {
 			} else {
 				timeBlocks[i].set(Resources.getInstance().time1);
 			}
-			timeBlocks[i].setPosition(163 + 53*i, 682.5f);
+			timeBlocks[i].setPosition(163 + 53*i, 672.5f);
 		}
 		
 		timeChecks = new int[18];		
@@ -76,6 +77,8 @@ public class GameScreen implements Screen {
 		attackIcon = new Sprite();
 		attackFade = new Sprite();
 		attackFade.set(Resources.getInstance().attackFade);
+		
+		UILayerNum = 1;
 		
 		gameOverCountDown = 3f;
 		paused = false;
@@ -119,29 +122,34 @@ public class GameScreen implements Screen {
 	        stage.act();
 	        
 	        if(gameInstance.mode != -1) {
-		        uiBatch.begin();
-		        
-			    for(int i = 0; i < timeBlocks.length; i++) {
-			        if(gameInstance.currentTime > timeChecks[i]) {
-			        	timeBlocks[i].draw(uiBatch);
+	        	if(UILayerNum >= 1) {
+			        uiBatch.begin();
+			        
+				    for(int i = 0; i < timeBlocks.length; i++) {
+				        if(gameInstance.currentTime > timeChecks[i]) {
+				        	timeBlocks[i].draw(uiBatch);
+				        }
+				    }
+				    
+				    redScore.setSize(1000 * (float)gameInstance.teamScores[0]/(gameInstance.teamScores[1]+gameInstance.teamScores[0]), redScore.getHeight());
+				    redScore.draw(uiBatch);
+				    blueScore.setSize(1000 * (float)gameInstance.teamScores[1]/(gameInstance.teamScores[1]+gameInstance.teamScores[0]), blueScore.getHeight());
+				    blueScore.setPosition(140+redScore.getWidth(), 700f);
+					blueScore.draw(uiBatch);
+			     
+			        
+			        float attackPercent = (float)(gameInstance.human.cooldownTime/gameInstance.human.totalCooldownTime);
+			        if(attackPercent != 0) {
+			        	attackIcon.setAlpha(0.6f);
+			        } else {
+			        	attackIcon.setAlpha(1f);	        	
 			        }
-			    }
-			    
-			    //redScore.draw(uiBatch);
-				//blueScore.draw(uiBatch);
-		     
-		        
-		        float attackPercent = (float)(gameInstance.human.cooldownTime/gameInstance.human.totalCooldownTime);
-		        if(attackPercent != 0) {
-		        	attackIcon.setAlpha(0.6f);
-		        } else {
-		        	attackIcon.setAlpha(1f);	        	
-		        }
-		        attackIcon.draw(uiBatch);
-		        attackFade.setSize(48, 48 * attackPercent);
-		        attackFade.draw(uiBatch);
-		        
-		        uiBatch.end();
+			        attackIcon.draw(uiBatch);
+			        attackFade.setSize(48, 48 * attackPercent);
+			        attackFade.draw(uiBatch);
+			        
+			        uiBatch.end();
+	        	}
 	        } else {
 	        	switch(gameInstance.guideLevel) {
 	        	case 0:
@@ -202,7 +210,7 @@ public class GameScreen implements Screen {
 	        	if(gameOverCountDown >= 0) {
 	        		gameOverCountDown -= Gdx.graphics.getDeltaTime();
 	        	} else {
-					//result[6][3] contains each samurai's score(territory+killNum), killNum, killedNum
+					//result[6][4] contains each samurai's score(territory+killNum), killNum, killedNum
 					//winFlag: 1:win 0:lose -1:tied
 	        		finished = true;
 	        	}
@@ -233,6 +241,16 @@ public class GameScreen implements Screen {
 		}
         
 		
+	}
+	
+	/**open/close HUD */
+	public void changeUILayer() {
+		if(UILayerNum == 0) {
+			UILayerNum = 1;
+		}
+		else if(UILayerNum == 1) {
+			UILayerNum = 0;
+		}
 	}
 	
 	/**End the game and back to main menu  */

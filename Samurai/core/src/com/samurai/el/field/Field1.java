@@ -27,11 +27,11 @@ public class Field1 extends Field {
 		if(mode == 0) {
 			planetPositions = new Vector2[] {
 					new Vector2(4,8), new Vector2(4,3), new Vector2(5,5), new Vector2(16,8),
-					new Vector2(16,3), new Vector2(16,6)
+					new Vector2(16,3), new Vector2(15,6)
 			};
 			planets = new Block[] {
 					blocks[4][8], blocks[4][3], blocks[5][5], blocks[16][8],
-					blocks[16][3], blocks[16][6]
+					blocks[16][3], blocks[15][6]
 			};
 			
 			
