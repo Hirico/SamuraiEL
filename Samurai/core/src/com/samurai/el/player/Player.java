@@ -25,6 +25,7 @@ public abstract class Player extends Sprite implements Disposable{
 	public int killNum;
 	public int killedNum;
 	public int planetOccupyNum;
+	public boolean isInvincible;
 	public double cooldownTime;
 	public double totalCooldownTime;
 	public boolean isAllied;
@@ -49,6 +50,7 @@ public abstract class Player extends Sprite implements Disposable{
 		isMoving = false;
 		recoverLeftTime = 0;
 		isAllied = false;
+		isInvincible = false;
 		enemies = new Array<Player>();
 		this.homePosition = new Vector2();
 		this.homePosition.set(homePosition);

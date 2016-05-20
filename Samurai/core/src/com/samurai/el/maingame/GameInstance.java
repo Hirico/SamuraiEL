@@ -15,6 +15,7 @@ import com.samurai.el.field.Field0;
 import com.samurai.el.field.Field1;
 import com.samurai.el.field.Field2;
 import com.samurai.el.field.Field3;
+import com.samurai.el.field.FieldGuide;
 import com.samurai.el.player.BlueAxe;
 import com.samurai.el.player.BlueSpear;
 import com.samurai.el.player.BlueSword;
@@ -26,7 +27,8 @@ import com.samurai.el.player.RedSword;
 public class GameInstance implements Disposable{
 	
 	public static GameInstance instance;
-	public int mode; // 0 is planet mode, 1 is battle mode 
+	public int mode; // 0 is planet mode, 1 is battle mode, -1 is guide mode
+	public int guideLevel; // record which guide step is now
 	public int totalTime;
 	public double currentTime;
 	public RedSpear redSpear;
@@ -76,8 +78,25 @@ public class GameInstance implements Disposable{
 		}
 		
 				
+		batch = new SpriteBatch();				
+	}
+	
+	/**initialize a guide map */
+	private GameInstance() {
+		totalTime = 10000;
+		currentTime = totalTime;
+		this.mode = -1;
+		
+		winFlag = -1;
+		aiProgram = new AIProgramCenter();
+		stoped = false;
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false, 1280, 720);
+		field = new FieldGuide();
+		guideLevel = 0;
+		
 		batch = new SpriteBatch();
-				
+		
 	}
 	
 	public void initializePlayer(int humanid, int[][]AI) {
@@ -168,6 +187,13 @@ public class GameInstance implements Disposable{
 		return instance;
 	}
 	
+	/**use this to start a guide level */
+	public static void setInstance() {
+		instance = new GameInstance();
+		instance.initializePlayer(0, new int[][]{{3,-1}});
+
+	}
+	
 	public static void setInstance(int mapid, int human, int[][]AI, int time) {
 			instance = new GameInstance(mapid, time, 0);
 			instance.initializePlayer(human, AI);
@@ -186,8 +212,8 @@ public class GameInstance implements Disposable{
 		
 			float lerp = 0.6f;
 			Vector3 position = camera.position;
-			position.x += (human.getX() - position.x) * lerp * Gdx.graphics.getDeltaTime();
-			position.y += (human.getY() - position.y) * lerp * Gdx.graphics.getDeltaTime();
+			position.x += (human.getX()+human.getWidth()/2 - position.x) * lerp * Gdx.graphics.getDeltaTime();
+			position.y += (human.getY()+human.getHeight()/2 - position.y) * lerp * Gdx.graphics.getDeltaTime();
 			
 			camera.position.set(position.x, position.y, 0);
 			camera.update();
@@ -237,6 +263,71 @@ public class GameInstance implements Disposable{
 		teamScores[1] = blueScore;
 		
 		return result;
+	}
+	
+	public void initializeGuideLevel() {
+		guideLevel = 0;
+		if(blueSpear != null) {
+			blueSpear.hide();
+			blueSpear.isInvincible = true;
+		}
+	}
+	
+	public void updateGuideLevel() {
+		if(guideLevel == 0) {
+			resetPlayerPosition(human);
+			human.direction = 0;
+		}
+		else if(guideLevel == 1) {
+			resetPlayerPosition(human);
+			human.direction = 0;
+			field.clearBlocks();
+			
+			if(blueSpear != null) {
+				field.blocks[2][2].isPlanet = false;
+				blueSpear.isInvincible = false;
+				blueSpear.show();
+				setPlayerPosition(blueSpear, new Vector2(2f,2f));
+			}
+		}
+		else if(guideLevel == 2) {
+			resetPlayerPosition(human);
+			human.direction = 0;
+			field.clearBlocks();
+			if(blueSpear != null) {
+				resetPlayerPosition(blueSpear);
+				blueSpear.hide();
+				blueSpear.isInvincible = true;
+			}
+		}
+		else if(guideLevel == 3) {
+			resetPlayerPosition(human);
+			human.direction = 0;
+			field.clearBlocks();
+			
+			blueSpear.killedNum = 0;
+			blueSpear.show();
+			blueSpear.isInvincible = false;
+			aiProgram.setAI(blueSpear, 0, 1);
+			aiProgram.initializeEnemies();
+			System.out.println("set");
+		}			
+		guideLevel += 1;	
+	}
+	
+	public void resetPlayerPosition(Player player) {
+		setPlayerPosition(player, player.homePosition);
+	}
+	
+	public void setPlayerPosition(Player player, Vector2 position) {
+		field.blocks[(int) player.position.x][(int) player.position.y].playerLeave();
+		field.closeVision(player.position, player);
+		
+		field.blocks[(int) position.x][(int) position.y].playerArrive(player.id);
+		field.openVision(position);
+		
+		player.position.set(position);
+		player.drawPosition.set(position);
 	}
 	
 	public void dispose() {

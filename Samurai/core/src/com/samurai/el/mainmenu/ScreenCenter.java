@@ -5,6 +5,8 @@ import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Music;
 import com.samurai.el.achievement.AchievementScreen;
 import com.samurai.el.gamesetting.GameSetScreen;
+import com.samurai.el.maingame.GameInstance;
+import com.samurai.el.maingame.GameScreen;
 import com.samurai.el.maingame.GameloadScreen;
 import com.samurai.el.setting.SettingScreen;
 public class ScreenCenter 
@@ -78,7 +80,9 @@ public class ScreenCenter
 				break;
 			case 5:
 				game.getScreen().dispose();
-				game.setScreen(new HelpScreen());
+				stopmusic();
+				GameInstance.setInstance();
+				game.setScreen(new GameScreen(game));
 				break;
 		}
 	}

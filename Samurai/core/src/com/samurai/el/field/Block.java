@@ -161,15 +161,23 @@ public class Block extends Sprite{
 			side = 1;
 			planetTexture = Resources.getInstance().planet1;
 			break;
+		case -1:
+			owner = null;
+			side = -1;
+			planetTexture = Resources.getInstance().planet2;
+			break;
 		}
 		
 		
 		//implements to set texture
-		if(isVisible && !isPlanet) {
+		if(isVisible && !isPlanet && owner != null && !isHome) {
 			this.setTexture(owner.specBlockTexture);
 		}
 		else if(isVisible && isPlanet) {
 			this.setTexture(planetTexture);
+		}
+		if(owner == null) {
+			this.setTexture(block7);
 		}
 		
 	}

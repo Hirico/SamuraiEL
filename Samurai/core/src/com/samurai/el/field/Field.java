@@ -84,10 +84,8 @@ public abstract class Field implements Disposable{
 	
 	public boolean isPlanet(Vector2 targetPosition) {
 		if(planetPositions != null) {
-			for(Vector2 p: planetPositions) {
-				if(p.equals(targetPosition)) {
-					return true;
-				}
+			if(blocks[(int) targetPosition.x][(int) targetPosition.y].isPlanet) {
+				return true;
 			}
 		}
 		return false;
@@ -178,9 +176,9 @@ public abstract class Field implements Disposable{
 	}
 	
 	public void homeInitialize(int i) {
-		blocks[(int) homePositions[i].x][(int) homePositions[i].y].occupy(i);
-		blocks[(int) homePositions[i].x][(int) homePositions[i].y].playerArrive(i);
 		blocks[(int) homePositions[i].x][(int) homePositions[i].y].isHome = true;
+		blocks[(int) homePositions[i].x][(int) homePositions[i].y].occupy(i);
+		blocks[(int) homePositions[i].x][(int) homePositions[i].y].playerArrive(i);		
 		if(i <= 2) {
 			homeEffects[i].load(Gdx.files.internal("img/field/red.p"), Gdx.files.internal("img/field"));
 		} else {
@@ -257,7 +255,7 @@ public abstract class Field implements Disposable{
 					//detect enemy
 					Array<Player> players = GameInstance.getInstance().players;
 					for(Player p: players) {
-						if(p.position.equals(targetPosition) && !p.isRecovering) {
+						if(p.position.equals(targetPosition) && !p.isRecovering && !p.isInvincible) {
 							p.attacked();
 							player.getKillBonus();
 						}
@@ -369,7 +367,22 @@ public abstract class Field implements Disposable{
 	public Block getSpefBlock(Vector2 position) {
 		return blocks[(int)position.x][(int)position.y];
 	}
-
+	
+	/**make all the blocks neutral */
+	public void clearBlocks() {
+		for(int i = 0; i < blocks.length; i++) {
+			for(int j = 0; j < blocks[i].length; j++) {
+				if(!blocks[i][j].isHome) {
+					blocks[i][j].occupy(-1);
+				}
+			}
+		}
+	}
+	
+	public void resetPlayerPosition() {
+		
+	}
+	
 	public boolean isOthersHome(Player player, Vector2 targetPosition) {
 		Array<Player> players = GameInstance.getInstance().players;
 		for(Player p: players) {

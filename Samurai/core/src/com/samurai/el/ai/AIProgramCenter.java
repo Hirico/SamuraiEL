@@ -31,6 +31,7 @@ public class AIProgramCenter {
 	    		AIs.add(new PlanetEasyAI(player));
 	    	}
     	} 
+    	
     	else if(mode == 1) {
     		switch(difficulty) {
 	    	case 0:
@@ -48,6 +49,10 @@ public class AIProgramCenter {
 	    	default:
 	    		AIs.add(new EncounterEasyAI(player));
 	    	}
+    	}
+    	
+    	else if(mode == -1) {
+    		AIs.add(new GuideAI(player));
     	}
 	}
 

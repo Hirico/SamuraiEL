@@ -45,44 +45,164 @@ public class GameStage extends Stage{
 		Player human = gameInstance.human;
 		
 		if(!gameInstance.stoped) {
-			if(keycode == Input.Keys.P) {
-				if(!paused) {
-					screen.pause();
-					stop();
-					paused = true;
-				} else {
-					screen.resume();
-					paused = false;
+			if(gameInstance.mode != -1) {
+				if(keycode == Input.Keys.P) {
+					if(!paused) {
+						screen.pause();
+						stop();
+						paused = true;
+					} else {
+						screen.resume();
+						paused = false;
+					}
 				}
-			}
-			
-			if(keycode == Input.Keys.W) {
-				upTimer = human.moveBegin(0);
-			}
-			if(keycode == Input.Keys.S) {
-				downTimer = human.moveBegin(1);
-			}
-			if(keycode == Input.Keys.A) {
-				leftTimer = human.moveBegin(2);
-			}
-			if(keycode == Input.Keys.D) {
-				rightTimer = human.moveBegin(3);
-			}
-			if(keycode == Input.Keys.J) {
-				human.occupy();
-			}
-			if(keycode == Input.Keys.K) {
-				if(!human.isHidden) {
-					human.hide();
-				} else {
-					human.show();
+				
+				if(keycode == Input.Keys.W) {
+					upTimer = human.moveBegin(0);
 				}
-			}
-			if(keycode == Input.Keys.Q) {
-				human.turn(false);
-			}
-			if(keycode == Input.Keys.E) {
-				human.turn(true);
+				if(keycode == Input.Keys.S) {
+					downTimer = human.moveBegin(1);
+				}
+				if(keycode == Input.Keys.A) {
+					leftTimer = human.moveBegin(2);
+				}
+				if(keycode == Input.Keys.D) {
+					rightTimer = human.moveBegin(3);
+				}
+				if(keycode == Input.Keys.J) {
+					human.occupy();
+				}
+				if(keycode == Input.Keys.K) {
+					if(!human.isHidden) {
+						human.hide();
+					} else {
+						human.show();
+					}
+				}
+				if(keycode == Input.Keys.Q) {
+					human.turn(false);
+				}
+				if(keycode == Input.Keys.E) {
+					human.turn(true);
+				}
+			} else {
+				//guideLevel control
+				if(gameInstance.guideLevel == 0) {
+					if(keycode == Input.Keys.W) {
+						upTimer = human.moveBegin(0);
+					}
+					if(keycode == Input.Keys.S) {
+						downTimer = human.moveBegin(1);
+					}
+					if(keycode == Input.Keys.A) {
+						leftTimer = human.moveBegin(2);
+					}
+					if(keycode == Input.Keys.D) {
+						rightTimer = human.moveBegin(3);
+					}
+					if(keycode == Input.Keys.Q) {
+						human.turn(false);
+					}
+					if(keycode == Input.Keys.E) {
+						human.turn(true);
+					}
+					if(keycode == Input.Keys.SPACE) {
+						gameInstance.updateGuideLevel();
+					}
+				}
+				else if(gameInstance.guideLevel == 1 || gameInstance.guideLevel == 2) {
+					if(keycode == Input.Keys.W) {
+						upTimer = human.moveBegin(0);
+					}
+					if(keycode == Input.Keys.S) {
+						downTimer = human.moveBegin(1);
+					}
+					if(keycode == Input.Keys.A) {
+						leftTimer = human.moveBegin(2);
+					}
+					if(keycode == Input.Keys.D) {
+						rightTimer = human.moveBegin(3);
+					}
+					if(keycode == Input.Keys.Q) {
+						human.turn(false);
+					}
+					if(keycode == Input.Keys.E) {
+						human.turn(true);
+					}
+					if(keycode == Input.Keys.J) {
+						human.occupy();
+					}
+					if(keycode == Input.Keys.SPACE) {
+						gameInstance.updateGuideLevel();
+					}
+				}
+				else if(gameInstance.guideLevel == 3) {
+					if(keycode == Input.Keys.W) {
+						upTimer = human.moveBegin(0);
+					}
+					if(keycode == Input.Keys.S) {
+						downTimer = human.moveBegin(1);
+					}
+					if(keycode == Input.Keys.A) {
+						leftTimer = human.moveBegin(2);
+					}
+					if(keycode == Input.Keys.D) {
+						rightTimer = human.moveBegin(3);
+					}
+					if(keycode == Input.Keys.Q) {
+						human.turn(false);
+					}
+					if(keycode == Input.Keys.E) {
+						human.turn(true);
+					}
+					if(keycode == Input.Keys.J) {
+						human.occupy();
+					}					
+					if(keycode == Input.Keys.K) {
+						if(!human.isHidden) {
+							human.hide();
+						} else {
+							human.show();
+						}
+					}if(keycode == Input.Keys.SPACE) {
+						gameInstance.updateGuideLevel();
+					}
+				}
+				else if(gameInstance.guideLevel == 4) {
+					if(keycode == Input.Keys.W) {
+						upTimer = human.moveBegin(0);
+					}
+					if(keycode == Input.Keys.S) {
+						downTimer = human.moveBegin(1);
+					}
+					if(keycode == Input.Keys.A) {
+						leftTimer = human.moveBegin(2);
+					}
+					if(keycode == Input.Keys.D) {
+						rightTimer = human.moveBegin(3);
+					}
+					if(keycode == Input.Keys.Q) {
+						human.turn(false);
+					}
+					if(keycode == Input.Keys.E) {
+						human.turn(true);
+					}
+					if(keycode == Input.Keys.J) {
+						human.occupy();
+					}					
+					if(keycode == Input.Keys.K) {
+						if(!human.isHidden) {
+							human.hide();
+						} else {
+							human.show();
+						}
+					}if(keycode == Input.Keys.SPACE) {
+						gameInstance.stop();
+						screen.exit();
+					}
+				}
+				
+				
 			}
 		}
 		return false;

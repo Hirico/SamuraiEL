@@ -34,6 +34,8 @@ public class Resources {
 	public Sprite draw = new Sprite(new Texture(Gdx.files.internal("img/field/draw.png")));
 	public Sprite time0 = new Sprite(new Texture(Gdx.files.internal("img/ui/time0.png")));
 	public Sprite time1 = new Sprite(new Texture(Gdx.files.internal("img/ui/time1.png")));
+	public Sprite redScore = new Sprite(new Texture(Gdx.files.internal("img/ui/redScore.png")));
+	public Sprite blueScore = new Sprite(new Texture(Gdx.files.internal("img/ui/blueScore.png")));
 	public Sprite attack0Icon = new Sprite(new Texture(Gdx.files.internal("img/ui/attack0.png")));
 	public Sprite attack1Icon = new Sprite(new Texture(Gdx.files.internal("img/ui/attack1.png")));
 	public Sprite attackFade = new Sprite(new Texture(Gdx.files.internal("img/ui/attackFade.png")));
@@ -97,6 +99,11 @@ public class Resources {
 	public Sprite gameload = new Sprite(new Texture(Gdx.files.internal("img/background/gameload.jpg")));
 	public Sprite gameload2 = new Sprite(new Texture(Gdx.files.internal("img/background/gameload2.jpg")));
 	public Sprite help = new Sprite(new Texture(Gdx.files.internal("img/background/help.png")));
+	public Sprite guideL0 = new Sprite(new Texture(Gdx.files.internal("img/ui/guideL0.png")));
+	public Sprite guideL1 = new Sprite(new Texture(Gdx.files.internal("img/ui/guideL1.png")));
+	public Sprite guideL2 = new Sprite(new Texture(Gdx.files.internal("img/ui/guideL2.png")));
+	public Sprite guideL3 = new Sprite(new Texture(Gdx.files.internal("img/ui/guideL3.png")));
+	public Sprite guideL4 = new Sprite(new Texture(Gdx.files.internal("img/ui/guideL4.png")));
 	public Sprite blackFade = new Sprite(new Texture(Gdx.files.internal("img/background/blackfade.png")));
 
 	public Music bgm02 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm02.mp3"));
@@ -152,6 +159,9 @@ public class Resources {
 		draw = new Sprite(new Texture(Gdx.files.internal("img/field/draw.png")));
 		time0 = new Sprite(new Texture(Gdx.files.internal("img/ui/time0.png")));
 		time1 = new Sprite(new Texture(Gdx.files.internal("img/ui/time1.png")));
+		redScore = new Sprite(new Texture(Gdx.files.internal("img/ui/redScore.png")));
+		blueScore = new Sprite(new Texture(Gdx.files.internal("img/ui/blueScore.png")));
+		
 		attack0Icon = new Sprite(new Texture(Gdx.files.internal("img/ui/attack0.png")));
 		attack1Icon = new Sprite(new Texture(Gdx.files.internal("img/ui/attack1.png")));
 		attackFade = new Sprite(new Texture(Gdx.files.internal("img/ui/attackFade.png")));
@@ -210,6 +220,11 @@ public class Resources {
 		background2 = new Sprite(new Texture(Gdx.files.internal("img/field/bg2.jpg")));
 		background3 = new Sprite(new Texture(Gdx.files.internal("img/field/bg3.jpg")));
 		help = new Sprite(new Texture(Gdx.files.internal("img/background/help.png")));
+		guideL0 = new Sprite(new Texture(Gdx.files.internal("img/ui/guideL0.png")));
+		guideL1 = new Sprite(new Texture(Gdx.files.internal("img/ui/guideL1.png")));
+		guideL2 = new Sprite(new Texture(Gdx.files.internal("img/ui/guideL2.png")));
+		guideL3 = new Sprite(new Texture(Gdx.files.internal("img/ui/guideL3.png")));
+		guideL4 = new Sprite(new Texture(Gdx.files.internal("img/ui/guideL4.png")));
 		blackFade = new Sprite(new Texture(Gdx.files.internal("img/background/blackfade.png")));
 		gameload = new Sprite(new Texture(Gdx.files.internal("img/background/gameload.jpg")));
 		gameload2 = new Sprite(new Texture(Gdx.files.internal("img/background/gameload2.jpg")));
