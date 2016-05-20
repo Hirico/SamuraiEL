@@ -87,6 +87,7 @@ public class GameInstance implements Disposable{
 		currentTime = totalTime;
 		this.mode = -1;
 		
+		teamScores = new int[2];
 		winFlag = -1;
 		aiProgram = new AIProgramCenter();
 		stoped = false;
