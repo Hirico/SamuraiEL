@@ -2,6 +2,8 @@ package com.samurai.el.desktop;
 
 import org.lwjgl.LWJGLUtil;
 
+import com.badlogic.gdx.Files;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.samurai.el.mainmenu.Samurai;
@@ -16,8 +18,11 @@ public class DesktopLauncher {
 		if(LWJGLUtil.getPlatform() == LWJGLUtil.PLATFORM_MACOSX) {
 			config.fullscreen = false;
 		} else {
-			config.fullscreen = true;
+			//config.fullscreen = true;
 		}
+		config.addIcon("icon128.png", Files.FileType.Internal);
+		config.addIcon("icon32.png", Files.FileType.Internal);
+		config.addIcon("icon16.png", Files.FileType.Internal);
 		new LwjglApplication(new Samurai(), config);
 	}
 }
