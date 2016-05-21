@@ -23,7 +23,8 @@ public class Block extends Sprite{
 	public Texture block6; // invisible block
 	public Texture block7; // neutral block
 	public Texture planetTexture;
-	public ParticleEffect homeEffect;
+	public ParticleEffect[] homeEffect;
+	public ParticleEffect currentEffect;
 	public int size;
 	public Vector2 planetPosition;// only useful when it's a planet
 	
@@ -81,9 +82,11 @@ public class Block extends Sprite{
 		isPlanet = true;
 	}
 	
-	public void effectInitialize(ParticleEffect homeEffect) {
+	public void effectInitialize(ParticleEffect[] homeEffect) {
 		this.homeEffect = homeEffect;
-		this.homeEffect.setPosition(this.getX()+this.size/2, this.getY()+this.size/2);
+		this.homeEffect[0].setPosition(this.getX()+this.size/2, this.getY()+this.size/2);
+		this.homeEffect[1].setPosition(this.getX()+this.size/2, this.getY()+this.size/2);
+		currentEffect = homeEffect[0];
 	}
 	
 	public void playerArrive(Player player) {
@@ -91,6 +94,9 @@ public class Block extends Sprite{
 		playerIdOn = playerOn.id;
 		if(isVisible) {
 			playerOn.isVisible = true;
+		}
+		if(isHome && playerOn.isRecovering) {
+			currentEffect = homeEffect[1];
 		}
 	}
 	
@@ -123,8 +129,11 @@ public class Block extends Sprite{
 			playerOn.isVisible = false;
 		}
 		playerOn = null;		
-		playerIdOn = -1;
-		
+		playerIdOn = -1;		
+	}
+	
+	public void recoverComplete() {
+		currentEffect = homeEffect[0];
 	}
 	
 	public void occupy(int id) {
@@ -250,9 +259,9 @@ public class Block extends Sprite{
 		}
 		super.draw(batch);
 		
-		if(homeEffect != null) {
-			homeEffect.draw(batch);
-			homeEffect.update(Gdx.graphics.getDeltaTime());
+		if(currentEffect != null) {
+			currentEffect.draw(batch);
+			currentEffect.update(Gdx.graphics.getDeltaTime());
 		}
 		
 	}

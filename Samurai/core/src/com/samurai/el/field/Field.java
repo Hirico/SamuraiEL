@@ -20,7 +20,7 @@ public abstract class Field implements Disposable{
 	public Vector2[] homePositions;
 	public Vector2[] planetPositions;
 	public Block[] planets;
-	public ParticleEffect[] homeEffects;
+	public ParticleEffect[][] homeEffects;
 	public OrthographicCamera camera;
 	
 	public Field() {
@@ -28,9 +28,13 @@ public abstract class Field implements Disposable{
 		fieldBatch = new SpriteBatch();
 		
 		//due to a problem of particle, must create a maximum array even if useless
-		homeEffects = new ParticleEffect[] {
-				new ParticleEffect(), new ParticleEffect(), new ParticleEffect(),
-				new ParticleEffect(), new ParticleEffect(), new ParticleEffect()
+		homeEffects = new ParticleEffect[][] {
+				{new ParticleEffect(), new ParticleEffect()}, 
+				{new ParticleEffect(), new ParticleEffect()},
+				{new ParticleEffect(), new ParticleEffect()},
+				{new ParticleEffect(), new ParticleEffect()},
+				{new ParticleEffect(), new ParticleEffect()},
+				{new ParticleEffect(), new ParticleEffect()}
 		};
 		
 		
@@ -68,7 +72,9 @@ public abstract class Field implements Disposable{
 			}
 		}
 		for(int i = 0; i < homeEffects.length; i++) {
-			homeEffects[i].dispose();
+			for(int j = 0; j < homeEffects[i].length; j++) {
+				homeEffects[i][j].dispose();
+			}
 		}
 		fieldBatch.dispose();
 	}
@@ -180,9 +186,11 @@ public abstract class Field implements Disposable{
 		blocks[(int) homePositions[i].x][(int) homePositions[i].y].occupy(i);
 		blocks[(int) homePositions[i].x][(int) homePositions[i].y].playerArrive(i);		
 		if(i <= 2) {
-			homeEffects[i].load(Gdx.files.internal("img/field/red.p"), Gdx.files.internal("img/field"));
+			homeEffects[i][0].load(Gdx.files.internal("img/field/red.p"), Gdx.files.internal("img/field"));
+			homeEffects[i][1].load(Gdx.files.internal("img/field/redR.p"), Gdx.files.internal("img/field"));
 		} else {
-			homeEffects[i].load(Gdx.files.internal("img/field/blue.p"), Gdx.files.internal("img/field"));
+			homeEffects[i][0].load(Gdx.files.internal("img/field/blue.p"), Gdx.files.internal("img/field"));
+			homeEffects[i][1].load(Gdx.files.internal("img/field/blueR.p"), Gdx.files.internal("img/field"));
 		}
 		blocks[(int) homePositions[i].x][(int) homePositions[i].y].effectInitialize(homeEffects[i]);
 	}

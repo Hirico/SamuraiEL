@@ -38,7 +38,7 @@ public class GameloadScreen implements Screen{
 	}
 	@Override
 	public void show() {
-		countdown = 3f;
+		countdown = 2.5f;
 		fade = 1.0f;
 		finished = false;
 	}

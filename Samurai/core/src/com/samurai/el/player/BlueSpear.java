@@ -23,7 +23,7 @@ public class BlueSpear extends Player {
 	@Override
 	public void draw(Batch batch) {
 		// determine assets
-		
+		Field field = GameInstance.getInstance().field;
 		//implements waited
 		if(cooldownTime > 0) {
 			cooldownTime -= 60*Gdx.graphics.getDeltaTime();
@@ -31,14 +31,14 @@ public class BlueSpear extends Player {
 				cooldownTime = 0;
 			}
 		}
-		
+				
 		if(isRecovering) {
 			recoverLeftTime -= 60*Gdx.graphics.getDeltaTime();
 			if(recoverLeftTime <= 0) {
 				isRecovering = false;
+				field.blocks[(int) homePosition.x][(int) homePosition.y].recoverComplete();				
 			}
 		}
-		Field field = GameInstance.getInstance().field;
 		
 		if(isMoving) {
 			switch(direction) {
@@ -87,7 +87,9 @@ public class BlueSpear extends Player {
 				playerHint.setPosition(this.getX(), this.getY());
 				playerHint.draw(batch);
 			}
-			super.draw(batch);
+			if(!isRecovering) {
+				super.draw(batch);
+			}
 		}
 	}
 	

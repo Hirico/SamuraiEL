@@ -105,10 +105,12 @@ public abstract class Player extends Sprite implements Disposable{
 	
 	public void attacked() {
 		isHidden = false;
-		GameInstance.getInstance().field.blocks[(int) position.x][(int) position.y].playerLeave();
-		GameInstance.getInstance().field.blocks[(int) homePosition.x][(int) homePosition.y].playerArrive(this);
 		isRecovering = true;
 		isMoving = false;
+		GameInstance.getInstance().field.blocks[(int) position.x][(int) position.y].playerLeave();
+		GameInstance.getInstance().field.blocks[(int) homePosition.x][(int) homePosition.y].playerArrive(this);
+
+
 		if(isAllied) {
 			Field field = GameInstance.getInstance().field;
 			field.closeVision(position, this);			

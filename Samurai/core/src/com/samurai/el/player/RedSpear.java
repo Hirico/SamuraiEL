@@ -23,22 +23,22 @@ public class RedSpear extends Player {
 	@Override
 	public void draw(Batch batch) {
 		// determine assets
-		
-		//implements waited
-		if(cooldownTime > 0) {
-			cooldownTime -= 60*Gdx.graphics.getDeltaTime();
-			if(cooldownTime < 0) {
-				cooldownTime = 0;
-			}
-		}
-		
-		if(isRecovering) {
-			recoverLeftTime -= 60*Gdx.graphics.getDeltaTime();
-			if(recoverLeftTime <= 0) {
-				isRecovering = false;
-			}
-		}
-		Field field = GameInstance.getInstance().field;
+				Field field = GameInstance.getInstance().field;
+				//implements waited
+				if(cooldownTime > 0) {
+					cooldownTime -= 60*Gdx.graphics.getDeltaTime();
+					if(cooldownTime < 0) {
+						cooldownTime = 0;
+					}
+				}
+						
+				if(isRecovering) {
+					recoverLeftTime -= 60*Gdx.graphics.getDeltaTime();
+					if(recoverLeftTime <= 0) {
+						isRecovering = false;
+						field.blocks[(int) homePosition.x][(int) homePosition.y].recoverComplete();				
+					}
+				}
 		
 		if(isMoving) {
 			switch(direction) {
@@ -87,7 +87,9 @@ public class RedSpear extends Player {
 				playerHint.setPosition(this.getX(), this.getY());
 				playerHint.draw(batch);
 			}
-			super.draw(batch);
+			if(!isRecovering) {
+				super.draw(batch);
+			}
 		}
 	}
 	
