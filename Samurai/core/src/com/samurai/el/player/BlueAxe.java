@@ -17,7 +17,36 @@ public class BlueAxe extends Player {
 		this.set(Resources.getInstance().stand1_5);
 		totalCooldownTime = 65;
 		playerHint.set(Resources.getInstance().player1);
+		attackEffect.set(Resources.getInstance().explosion1);
 		GameInstance.getInstance().teamScores[1] += 1;
+	}
+	
+	@Override
+	public void attackEffectBegin() {
+		Field field = GameInstance.getInstance().field;
+		attackEffectDelay = 0.08f;
+		switch(direction) {
+		case 0:
+			attackEffect.setRotation(270);
+			attackEffect.setPosition(field.getBottomLeftCorner().x + (position.x-1.345f)*field.blockSize, 
+					 field.getBottomLeftCorner().y + (position.y-1.175f)*field.blockSize);
+			break;
+		case 1:
+			attackEffect.setRotation(90);
+			attackEffect.setPosition(field.getBottomLeftCorner().x + (position.x-1.375f)*field.blockSize, 
+					 field.getBottomLeftCorner().y + (position.y-1.15f)*field.blockSize);
+			break;
+		case 2:
+			attackEffect.setRotation(0);
+			attackEffect.setPosition(field.getBottomLeftCorner().x + (position.x-1.4f)*field.blockSize, 
+					 field.getBottomLeftCorner().y + (position.y-1.15f)*field.blockSize);
+			break;
+		case 3:
+			attackEffect.setRotation(180);
+			attackEffect.setPosition(field.getBottomLeftCorner().x + (position.x-1.365f)*field.blockSize, 
+				 field.getBottomLeftCorner().y + (position.y-1.158f)*field.blockSize);
+			break;
+		}
 	}
 	
 	@Override
@@ -33,7 +62,7 @@ public class BlueAxe extends Player {
 		
 		if(attackEffectDelay > 0) {
 			attackEffectDelay -= Gdx.graphics.getDeltaTime();
-			//attackEffect.draw(batch);
+			attackEffect.draw(batch);
 		}
 				
 		if(isRecovering) {

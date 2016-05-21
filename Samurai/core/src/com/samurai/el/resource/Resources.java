@@ -43,6 +43,8 @@ public class Resources {
 	
 	public Sprite laser0 = new Sprite(new Texture(Gdx.files.internal("img/character/laser0.png")));
 	public Sprite laser1 = new Sprite(new Texture(Gdx.files.internal("img/character/laser1.png")));
+	public Sprite explosion0 = new Sprite(new Texture(Gdx.files.internal("img/character/explosion0.png")));
+	public Sprite explosion1 = new Sprite(new Texture(Gdx.files.internal("img/character/explosion1.png")));
 	public Sprite stand0_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_0.png")));
 	public Sprite stand1_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_0.png")));
 	public Sprite stand2_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_0.png")));
@@ -171,6 +173,8 @@ public class Resources {
 		attackFade = new Sprite(new Texture(Gdx.files.internal("img/ui/attackFade.png")));
 		laser0 = new Sprite(new Texture(Gdx.files.internal("img/character/laser0.png")));
 		laser1 = new Sprite(new Texture(Gdx.files.internal("img/character/laser1.png")));
+		explosion0 = new Sprite(new Texture(Gdx.files.internal("img/character/explosion0.png")));
+		explosion1 = new Sprite(new Texture(Gdx.files.internal("img/character/explosion1.png")));
 		stand0_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_0.png")));
 		stand1_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_0.png")));
 		stand2_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_0.png")));
