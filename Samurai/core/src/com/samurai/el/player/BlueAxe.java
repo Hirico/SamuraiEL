@@ -23,7 +23,6 @@ public class BlueAxe extends Player {
 	public void draw(Batch batch) {
 		// determine assets
 		Field field = GameInstance.getInstance().field;
-		//implements waited
 		if(cooldownTime > 0) {
 			cooldownTime -= 60*Gdx.graphics.getDeltaTime();
 			if(cooldownTime < 0) {
@@ -31,6 +30,11 @@ public class BlueAxe extends Player {
 			}
 		}
 		
+		if(attackEffectDelay > 0) {
+			attackEffectDelay -= Gdx.graphics.getDeltaTime();
+			//attackEffect.draw(batch);
+		}
+				
 		if(isRecovering) {
 			recoverLeftTime -= 60*Gdx.graphics.getDeltaTime();
 			if(recoverLeftTime <= 0) {

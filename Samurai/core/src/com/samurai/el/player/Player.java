@@ -3,6 +3,7 @@ package com.samurai.el.player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -26,6 +27,8 @@ public abstract class Player extends Sprite implements Disposable{
 	public int killedNum;
 	public int planetOccupyNum;
 	public boolean isInvincible;
+	public Sprite attackEffect;
+	public float attackEffectDelay;
 	public double cooldownTime;
 	public double totalCooldownTime;
 	public boolean isAllied;
@@ -67,7 +70,9 @@ public abstract class Player extends Sprite implements Disposable{
 		
 		resource = Resources.getInstance();
 		playerHint = new Sprite();
-		
+		attackEffectDelay = 0f;
+		attackEffect = new Sprite();
+		attackEffect.setOrigin(0, 6);
 	}
 	
 	
@@ -89,7 +94,13 @@ public abstract class Player extends Sprite implements Disposable{
 			} else {
 				attackSound.play(Gdx.app.getPreferences("volumePref").getFloat("soundVolume", 1));
 			}
+			attackEffectBegin();
+		
 		}
+	}
+	
+	public void attackEffectBegin() {
+		
 	}
 	
 	/**use for AI before occupy() to avoid making friendly fire */

@@ -1,7 +1,6 @@
 package com.samurai.el.player;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.math.Vector2;
 import com.samurai.el.field.Field;
@@ -9,6 +8,7 @@ import com.samurai.el.maingame.GameInstance;
 import com.samurai.el.resource.Resources;
 
 public class BlueSword extends Player {
+	
 	public BlueSword(Vector2 homePosition) {
 		super(homePosition);
 		side = 1;
@@ -22,23 +22,26 @@ public class BlueSword extends Player {
 	
 	@Override
 	public void draw(Batch batch) {
-		// determine assets
-				Field field = GameInstance.getInstance().field;
-				//implements waited
-				if(cooldownTime > 0) {
-					cooldownTime -= 60*Gdx.graphics.getDeltaTime();
-					if(cooldownTime < 0) {
-						cooldownTime = 0;
-					}
-				}
-						
-				if(isRecovering) {
-					recoverLeftTime -= 60*Gdx.graphics.getDeltaTime();
-					if(recoverLeftTime <= 0) {
-						isRecovering = false;
-						field.blocks[(int) homePosition.x][(int) homePosition.y].recoverComplete();				
-					}
-				}
+		Field field = GameInstance.getInstance().field;
+		if(cooldownTime > 0) {
+			cooldownTime -= 60*Gdx.graphics.getDeltaTime();
+			if(cooldownTime < 0) {
+				cooldownTime = 0;
+			}
+		}
+		
+		if(attackEffectDelay > 0) {
+			attackEffectDelay -= Gdx.graphics.getDeltaTime();
+			//attackEffect.draw(batch);
+		}
+				
+		if(isRecovering) {
+			recoverLeftTime -= 60*Gdx.graphics.getDeltaTime();
+			if(recoverLeftTime <= 0) {
+				isRecovering = false;
+				field.blocks[(int) homePosition.x][(int) homePosition.y].recoverComplete();				
+			}
+		}
 		
 		if(isMoving) {
 			switch(direction) {
