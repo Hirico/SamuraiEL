@@ -29,6 +29,7 @@ public class GameScreen implements Screen {
 	
 	public Sprite redScore;
 	public Sprite blueScore;
+	public Sprite middleScore;
 	
 	public int UILayerNum;
 	
@@ -50,9 +51,11 @@ public class GameScreen implements Screen {
 		
 		redScore = Resources.getInstance().redScore;
 		blueScore = Resources.getInstance().blueScore;
+		middleScore = Resources.getInstance().middleScore;
 		
-		redScore.setPosition(140f, 700f);
-		blueScore.setPosition(640f, 700f);
+		redScore.setPosition(140f, 699f);
+		blueScore.setPosition(640f, 699f);
+		middleScore.setPosition(616f, 677f);
 		
 		gameInstance = GameInstance.getInstance();	
 		stage = new GameStage(gameInstance, this);
@@ -65,7 +68,7 @@ public class GameScreen implements Screen {
 			} else {
 				timeBlocks[i].set(Resources.getInstance().time1);
 			}
-			timeBlocks[i].setPosition(163 + 53*i, 672.5f);
+			timeBlocks[i].setPosition(163 + 53*i, 671.5f);
 		}
 		
 		timeChecks = new int[18];		
@@ -134,8 +137,9 @@ public class GameScreen implements Screen {
 				    redScore.setSize(1000 * (float)gameInstance.teamScores[0]/(gameInstance.teamScores[1]+gameInstance.teamScores[0]), redScore.getHeight());
 				    redScore.draw(uiBatch);
 				    blueScore.setSize(1000 * (float)gameInstance.teamScores[1]/(gameInstance.teamScores[1]+gameInstance.teamScores[0]), blueScore.getHeight());
-				    blueScore.setPosition(140+redScore.getWidth(), 700f);
+				    blueScore.setPosition(140+redScore.getWidth(), 699f);
 					blueScore.draw(uiBatch);
+					middleScore.draw(uiBatch);
 			     
 			        
 			        float attackPercent = (float)(gameInstance.human.cooldownTime/gameInstance.human.totalCooldownTime);

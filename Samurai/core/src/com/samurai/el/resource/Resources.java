@@ -36,6 +36,7 @@ public class Resources {
 	public Sprite time1 = new Sprite(new Texture(Gdx.files.internal("img/ui/time1.png")));
 	public Sprite redScore = new Sprite(new Texture(Gdx.files.internal("img/ui/redScore.png")));
 	public Sprite blueScore = new Sprite(new Texture(Gdx.files.internal("img/ui/blueScore.png")));
+	public Sprite middleScore = new Sprite(new Texture(Gdx.files.internal("img/ui/middleScore.png")));
 	public Sprite attack0Icon = new Sprite(new Texture(Gdx.files.internal("img/ui/attack0.png")));
 	public Sprite attack1Icon = new Sprite(new Texture(Gdx.files.internal("img/ui/attack1.png")));
 	public Sprite attackFade = new Sprite(new Texture(Gdx.files.internal("img/ui/attackFade.png")));
@@ -161,6 +162,7 @@ public class Resources {
 		time1 = new Sprite(new Texture(Gdx.files.internal("img/ui/time1.png")));
 		redScore = new Sprite(new Texture(Gdx.files.internal("img/ui/redScore.png")));
 		blueScore = new Sprite(new Texture(Gdx.files.internal("img/ui/blueScore.png")));
+		middleScore = new Sprite(new Texture(Gdx.files.internal("img/ui/middleScore.png")));
 		
 		attack0Icon = new Sprite(new Texture(Gdx.files.internal("img/ui/attack0.png")));
 		attack1Icon = new Sprite(new Texture(Gdx.files.internal("img/ui/attack1.png")));
