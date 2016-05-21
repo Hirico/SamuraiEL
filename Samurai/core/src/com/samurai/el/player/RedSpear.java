@@ -21,12 +21,13 @@ public class RedSpear extends Player {
 		totalCooldownTime = 55;
 		playerHint.set(Resources.getInstance().player0);
 		attackEffect.set(Resources.getInstance().laser0);
+		GameInstance.getInstance().teamScores[0] += 1;
 	}
 	
 	@Override
 	public void attackEffectBegin() {
 		Field field = GameInstance.getInstance().field;
-		attackEffectDelay = 0.1f;
+		attackEffectDelay = 0.08f;
 		switch(direction) {
 		case 0:
 			attackEffect.setRotation(90);

@@ -18,6 +18,7 @@ public class BlueSword extends Player {
 		this.set(Resources.getInstance().stand1_4);
 		totalCooldownTime = 55;
 		playerHint.set(Resources.getInstance().player1);
+		GameInstance.getInstance().teamScores[1] += 1;
 	}
 	
 	@Override

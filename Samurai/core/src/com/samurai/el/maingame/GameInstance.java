@@ -240,23 +240,10 @@ public class GameInstance implements Disposable{
 			result[p.id][2] = p.killedNum;
 			result[p.id][3] = p.planetOccupyNum;
 		}
-		int redScore = scores[0] + scores[1] + scores[2];
-		int blueScore = scores[3] + scores[4] + scores[5];
 		
-		if(field.planets != null) {
-			for(Block b: field.planets) {
-				if(b.side == 0) {
-					redScore += 30;
-				}
-				else if(b.side == 1) {
-					blueScore += 30;
-				}
-			}
-		}
-		
-		if((human.side == 0 && redScore > blueScore) || (human.side == 1 && blueScore > redScore)) {
+		if((human.side == 0 && teamScores[0] > teamScores[1]) || (human.side == 1 && teamScores[1] > teamScores[0])) {
 			winFlag = 1;
-		} else if((human.side == 0 && redScore < blueScore) || (human.side == 1 && blueScore < redScore)) {
+		} else if((human.side == 0 && teamScores[0] < teamScores[1]) || (human.side == 1 && teamScores[1] < teamScores[0])) {
 			winFlag = 0;
 		}
 		

@@ -17,6 +17,7 @@ public class BlueAxe extends Player {
 		this.set(Resources.getInstance().stand1_5);
 		totalCooldownTime = 65;
 		playerHint.set(Resources.getInstance().player1);
+		GameInstance.getInstance().teamScores[1] += 1;
 	}
 	
 	@Override

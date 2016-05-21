@@ -18,6 +18,7 @@ public class RedAxe extends Player {
 		this.set(Resources.getInstance().stand1_2);
 		totalCooldownTime = 65;
 		playerHint.set(Resources.getInstance().player0);
+		GameInstance.getInstance().teamScores[0] += 1;
 	}
 	
 	@Override

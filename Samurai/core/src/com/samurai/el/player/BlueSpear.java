@@ -21,12 +21,13 @@ public class BlueSpear extends Player {
 		totalCooldownTime = 60;
 		playerHint.set(Resources.getInstance().player1);
 		attackEffect.set(Resources.getInstance().laser1);
+		GameInstance.getInstance().teamScores[1] += 1;
 	}
 	
 	@Override
 	public void attackEffectBegin() {
 		Field field = GameInstance.getInstance().field;
-		attackEffectDelay = 0.1f;
+		attackEffectDelay = 0.08f;
 		switch(direction) {
 		case 0:
 			attackEffect.setRotation(90);

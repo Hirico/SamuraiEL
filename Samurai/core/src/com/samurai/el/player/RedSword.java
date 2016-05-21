@@ -18,6 +18,7 @@ public class RedSword extends Player {
 		this.set(Resources.getInstance().stand1_1);
 		totalCooldownTime = 50;
 		playerHint.set(Resources.getInstance().player0);
+		GameInstance.getInstance().teamScores[0] += 1;
 	}
 	
 	@Override
