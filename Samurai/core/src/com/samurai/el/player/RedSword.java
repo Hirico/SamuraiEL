@@ -21,6 +21,8 @@ public class RedSword extends Player {
 		playerHint.set(Resources.getInstance().player0);
 		GameInstance.getInstance().teamScores[0] += 1;
 		attackEffect.set(Resources.getInstance().electric0);
+		LskillTotalCooldown = 4f;
+		LskillCooldown = 0;
 	}
 	
 	@Override
@@ -66,10 +68,10 @@ public class RedSword extends Player {
 				LskillCooldown = 0;
 			}
 		}
-		if(OskillCooldown > 0) {
-			OskillCooldown -= Gdx.graphics.getDeltaTime();
-			if(OskillCooldown < 0) {
-				OskillCooldown = 0;
+		if(stopTime > 0) {
+			stopTime -= Gdx.graphics.getDeltaTime();
+			if(stopTime < 0) {
+				stopTime = 0;
 			}
 		}
 		

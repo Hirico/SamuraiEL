@@ -105,17 +105,6 @@ public class GameStage extends Stage{
 						human.shockwave();
 					}
 				}
-				if(keycode == Input.Keys.O) {
-					if(human instanceof RedSpear || human instanceof BlueSpear) {
-						human.lightning();
-					}
-					else if(human instanceof RedSword || human instanceof BlueSword) {
-						human.assasin();
-					}
-					else if(human instanceof RedAxe || human instanceof BlueAxe) {
-						human.killing();
-					}
-				}
 			} else {
 				//guideLevel control
 				if(gameInstance.guideLevel == 0) {

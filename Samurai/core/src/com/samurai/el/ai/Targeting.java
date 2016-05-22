@@ -25,7 +25,7 @@ public class Targeting {
 			int minId = 0;
 			
 			for(int i = 0; i < targetPlanets.size; i++) {
-				distances[i] = (int) ((targetPlanets.get(i).planetPosition.x-p.position.x) + (targetPlanets.get(i).planetPosition.y-p.position.y));
+				distances[i] = (int) (Math.pow((targetPlanets.get(i).planetPosition.x-p.position.x), 2) +Math.pow((targetPlanets.get(i).planetPosition.y-p.position.y), 2));
 				if(i > 0 && distances[i] < distances[i-1]) {
 					minId = i;
 				}			
@@ -41,7 +41,7 @@ public class Targeting {
 		int minId = 0;
 		
 		for(int i = 0; i < enemies.size; i++) {
-			distances[i] = (int) ((enemies.get(i).position.x-p.position.x) + (enemies.get(i).position.y-p.position.y));
+			distances[i] = (int) (Math.pow((enemies.get(i).position.x-p.position.x), 2) +Math.pow((enemies.get(i).position.y-p.position.y), 2));
 			if(i > 0 && distances[i] < distances[i-1]) {
 				minId = i;
 			}			

@@ -25,8 +25,6 @@ public class BlueSpear extends Player {
 		GameInstance.getInstance().teamScores[1] += 1;
 		LskillTotalCooldown = 4f;
 		LskillCooldown = 0;
-		OskillTotalCooldown = 12f;
-		OskillCooldown = 0;
 	}
 	
 	@Override
@@ -67,16 +65,16 @@ public class BlueSpear extends Player {
 				cooldownTime = 0;
 			}
 		}
+		if(stopTime > 0) {
+			stopTime -= Gdx.graphics.getDeltaTime();
+			if(stopTime < 0) {
+				stopTime = 0;
+			}
+		}
 		if(LskillCooldown > 0) {
 			LskillCooldown -= Gdx.graphics.getDeltaTime();
 			if(LskillCooldown < 0) {
 				LskillCooldown = 0;
-			}
-		}
-		if(OskillCooldown > 0) {
-			OskillCooldown -= Gdx.graphics.getDeltaTime();
-			if(OskillCooldown < 0) {
-				OskillCooldown = 0;
 			}
 		}
 		

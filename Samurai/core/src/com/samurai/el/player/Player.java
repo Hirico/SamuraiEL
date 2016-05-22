@@ -38,8 +38,7 @@ public abstract class Player extends Sprite implements Disposable{
 	public float moveSpeed;
 	public float LskillCooldown;
 	public float LskillTotalCooldown;
-	public float OskillCooldown;
-	public float OskillTotalCooldown;
+	public float stopTime;
 	public boolean fightMode;
 	public int fightLevel;
 	public boolean isAllied;
@@ -91,6 +90,7 @@ public abstract class Player extends Sprite implements Disposable{
 		fightLevel = 0;
 		ai = null;
 		fightMode = Gdx.app.getPreferences("Colony").getBoolean("fightMode", true);
+		stopTime = 0;
 	}
 	
 	
@@ -202,7 +202,7 @@ public abstract class Player extends Sprite implements Disposable{
 	
 
 	public void move(final int direction) {
-		if(!isRecovering) {
+		if(!isRecovering && stopTime <= 0) {
 			Field field = GameInstance.getInstance().field;
 			this.direction = direction;
 			Vector2 targetPosition = new Vector2();
@@ -311,7 +311,7 @@ public abstract class Player extends Sprite implements Disposable{
 	
 	/**automatically show when targetPosition is not accessible */
 	public void moveForAI(final int direction) {
-		if(!isRecovering) {
+		if(!isRecovering && stopTime <= 0) {
 			Field field = GameInstance.getInstance().field;
 			this.direction = direction;
 			Vector2 targetPosition = new Vector2();
@@ -618,7 +618,7 @@ public abstract class Player extends Sprite implements Disposable{
 	}
 	
 	public void boundDebuff() {
-		
+		stopTime = 2f;
 	}
 	
 	/**L skill for Reaper */
@@ -626,6 +626,15 @@ public abstract class Player extends Sprite implements Disposable{
 		if(!isRecovering) {
 			if(LskillCooldown <= 0) {
 				Field field = GameInstance.getInstance().field;
+				field.executeOccupation(this, position, 0);
+				field.executeOccupation(this, position, 1);
+				field.executeOccupation(this, position, 2);
+				field.executeOccupation(this, position, 3);
+				if(!isHuman) {
+					attackSound.play(0.3f * Gdx.app.getPreferences("volumePref").getFloat("soundVolume", 1));
+				} else {
+					attackSound.play(0.8f *Gdx.app.getPreferences("volumePref").getFloat("soundVolume", 1));
+				}
 				LskillCooldown = LskillTotalCooldown;
 			}
 		
@@ -634,20 +643,6 @@ public abstract class Player extends Sprite implements Disposable{
 		
 	}
 	
-	/**O skill for Advancer */
-	public void lightning() {
-		
-	}
-	
-	/**O skill for Tracker */
-	public void assasin() {
-		
-	}
-	
-	/**O skill for Reaper */
-	public void killing() {
-
-	}
 	
 	public void dispose() {
 		specBlockTexture.dispose();

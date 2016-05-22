@@ -25,8 +25,6 @@ public class RedSpear extends Player {
 		GameInstance.getInstance().teamScores[0] += 1;
 		LskillTotalCooldown = 4f;
 		LskillCooldown = 0;
-		OskillTotalCooldown = 12f;
-		OskillCooldown = 0;
 	}
 	
 	@Override
@@ -72,10 +70,10 @@ public class RedSpear extends Player {
 				LskillCooldown = 0;
 			}
 		}
-		if(OskillCooldown > 0) {
-			OskillCooldown -= Gdx.graphics.getDeltaTime();
-			if(OskillCooldown < 0) {
-				OskillCooldown = 0;
+		if(stopTime > 0) {
+			stopTime -= Gdx.graphics.getDeltaTime();
+			if(stopTime < 0) {
+				stopTime = 0;
 			}
 		}
 		
