@@ -45,6 +45,8 @@ public class Resources {
 	public Sprite laser1 = new Sprite(new Texture(Gdx.files.internal("img/character/laser1.png")));
 	public Sprite explosion0 = new Sprite(new Texture(Gdx.files.internal("img/character/explosion0.png")));
 	public Sprite explosion1 = new Sprite(new Texture(Gdx.files.internal("img/character/explosion1.png")));
+	public Sprite electric0 = new Sprite(new Texture(Gdx.files.internal("img/character/electric0.png")));
+	public Sprite electric1 = new Sprite(new Texture(Gdx.files.internal("img/character/electric1.png")));
 	public Sprite stand0_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_0.png")));
 	public Sprite stand1_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_0.png")));
 	public Sprite stand2_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_0.png")));
@@ -175,6 +177,8 @@ public class Resources {
 		laser1 = new Sprite(new Texture(Gdx.files.internal("img/character/laser1.png")));
 		explosion0 = new Sprite(new Texture(Gdx.files.internal("img/character/explosion0.png")));
 		explosion1 = new Sprite(new Texture(Gdx.files.internal("img/character/explosion1.png")));
+		electric0 = new Sprite(new Texture(Gdx.files.internal("img/character/electric0.png")));
+		electric1 = new Sprite(new Texture(Gdx.files.internal("img/character/electric1.png")));
 		stand0_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_0.png")));
 		stand1_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_0.png")));
 		stand2_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_0.png")));

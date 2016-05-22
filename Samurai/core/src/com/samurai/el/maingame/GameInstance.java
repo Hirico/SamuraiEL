@@ -259,14 +259,17 @@ public class GameInstance implements Disposable{
 			blueSpear.hide();
 			blueSpear.isInvincible = true;
 		}
+		human.direction = 0;
 	}
 	
 	public void updateGuideLevel() {
 		if(guideLevel == 0) {
+			Timer.clearInstances();
 			resetPlayerPosition(human);
-			human.direction = 0;
+			human.direction = 0;			
 		}
 		else if(guideLevel == 1) {
+			Timer.clearInstances();
 			resetPlayerPosition(human);
 			human.direction = 0;
 			field.clearBlocks();
@@ -279,6 +282,7 @@ public class GameInstance implements Disposable{
 			}
 		}
 		else if(guideLevel == 2) {
+			Timer.clearInstances();
 			resetPlayerPosition(human);
 			human.direction = 0;
 			field.clearBlocks();
@@ -289,6 +293,7 @@ public class GameInstance implements Disposable{
 			}
 		}
 		else if(guideLevel == 3) {
+			Timer.clearInstances();
 			resetPlayerPosition(human);
 			human.direction = 0;
 			field.clearBlocks();

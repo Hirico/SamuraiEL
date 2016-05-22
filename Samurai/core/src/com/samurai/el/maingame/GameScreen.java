@@ -31,6 +31,9 @@ public class GameScreen implements Screen {
 	public Sprite blueScore;
 	public Sprite middleScore;
 	
+	public Sprite help;
+	public SpriteBatch helpBatch;
+	
 	public int UILayerNum;
 	
 	Sprite blackFade;
@@ -44,6 +47,7 @@ public class GameScreen implements Screen {
 	public Sprite guideInfo;
 	public SpriteBatch guideBatch;
 	
+	
 
 	public GameScreen(Game game) {
 		result = new int[6][4];
@@ -52,6 +56,8 @@ public class GameScreen implements Screen {
 		redScore = Resources.getInstance().redScore;
 		blueScore = Resources.getInstance().blueScore;
 		middleScore = Resources.getInstance().middleScore;
+		help = Resources.getInstance().help;
+		helpBatch = new SpriteBatch();
 		
 		redScore.setPosition(140f, 699f);
 		blueScore.setPosition(640f, 699f);
@@ -242,6 +248,10 @@ public class GameScreen implements Screen {
 	        	endBackground.draw(endBatch);
 	        	endBatch.end();
 	        }
+		} else {
+			helpBatch.begin();
+			help.draw(helpBatch);
+			helpBatch.end();
 		}
         
 		

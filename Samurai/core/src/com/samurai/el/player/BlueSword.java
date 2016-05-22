@@ -19,6 +19,35 @@ public class BlueSword extends Player {
 		totalCooldownTime = 55;
 		playerHint.set(Resources.getInstance().player1);
 		GameInstance.getInstance().teamScores[1] += 1;
+		attackEffect.set(Resources.getInstance().electric1);
+	}
+	
+	@Override
+	public void attackEffectBegin() {
+		Field field = GameInstance.getInstance().field;
+		attackEffectDelay = 0.08f;
+		switch(direction) {
+		case 0:
+			attackEffect.setRotation(180);
+			attackEffect.setPosition(field.getBottomLeftCorner().x + (position.x-2.22f)*field.blockSize, 
+					 field.getBottomLeftCorner().y + (position.y-0.27f)*field.blockSize);
+			break;
+		case 1:
+			attackEffect.setRotation(0);
+			attackEffect.setPosition(field.getBottomLeftCorner().x + (position.x-0.5f)*field.blockSize, 
+					 field.getBottomLeftCorner().y + (position.y-1.98f)*field.blockSize);
+			break;
+		case 2:
+			attackEffect.setRotation(270);
+			attackEffect.setPosition(field.getBottomLeftCorner().x + (position.x-2.2f)*field.blockSize, 
+					 field.getBottomLeftCorner().y + (position.y-2f)*field.blockSize);
+			break;
+		case 3:
+			attackEffect.setRotation(90);
+			attackEffect.setPosition(field.getBottomLeftCorner().x + (position.x-0.5f)*field.blockSize, 
+				 field.getBottomLeftCorner().y + (position.y-0.3f)*field.blockSize);
+			break;
+		}
 	}
 	
 	@Override
@@ -33,7 +62,7 @@ public class BlueSword extends Player {
 		
 		if(attackEffectDelay > 0) {
 			attackEffectDelay -= Gdx.graphics.getDeltaTime();
-			//attackEffect.draw(batch);
+			attackEffect.draw(batch);
 		}
 				
 		if(isRecovering) {
