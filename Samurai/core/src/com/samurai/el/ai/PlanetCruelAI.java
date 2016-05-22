@@ -7,7 +7,7 @@ public class PlanetCruelAI extends PlanetAI {
 
 	public PlanetCruelAI(Player player) {
 		super(player);
-		totalMoveCooldown = 0.1f;
+		initialTotalMoveCooldown = 0.1f;
 		// TODO Auto-generated constructor stub
 	}
 	

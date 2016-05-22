@@ -18,10 +18,15 @@ public class RedSpear extends Player {
 		specBlockTexture = Resources.getInstance().block0;
 		attackSound = Resources.getInstance().attack0;
 		this.set(Resources.getInstance().stand1_0);
-		totalCooldownTime = 55;
+		initialTotalCooldownTime = 55;
+		totalCooldownTime = initialTotalCooldownTime;
 		playerHint.set(Resources.getInstance().player0);
 		attackEffect.set(Resources.getInstance().laser0);
 		GameInstance.getInstance().teamScores[0] += 1;
+		LskillTotalCooldown = 4f;
+		LskillCooldown = 0;
+		OskillTotalCooldown = 12f;
+		OskillCooldown = 0;
 	}
 	
 	@Override
@@ -59,6 +64,18 @@ public class RedSpear extends Player {
 			cooldownTime -= 60*Gdx.graphics.getDeltaTime();
 			if(cooldownTime < 0) {
 				cooldownTime = 0;
+			}
+		}
+		if(LskillCooldown > 0) {
+			LskillCooldown -= Gdx.graphics.getDeltaTime();
+			if(LskillCooldown < 0) {
+				LskillCooldown = 0;
+			}
+		}
+		if(OskillCooldown > 0) {
+			OskillCooldown -= Gdx.graphics.getDeltaTime();
+			if(OskillCooldown < 0) {
+				OskillCooldown = 0;
 			}
 		}
 		

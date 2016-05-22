@@ -9,6 +9,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.samurai.el.maingame.Timer;
+import com.samurai.el.ai.PlayerAI;
+import com.samurai.el.ai.Targeting;
 import com.samurai.el.field.Field;
 import com.samurai.el.maingame.GameInstance;
 import com.samurai.el.resource.Resources;
@@ -31,6 +33,15 @@ public abstract class Player extends Sprite implements Disposable{
 	public float attackEffectDelay;
 	public double cooldownTime;
 	public double totalCooldownTime;
+	public double initialTotalCooldownTime;
+	public float initialMoveSpeed;
+	public float moveSpeed;
+	public float LskillCooldown;
+	public float LskillTotalCooldown;
+	public float OskillCooldown;
+	public float OskillTotalCooldown;
+	public boolean fightMode;
+	public int fightLevel;
 	public boolean isAllied;
 	public boolean isVisible;
 	public boolean isHidden;
@@ -43,6 +54,8 @@ public abstract class Player extends Sprite implements Disposable{
 	public int size;
 	public Sound attackSound;
 	public Sprite playerHint;
+	
+	public PlayerAI ai;
 	
 	public Player(Vector2 homePosition) {
 		
@@ -73,6 +86,11 @@ public abstract class Player extends Sprite implements Disposable{
 		attackEffectDelay = 0f;
 		attackEffect = new Sprite();
 		attackEffect.setOrigin(0, 6);
+		initialMoveSpeed = 0.2f;
+		moveSpeed = initialMoveSpeed;
+		fightLevel = 0;
+		ai = null;
+		fightMode = Gdx.app.getPreferences("Colony").getBoolean("fightMode", true);
 	}
 	
 	
@@ -131,6 +149,9 @@ public abstract class Player extends Sprite implements Disposable{
 		drawPosition.set(homePosition);		
 		recoverLeftTime = 90;
 		killedNum += 1;
+		if(fightMode) {
+			fightCancel();
+		}
 	}
 	
 	
@@ -173,7 +194,7 @@ public abstract class Player extends Sprite implements Disposable{
 				}
 			}
 		}
-		, delay, 0.2f);//run,turnDelay,interval/moveSpeed(seconds)
+		, delay, moveSpeed);//run,turnDelay,interval/moveSpeed(seconds)
 		
 		return moveTimer;
 		
@@ -320,7 +341,7 @@ public abstract class Player extends Sprite implements Disposable{
 			
 			//execute move if the move follows regulation 
 			if(((!isHidden && field.blocks[(int) targetPosition.x][(int) targetPosition.y].playerIdOn == -1) 
-					|| (isHidden && field.isOwnSide(this, targetPosition) && !targetPosition.equals(position))) 
+					|| (isHidden && field.isOwnSide(this, targetPosition) && field.blocks[(int) targetPosition.x][(int) targetPosition.y].playerIdOn == -1 && !targetPosition.equals(position))) 
 					&& !field.isOthersHome(this,targetPosition) && !field.isPlanet(targetPosition)) {
 				isMoving = true;
 				
@@ -491,6 +512,64 @@ public abstract class Player extends Sprite implements Disposable{
 		killNum += 1;
 		score += 2;
 		GameInstance.getInstance().teamScores[side] += 2;
+		if(fightMode) {
+			fightUpgrade();
+		}
+	}
+	
+	public void fightUpgrade() {
+		if(fightLevel == 0) {
+			moveSpeed = 0.18f;
+			totalCooldownTime -= 2;
+			if(ai != null) {
+				ai.totalMoveCooldown *= 0.9;
+			}
+		}
+		else if(fightLevel == 2) {
+			moveSpeed = 0.16f;
+			totalCooldownTime -= 3;
+			if(ai != null) {
+				ai.totalMoveCooldown *= 0.9;
+			}
+		}
+		else if(fightLevel == 3) {
+			moveSpeed = 0.14f;
+			totalCooldownTime -= 3;
+			if(ai != null) {
+				ai.totalMoveCooldown *= 0.9;
+			}
+		}
+		else if(fightLevel == 4) {
+			moveSpeed = 0.12f;
+			totalCooldownTime -= 3;
+			if(ai != null) {
+				ai.totalMoveCooldown *= 0.9;
+			}
+		}
+		else if(fightLevel == 5) {
+			moveSpeed = 0.1f;
+			totalCooldownTime -= 4;
+			if(ai != null) {
+				ai.totalMoveCooldown *= 0.9;
+			}
+		}
+		else if(fightLevel == 7) {
+			moveSpeed = 0.08f;
+			totalCooldownTime -= 5;
+			if(ai != null) {
+				ai.totalMoveCooldown *= 0.9;
+			}
+		}
+		fightLevel += 1;
+	}
+	
+	public void fightCancel() {
+		fightLevel = 0;
+		moveSpeed = initialMoveSpeed;
+		totalCooldownTime = initialTotalCooldownTime;
+		if(ai != null) {
+			ai.totalMoveCooldown = ai.initialTotalMoveCooldown;
+		}
 	}
 	
 	/**count plus every time occupy a planet */
@@ -514,6 +593,60 @@ public abstract class Player extends Sprite implements Disposable{
 		score += 1;
 		GameInstance.getInstance().teamScores[side] += 1;
 		
+	}
+	
+	/**L skill for Advancer */
+	public void transport() {
+		if(!isRecovering) {
+			if(LskillCooldown <= 0) {
+				for(int i = 0; i < 4; i++) {
+					move(direction);
+				}
+				LskillCooldown = LskillTotalCooldown;
+			}	
+		}
+	}
+	
+	/**L skill for Tracker */
+	public void bound() {
+		if(!isRecovering) {
+			if(LskillCooldown <= 0) {
+				Targeting.getNearestEnemy(this).boundDebuff();
+				LskillCooldown = LskillTotalCooldown;
+			}
+		}
+	}
+	
+	public void boundDebuff() {
+		
+	}
+	
+	/**L skill for Reaper */
+	public void shockwave() {
+		if(!isRecovering) {
+			if(LskillCooldown <= 0) {
+				Field field = GameInstance.getInstance().field;
+				LskillCooldown = LskillTotalCooldown;
+			}
+		
+		}
+		
+		
+	}
+	
+	/**O skill for Advancer */
+	public void lightning() {
+		
+	}
+	
+	/**O skill for Tracker */
+	public void assasin() {
+		
+	}
+	
+	/**O skill for Reaper */
+	public void killing() {
+
 	}
 	
 	public void dispose() {

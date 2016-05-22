@@ -16,7 +16,8 @@ public class RedSword extends Player {
 		specBlockTexture = Resources.getInstance().block0;
 		attackSound = Resources.getInstance().attack1;
 		this.set(Resources.getInstance().stand1_1);
-		totalCooldownTime = 50;
+		initialTotalCooldownTime = 50;
+		totalCooldownTime = initialTotalCooldownTime;
 		playerHint.set(Resources.getInstance().player0);
 		GameInstance.getInstance().teamScores[0] += 1;
 		attackEffect.set(Resources.getInstance().electric0);
@@ -57,6 +58,18 @@ public class RedSword extends Player {
 			cooldownTime -= 60*Gdx.graphics.getDeltaTime();
 			if(cooldownTime < 0) {
 				cooldownTime = 0;
+			}
+		}
+		if(LskillCooldown > 0) {
+			LskillCooldown -= Gdx.graphics.getDeltaTime();
+			if(LskillCooldown < 0) {
+				LskillCooldown = 0;
+			}
+		}
+		if(OskillCooldown > 0) {
+			OskillCooldown -= Gdx.graphics.getDeltaTime();
+			if(OskillCooldown < 0) {
+				OskillCooldown = 0;
 			}
 		}
 		

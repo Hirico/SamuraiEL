@@ -7,7 +7,7 @@ public class PlanetHardAI extends PlanetAI {
 
 	public PlanetHardAI(Player player) {
 		super(player);
-		totalMoveCooldown = 0.1f;
+		initialTotalMoveCooldown = 0.1f;
 		
 	}
 	

@@ -7,7 +7,7 @@ public class EncounterHardAI extends EncounterAI {
 	public EncounterHardAI(Player player) {
 		super(player);
 		// TODO Auto-generated constructor stub
-		totalMoveCooldown = 0.1f;
+		initialTotalMoveCooldown = 0.1f;
 	}
 
 }

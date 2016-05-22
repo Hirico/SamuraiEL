@@ -27,9 +27,18 @@ public class GameScreen implements Screen {
 	public Sprite attackIcon;
 	public Sprite attackFade;
 	
+	public Sprite LskillIcon;
+	public Sprite LskillFade;
+	
+	public Sprite OskillIcon;
+	public Sprite OskillFade;
+	
 	public Sprite redScore;
 	public Sprite blueScore;
 	public Sprite middleScore;
+	
+	public Sprite fightBack;
+	public Sprite fight;
 	
 	public Sprite help;
 	public SpriteBatch helpBatch;
@@ -63,6 +72,9 @@ public class GameScreen implements Screen {
 		blueScore.setPosition(640f, 699f);
 		middleScore.setPosition(616f, 677f);
 		
+		fightBack = Resources.getInstance().fight;
+		fight = new Sprite();
+		
 		gameInstance = GameInstance.getInstance();	
 		stage = new GameStage(gameInstance, this);
 		uiBatch = new SpriteBatch();
@@ -71,8 +83,10 @@ public class GameScreen implements Screen {
 			timeBlocks[i] = new Sprite();
 			if(gameInstance.human.side == 0) {
 				timeBlocks[i].set(Resources.getInstance().time0);
+				fight.set(Resources.getInstance().fight0);
 			} else {
 				timeBlocks[i].set(Resources.getInstance().time1);
+				fight.set(Resources.getInstance().fight1);
 			}
 			timeBlocks[i].setPosition(163 + 53*i, 671.5f);
 		}
@@ -86,6 +100,14 @@ public class GameScreen implements Screen {
 		attackIcon = new Sprite();
 		attackFade = new Sprite();
 		attackFade.set(Resources.getInstance().attackFade);
+		
+		LskillIcon = new Sprite();
+		LskillFade = new Sprite();
+		LskillFade.set(Resources.getInstance().attackFade);
+		
+		OskillIcon = new Sprite();
+		OskillFade = new Sprite();
+		OskillFade.set(Resources.getInstance().attackFade);
 		
 		UILayerNum = 1;
 		
@@ -109,15 +131,28 @@ public class GameScreen implements Screen {
 		uiBatch = new SpriteBatch();
 		if(gameInstance.human.side == 0) {
 			attackIcon.set(Resources.getInstance().attack0Icon);
+			LskillIcon.set(Resources.getInstance().attack0Icon);
+			OskillIcon.set(Resources.getInstance().attack0Icon);
 		} else {
 			attackIcon.set(Resources.getInstance().attack1Icon);
+			LskillIcon.set(Resources.getInstance().attack1Icon);
+			OskillIcon.set(Resources.getInstance().attack1Icon);
 		}
 		if(gameInstance.mode == -1) {
 			gameInstance.initializeGuideLevel();
 			guideBatch = new SpriteBatch();
 		}
-		attackIcon.setPosition(640 - 24, 20);
-		attackFade.setPosition(640 - 24, 20);
+		fightBack.setPosition(640 - fightBack.getWidth()/2, 78);
+		fight.setPosition(640 - fight.getWidth()/2, 78);
+		
+		attackIcon.setPosition(640 - 75, 20);
+		attackFade.setPosition(640 - 75, 20);
+		
+		LskillIcon.setPosition(640 - 24, 20);
+		LskillFade.setPosition(640 - 24, 20);
+		
+		OskillIcon.setPosition(640 + 27, 20);
+		OskillFade.setPosition(640 + 27, 20);
 	}
 
 	@Override
@@ -146,9 +181,15 @@ public class GameScreen implements Screen {
 				    blueScore.setPosition(140+redScore.getWidth(), 699f);
 					blueScore.draw(uiBatch);
 					middleScore.draw(uiBatch);
+					
+					if(gameInstance.human.fightMode) {
+						fight.setSize(204*((float)gameInstance.human.fightLevel/8f), fight.getHeight());
+						fightBack.draw(uiBatch);
+						fight.draw(uiBatch);
+					}
 			     
 			        
-			        float attackPercent = (float)(gameInstance.human.cooldownTime/gameInstance.human.totalCooldownTime);
+			        float attackPercent = (float)(gameInstance.human.cooldownTime/gameInstance.human.initialTotalCooldownTime);
 			        if(attackPercent != 0) {
 			        	attackIcon.setAlpha(0.6f);
 			        } else {
@@ -157,6 +198,26 @@ public class GameScreen implements Screen {
 			        attackIcon.draw(uiBatch);
 			        attackFade.setSize(48, 48 * attackPercent);
 			        attackFade.draw(uiBatch);
+			        
+			        float LskillPercent = (float)(gameInstance.human.LskillCooldown/gameInstance.human.LskillTotalCooldown);
+			        if(LskillPercent != 0) {
+			        	LskillIcon.setAlpha(0.6f);
+			        } else {
+			        	LskillIcon.setAlpha(1f);	        	
+			        }
+			        LskillIcon.draw(uiBatch);
+			        LskillFade.setSize(48, 48 * LskillPercent);
+			        LskillFade.draw(uiBatch);
+			        
+			        float OskillPercent = (float)(gameInstance.human.OskillCooldown/gameInstance.human.OskillTotalCooldown);
+			        if(OskillPercent != 0) {
+			        	OskillIcon.setAlpha(0.6f);
+			        } else {
+			        	OskillIcon.setAlpha(1f);	        	
+			        }
+			        OskillIcon.draw(uiBatch);
+			        OskillFade.setSize(48, 48 * OskillPercent);
+			        OskillFade.draw(uiBatch);
 			        
 			        uiBatch.end();
 	        	}

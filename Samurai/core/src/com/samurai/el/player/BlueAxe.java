@@ -15,7 +15,8 @@ public class BlueAxe extends Player {
 		specBlockTexture = Resources.getInstance().block1;
 		attackSound = Resources.getInstance().attack2;
 		this.set(Resources.getInstance().stand1_5);
-		totalCooldownTime = 65;
+		initialTotalCooldownTime = 65;
+		totalCooldownTime = initialTotalCooldownTime;
 		playerHint.set(Resources.getInstance().player1);
 		attackEffect.set(Resources.getInstance().explosion1);
 		GameInstance.getInstance().teamScores[1] += 1;
@@ -57,6 +58,18 @@ public class BlueAxe extends Player {
 			cooldownTime -= 60*Gdx.graphics.getDeltaTime();
 			if(cooldownTime < 0) {
 				cooldownTime = 0;
+			}
+		}
+		if(LskillCooldown > 0) {
+			LskillCooldown -= Gdx.graphics.getDeltaTime();
+			if(LskillCooldown < 0) {
+				LskillCooldown = 0;
+			}
+		}
+		if(OskillCooldown > 0) {
+			OskillCooldown -= Gdx.graphics.getDeltaTime();
+			if(OskillCooldown < 0) {
+				OskillCooldown = 0;
 			}
 		}
 		

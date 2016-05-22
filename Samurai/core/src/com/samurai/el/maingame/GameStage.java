@@ -3,7 +3,13 @@ package com.samurai.el.maingame;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.samurai.el.maingame.Timer;
+import com.samurai.el.player.BlueAxe;
+import com.samurai.el.player.BlueSpear;
+import com.samurai.el.player.BlueSword;
 import com.samurai.el.player.Player;
+import com.samurai.el.player.RedAxe;
+import com.samurai.el.player.RedSpear;
+import com.samurai.el.player.RedSword;
 
 public class GameStage extends Stage{
 	private Timer upTimer;
@@ -87,6 +93,28 @@ public class GameStage extends Stage{
 				}
 				if(keycode == Input.Keys.U) {
 					screen.changeUILayer();
+				}
+				if(keycode == Input.Keys.L) {
+					if(human instanceof RedSpear || human instanceof BlueSpear) {
+						human.transport();
+					}
+					else if(human instanceof RedSword || human instanceof BlueSword) {
+						human.bound();
+					}
+					else if(human instanceof RedAxe || human instanceof BlueAxe) {
+						human.shockwave();
+					}
+				}
+				if(keycode == Input.Keys.O) {
+					if(human instanceof RedSpear || human instanceof BlueSpear) {
+						human.lightning();
+					}
+					else if(human instanceof RedSword || human instanceof BlueSword) {
+						human.assasin();
+					}
+					else if(human instanceof RedAxe || human instanceof BlueAxe) {
+						human.killing();
+					}
 				}
 			} else {
 				//guideLevel control

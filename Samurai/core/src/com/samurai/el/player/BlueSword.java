@@ -16,7 +16,8 @@ public class BlueSword extends Player {
 		specBlockTexture = Resources.getInstance().block1;
 		attackSound = Resources.getInstance().attack1;
 		this.set(Resources.getInstance().stand1_4);
-		totalCooldownTime = 55;
+		initialTotalCooldownTime = 55;
+		totalCooldownTime = initialTotalCooldownTime;
 		playerHint.set(Resources.getInstance().player1);
 		GameInstance.getInstance().teamScores[1] += 1;
 		attackEffect.set(Resources.getInstance().electric1);
@@ -57,6 +58,18 @@ public class BlueSword extends Player {
 			cooldownTime -= 60*Gdx.graphics.getDeltaTime();
 			if(cooldownTime < 0) {
 				cooldownTime = 0;
+			}
+		}
+		if(LskillCooldown > 0) {
+			LskillCooldown -= Gdx.graphics.getDeltaTime();
+			if(LskillCooldown < 0) {
+				LskillCooldown = 0;
+			}
+		}
+		if(OskillCooldown > 0) {
+			OskillCooldown -= Gdx.graphics.getDeltaTime();
+			if(OskillCooldown < 0) {
+				OskillCooldown = 0;
 			}
 		}
 		

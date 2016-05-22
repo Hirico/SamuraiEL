@@ -10,6 +10,7 @@ import com.samurai.el.player.Player;
 public abstract class PlayerAI {
 	
 	public double moveCooldown;
+	public double initialTotalMoveCooldown;
 	public double totalMoveCooldown;
 	public Player player;
 	public Player target;
@@ -24,7 +25,10 @@ public abstract class PlayerAI {
 		gameInstance = GameInstance.getInstance();
 		stuckState = 0;
 		moveCooldown = 0.2f;
-		totalMoveCooldown = 0.2f;
+		initialTotalMoveCooldown = 0.2f;
+		totalMoveCooldown = initialTotalMoveCooldown;
+		
+		
 		planets = gameInstance.field.planets;
 		targetPlanetPosition = new Vector2();
 
@@ -116,5 +120,9 @@ public abstract class PlayerAI {
 			stuckState = 0;
 			player.isStuck = false;
 		}
+	}
+	
+	public void boundDebuff() {
+		
 	}
 }

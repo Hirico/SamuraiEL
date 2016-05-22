@@ -16,43 +16,43 @@ public class AIProgramCenter {
     	if(mode == 0) {
 	    	switch(difficulty) {
 	    	case 0:
-	    		AIs.add(new PlanetEasyAI(player));
+	    		AIs.add(player.ai = new PlanetEasyAI(player));
 	    		break;
 	    	case 1:
-	    		AIs.add(new PlanetNormalAI(player));
+	    		AIs.add(player.ai = new PlanetNormalAI(player));
 	    		break;
 	    	case 2:
-	    		AIs.add(new PlanetHardAI(player));
+	    		AIs.add(player.ai = new PlanetHardAI(player));
 	    		break;
 	    	case 3:
-	    		AIs.add(new PlanetCruelAI(player));
+	    		AIs.add(player.ai = new PlanetCruelAI(player));
 	    		break;
 	    	default:
-	    		AIs.add(new PlanetEasyAI(player));
+	    		AIs.add(player.ai = new PlanetEasyAI(player));
 	    	}
     	} 
     	
     	else if(mode == 1) {
     		switch(difficulty) {
 	    	case 0:
-	    		AIs.add(new EncounterEasyAI(player));
+	    		AIs.add(player.ai = new EncounterEasyAI(player));
 	    		break;
 	    	case 1:
-	    		AIs.add(new EncounterNormalAI(player));
+	    		AIs.add(player.ai = new EncounterNormalAI(player));
 	    		break;
 	    	case 2:
-	    		AIs.add(new EncounterHardAI(player));
+	    		AIs.add(player.ai = new EncounterHardAI(player));
 	    		break;
 	    	case 3:
-	    		AIs.add(new EncounterCruelAI(player));
+	    		AIs.add(player.ai = new EncounterCruelAI(player));
 	    		break;
 	    	default:
-	    		AIs.add(new EncounterEasyAI(player));
+	    		AIs.add(player.ai = new EncounterEasyAI(player));
 	    	}
     	}
     	
     	else if(mode == -1) {
-    		AIs.add(new GuideAI(player));
+    		AIs.add(player.ai = new GuideAI(player));
     	}
 	}
 

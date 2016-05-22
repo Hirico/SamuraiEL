@@ -18,10 +18,15 @@ public class BlueSpear extends Player {
 		specBlockTexture = Resources.getInstance().block1;
 		attackSound = Resources.getInstance().attack0;
 		this.set(Resources.getInstance().stand1_3);
-		totalCooldownTime = 60;
+		initialTotalCooldownTime = 60;
+		totalCooldownTime = initialTotalCooldownTime;
 		playerHint.set(Resources.getInstance().player1);
 		attackEffect.set(Resources.getInstance().laser1);
 		GameInstance.getInstance().teamScores[1] += 1;
+		LskillTotalCooldown = 4f;
+		LskillCooldown = 0;
+		OskillTotalCooldown = 12f;
+		OskillCooldown = 0;
 	}
 	
 	@Override
@@ -60,6 +65,18 @@ public class BlueSpear extends Player {
 			cooldownTime -= 60*Gdx.graphics.getDeltaTime();
 			if(cooldownTime < 0) {
 				cooldownTime = 0;
+			}
+		}
+		if(LskillCooldown > 0) {
+			LskillCooldown -= Gdx.graphics.getDeltaTime();
+			if(LskillCooldown < 0) {
+				LskillCooldown = 0;
+			}
+		}
+		if(OskillCooldown > 0) {
+			OskillCooldown -= Gdx.graphics.getDeltaTime();
+			if(OskillCooldown < 0) {
+				OskillCooldown = 0;
 			}
 		}
 		
