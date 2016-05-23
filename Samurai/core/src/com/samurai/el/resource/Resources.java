@@ -43,7 +43,12 @@ public class Resources {
 	public Sprite attack0Icon = new Sprite(new Texture(Gdx.files.internal("img/ui/attack0.png")));
 	public Sprite attack1Icon = new Sprite(new Texture(Gdx.files.internal("img/ui/attack1.png")));
 	public Sprite attackFade = new Sprite(new Texture(Gdx.files.internal("img/ui/attackFade.png")));
-	
+	public Sprite transport0 = new Sprite(new Texture(Gdx.files.internal("img/ui/transport0.png")));
+	public Sprite transport1 = new Sprite(new Texture(Gdx.files.internal("img/ui/transport1.png")));
+	public Sprite bound0 = new Sprite(new Texture(Gdx.files.internal("img/ui/bound0.png")));
+	public Sprite bound1 = new Sprite(new Texture(Gdx.files.internal("img/ui/bound1.png")));
+	public Sprite shockwave0 = new Sprite(new Texture(Gdx.files.internal("img/ui/shockwave0.png")));
+	public Sprite shockwave1 = new Sprite(new Texture(Gdx.files.internal("img/ui/shockwave1.png")));
 	public Sprite laser0 = new Sprite(new Texture(Gdx.files.internal("img/character/laser0.png")));
 	public Sprite laser1 = new Sprite(new Texture(Gdx.files.internal("img/character/laser1.png")));
 	public Sprite explosion0 = new Sprite(new Texture(Gdx.files.internal("img/character/explosion0.png")));
@@ -179,6 +184,12 @@ public class Resources {
 		attack0Icon = new Sprite(new Texture(Gdx.files.internal("img/ui/attack0.png")));
 		attack1Icon = new Sprite(new Texture(Gdx.files.internal("img/ui/attack1.png")));
 		attackFade = new Sprite(new Texture(Gdx.files.internal("img/ui/attackFade.png")));
+		transport0 = new Sprite(new Texture(Gdx.files.internal("img/ui/transport0.png")));
+		transport1 = new Sprite(new Texture(Gdx.files.internal("img/ui/transport1.png")));
+		bound0 = new Sprite(new Texture(Gdx.files.internal("img/ui/bound0.png")));
+		bound1 = new Sprite(new Texture(Gdx.files.internal("img/ui/bound1.png")));
+		shockwave0 = new Sprite(new Texture(Gdx.files.internal("img/ui/shockwave0.png")));
+		shockwave1 = new Sprite(new Texture(Gdx.files.internal("img/ui/shockwave1.png")));
 		laser0 = new Sprite(new Texture(Gdx.files.internal("img/character/laser0.png")));
 		laser1 = new Sprite(new Texture(Gdx.files.internal("img/character/laser1.png")));
 		explosion0 = new Sprite(new Texture(Gdx.files.internal("img/character/explosion0.png")));

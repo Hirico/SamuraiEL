@@ -30,9 +30,6 @@ public class GameScreen implements Screen {
 	public Sprite LskillIcon;
 	public Sprite LskillFade;
 	
-	public Sprite OskillIcon;
-	public Sprite OskillFade;
-	
 	public Sprite redScore;
 	public Sprite blueScore;
 	public Sprite middleScore;
@@ -105,9 +102,6 @@ public class GameScreen implements Screen {
 		LskillFade = new Sprite();
 		LskillFade.set(Resources.getInstance().attackFade);
 		
-		OskillIcon = new Sprite();
-		OskillFade = new Sprite();
-		OskillFade.set(Resources.getInstance().attackFade);
 		
 		UILayerNum = 1;
 		
@@ -129,12 +123,32 @@ public class GameScreen implements Screen {
 		finished = false;
 		Gdx.input.setInputProcessor(stage);
 		uiBatch = new SpriteBatch();
-		if(gameInstance.human.side == 0) {
+		switch(gameInstance.human.id) {
+		case 0:
 			attackIcon.set(Resources.getInstance().attack0Icon);
-			LskillIcon.set(Resources.getInstance().attack0Icon);
-		} else {
+			LskillIcon.set(Resources.getInstance().transport0);
+			break;
+		case 1:
+			attackIcon.set(Resources.getInstance().attack0Icon);
+			LskillIcon.set(Resources.getInstance().bound0);
+			break;
+		case 2:
+			attackIcon.set(Resources.getInstance().attack0Icon);
+			LskillIcon.set(Resources.getInstance().shockwave0);
+			break;
+		case 3:
 			attackIcon.set(Resources.getInstance().attack1Icon);
-			LskillIcon.set(Resources.getInstance().attack1Icon);
+			LskillIcon.set(Resources.getInstance().transport1);
+			break;
+		case 4:
+			attackIcon.set(Resources.getInstance().attack1Icon);
+			LskillIcon.set(Resources.getInstance().bound1);
+			break;
+		case 5:
+			attackIcon.set(Resources.getInstance().attack1Icon);
+			LskillIcon.set(Resources.getInstance().shockwave1);
+			break;	
+			
 		}
 		if(gameInstance.mode == -1) {
 			gameInstance.initializeGuideLevel();
