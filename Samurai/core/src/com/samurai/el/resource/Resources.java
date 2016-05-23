@@ -1,5 +1,6 @@
 package com.samurai.el.resource;
 
+import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -40,6 +41,8 @@ public class Resources {
 	public Sprite fight = new Sprite(new Texture(Gdx.files.internal("img/ui/fight.png")));
 	public Sprite fight0 = new Sprite(new Texture(Gdx.files.internal("img/ui/fight0.png")));
 	public Sprite fight1 = new Sprite(new Texture(Gdx.files.internal("img/ui/fight1.png")));
+	public Sprite moveButton = new Sprite(new Texture(Gdx.files.internal("img/ui/moveButton.png")));
+	public Sprite attackButton = new Sprite(new Texture(Gdx.files.internal("img/ui/attackButton.png")));
 	public Sprite attack0Icon = new Sprite(new Texture(Gdx.files.internal("img/ui/attack0.png")));
 	public Sprite attack1Icon = new Sprite(new Texture(Gdx.files.internal("img/ui/attack1.png")));
 	public Sprite attackFade = new Sprite(new Texture(Gdx.files.internal("img/ui/attackFade.png")));
@@ -180,6 +183,8 @@ public class Resources {
 		fight = new Sprite(new Texture(Gdx.files.internal("img/ui/fight.png")));
 		fight0 = new Sprite(new Texture(Gdx.files.internal("img/ui/fight0.png")));
 		fight1 = new Sprite(new Texture(Gdx.files.internal("img/ui/fight1.png")));
+		moveButton = new Sprite(new Texture(Gdx.files.internal("img/ui/moveButton.png")));
+		attackButton = new Sprite(new Texture(Gdx.files.internal("img/ui/attackButton.png")));
 		
 		attack0Icon = new Sprite(new Texture(Gdx.files.internal("img/ui/attack0.png")));
 		attack1Icon = new Sprite(new Texture(Gdx.files.internal("img/ui/attack1.png")));
@@ -244,13 +249,19 @@ public class Resources {
 		move1_5 = new Sprite(new Texture(Gdx.files.internal("img/character/move1_5.png")));
 		move2_5 = new Sprite(new Texture(Gdx.files.internal("img/character/move2_5.png")));
 		move3_5 = new Sprite(new Texture(Gdx.files.internal("img/character/move3_5.png")));
+		
 		player0 = new Sprite(new Texture(Gdx.files.internal("img/ui/player0.png")));
 		player1 = new Sprite(new Texture(Gdx.files.internal("img/ui/player1.png")));
 		background0 = new Sprite(new Texture(Gdx.files.internal("img/field/bg0.jpg")));
 		background1 = new Sprite(new Texture(Gdx.files.internal("img/field/bg1.jpg")));
 		background2 = new Sprite(new Texture(Gdx.files.internal("img/field/bg2.jpg")));
 		background3 = new Sprite(new Texture(Gdx.files.internal("img/field/bg3.jpg")));
-		help = new Sprite(new Texture(Gdx.files.internal("img/background/help.png")));
+		if(Gdx.app.getType() == ApplicationType.Desktop) {
+			help = new Sprite(new Texture(Gdx.files.internal("img/background/help.png")));
+		}
+		else if(Gdx.app.getType() == ApplicationType.Android) {
+			help = new Sprite(new Texture(Gdx.files.internal("img/background/helpAndroid.png")));
+		}
 		guideL0 = new Sprite(new Texture(Gdx.files.internal("img/ui/guideL0.png")));
 		guideL1 = new Sprite(new Texture(Gdx.files.internal("img/ui/guideL1.png")));
 		guideL2 = new Sprite(new Texture(Gdx.files.internal("img/ui/guideL2.png")));

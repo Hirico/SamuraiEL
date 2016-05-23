@@ -56,6 +56,7 @@ public class SettingScreen implements Screen{
 		
 		
 		background=new Sprite(new Texture("img/background/setting.png"));
+		background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		
 		
 		
@@ -229,7 +230,7 @@ public class SettingScreen implements Screen{
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		batch.begin();
-		batch.draw(background,0,0);
+		background.draw(batch);
 		batch.end();
 		stage.act();
 		stage.draw();

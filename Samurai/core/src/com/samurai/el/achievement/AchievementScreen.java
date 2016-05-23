@@ -42,6 +42,7 @@ public class AchievementScreen implements Screen{
 		if (Gdx.app.getPreferences("challenge").getInteger("winNum", 0)>20) background = new Sprite(new Texture(Gdx.files.internal("img/background/achieve1.png")));
 		else background = new Sprite(new Texture(Gdx.files.internal("img/background/achieve0.png")));
 		batch = new SpriteBatch();
+		background.setSize(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 		
 		fadeBatch = new SpriteBatch();		
 		fadeBatch.getProjectionMatrix().setToOrtho2D(0, 0, 2, 2);

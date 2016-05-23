@@ -7,6 +7,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -63,8 +64,20 @@ public class GameSetScreen implements Screen{
 	Label mode_label;
 	Sprite[] playername=new Sprite[6];
 	
+	Sprite blackFade;
+	SpriteBatch fadeBatch;
+	public float fade;
+	public OrthographicCamera camera;
+	
 	public GameSetScreen() {
 		
+		fadeBatch = new SpriteBatch();
+		fadeBatch.getProjectionMatrix().setToOrtho2D(0, 0, 2, 2);
+		blackFade = Resources.getInstance().blackFade;
+
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false, 1280, 720);
+		camera.position.set(640,360,0);
 		
 		icon=535;
 		for (int i=0;i<6;++i)
@@ -79,6 +92,7 @@ public class GameSetScreen implements Screen{
 		
 		batch=new SpriteBatch();
 		background=new Sprite(new Texture(Gdx.files.internal("img/background/gameset.png")));
+		background.setSize(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 		
 		stage = new Stage(new StretchViewport(1280,720));
 		
@@ -186,7 +200,7 @@ public class GameSetScreen implements Screen{
 	
 	@Override
 	public void show() {
-		
+		fade = 1.0f;
 		Gdx.input.setInputProcessor(stage);
 		
 		stage.addActor(returnbutton);
@@ -549,9 +563,11 @@ public class GameSetScreen implements Screen{
 		// TODO Auto-generated method stub
 		//Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
+
+		camera.update();
+		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
-		batch.draw(background,0,0);
+		background.draw(batch);
 		batch.draw(republic,253,icon+100);
 		batch.draw(union,778,icon+100);
 		for (int i=0;i<6;++i)
@@ -562,6 +578,14 @@ public class GameSetScreen implements Screen{
 		
 		stage.act();
 		stage.draw();
+		
+		if (fade > 0) {
+			fade = Math.max(fade - Gdx.graphics.getDeltaTime() / 2.f, 0);
+			fadeBatch.begin();
+			blackFade.setColor(blackFade.getColor().r, blackFade.getColor().g, blackFade.getColor().b, fade);
+			blackFade.draw(fadeBatch);
+			fadeBatch.end();
+		}
 		
 	}
 

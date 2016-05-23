@@ -1,11 +1,13 @@
 package com.samurai.el.maingame;
 
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.samurai.el.mainmenu.ScreenCenter;
@@ -52,12 +54,16 @@ public class GameScreen implements Screen {
 	
 	public Sprite guideInfo;
 	public SpriteBatch guideBatch;
-	
-	
+
+	public OrthographicCamera camera;
 
 	public GameScreen(Game game) {
 		result = new int[6][4];
 		this.game = game;
+
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false, 1280, 720);
+		camera.position.set(640,360,0);
 		
 		redScore = Resources.getInstance().redScore;
 		blueScore = Resources.getInstance().blueScore;
@@ -71,6 +77,7 @@ public class GameScreen implements Screen {
 		
 		fightBack = Resources.getInstance().fight;
 		fight = new Sprite();
+		
 		
 		gameInstance = GameInstance.getInstance();	
 		stage = new GameStage(gameInstance, this);
@@ -121,6 +128,7 @@ public class GameScreen implements Screen {
 	public void show() {
 		fade = 0f;
 		finished = false;
+		Gdx.input.setCatchBackKey(true);
 		Gdx.input.setInputProcessor(stage);
 		uiBatch = new SpriteBatch();
 		switch(gameInstance.human.id) {
@@ -174,9 +182,14 @@ public class GameScreen implements Screen {
 	        
 	        gameInstance.render();
 	        stage.act();
+	        if(Gdx.app.getType() == Application.ApplicationType.Android) {
+	        	stage.draw();
+	        }
 	        
 	        if(gameInstance.mode != -1) {
 	        	if(UILayerNum >= 1) {
+					camera.update();
+					uiBatch.setProjectionMatrix(camera.combined);
 			        uiBatch.begin();
 			        
 				    for(int i = 0; i < timeBlocks.length; i++) {
@@ -197,28 +210,29 @@ public class GameScreen implements Screen {
 						fightBack.draw(uiBatch);
 						fight.draw(uiBatch);
 					}
-			     
-			        
-			        float attackPercent = (float)(gameInstance.human.cooldownTime/gameInstance.human.initialTotalCooldownTime);
-			        if(attackPercent != 0) {
-			        	attackIcon.setAlpha(0.6f);
-			        } else {
-			        	attackIcon.setAlpha(1f);	        	
-			        }
-			        attackIcon.draw(uiBatch);
-			        attackFade.setSize(48, 48 * attackPercent);
-			        attackFade.draw(uiBatch);
-			        
-			        float LskillPercent = (float)(gameInstance.human.LskillCooldown/gameInstance.human.LskillTotalCooldown);
-			        if(LskillPercent != 0) {
-			        	LskillIcon.setAlpha(0.6f);
-			        } else {
-			        	LskillIcon.setAlpha(1f);	        	
-			        }
-			        LskillIcon.draw(uiBatch);
-			        LskillFade.setSize(48, 48 * LskillPercent);
-			        LskillFade.draw(uiBatch);
-			        
+
+					if(Gdx.app.getType() == Application.ApplicationType.Desktop) {
+						float attackPercent = (float) (gameInstance.human.cooldownTime / gameInstance.human.initialTotalCooldownTime);
+						if (attackPercent != 0) {
+							attackIcon.setAlpha(0.6f);
+						} else {
+							attackIcon.setAlpha(1f);
+						}
+						attackIcon.draw(uiBatch);
+						attackFade.setSize(48, 48 * attackPercent);
+						attackFade.draw(uiBatch);
+
+						float LskillPercent = (float) (gameInstance.human.LskillCooldown / gameInstance.human.LskillTotalCooldown);
+						if (LskillPercent != 0) {
+							LskillIcon.setAlpha(0.6f);
+						} else {
+							LskillIcon.setAlpha(1f);
+						}
+						LskillIcon.draw(uiBatch);
+						LskillFade.setSize(48, 48 * LskillPercent);
+						LskillFade.draw(uiBatch);
+					}
+					
 			        
 			        uiBatch.end();
 	        	}
@@ -306,6 +320,7 @@ public class GameScreen implements Screen {
 			}
 	        
 	        if(endBackground != null && fade < 1 && gameInstance.mode != -1) {
+				endBatch.setProjectionMatrix(camera.combined);
 		        endBatch.begin();
 	        	endBackground.draw(endBatch);
 	        	endBatch.end();

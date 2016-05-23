@@ -5,6 +5,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
@@ -50,6 +51,7 @@ public class OverScreen implements Screen
 	int maxnum;
 	int maxmax;
 	Sprite[] playername=new Sprite[6];
+	public OrthographicCamera camera;
 	
 	public OverScreen(int[][] result,int winflag, Music endMusic, int[] teamScores)
 	{
@@ -57,6 +59,10 @@ public class OverScreen implements Screen
 		this.winflag=winflag;
 		this.endMusic = endMusic;
 		this.teamScores = teamScores;
+
+		camera = new OrthographicCamera();
+		camera.setToOrtho(false, 1280, 720);
+		camera.position.set(640,360,0);
 		
 		font=new BitmapFont(Gdx.files.internal("font/over1.fnt"),Gdx.files.internal("font/over1.png"), false);
 		labelstyle=new LabelStyle(font, font.getColor());
@@ -198,7 +204,9 @@ public class OverScreen implements Screen
 		// TODO Auto-generated method stub
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-		
+
+		camera.update();
+		batch.setProjectionMatrix(camera.combined);
 		batch.begin();
 
 		batch.draw(background,0,0);

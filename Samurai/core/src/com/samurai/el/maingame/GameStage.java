@@ -1,7 +1,15 @@
 package com.samurai.el.maingame;
 
+import com.badlogic.gdx.Application.ApplicationType;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.samurai.el.maingame.Timer;
 import com.samurai.el.player.BlueAxe;
 import com.samurai.el.player.BlueSpear;
@@ -10,6 +18,7 @@ import com.samurai.el.player.Player;
 import com.samurai.el.player.RedAxe;
 import com.samurai.el.player.RedSpear;
 import com.samurai.el.player.RedSword;
+import com.samurai.el.resource.Resources;
 
 public class GameStage extends Stage{
 	private Timer upTimer;
@@ -19,14 +28,118 @@ public class GameStage extends Stage{
 	public GameInstance gameInstance;
 	private GameScreen screen;
 	public boolean paused;
-	
+	public Button up;
+	public Button down;
+	public Button left;
+	public Button right;
+	public Button attack;
+
 	public GameStage(GameInstance gameInstance, GameScreen screen) {
-		super();
+		super(new StretchViewport(1280,720));
 		this.screen = screen;
 		this.gameInstance = gameInstance;
 		paused = false;
+
+		if(Gdx.app.getType() == ApplicationType.Android) {
+			Sprite moveButtonSprite = new Sprite();
+			moveButtonSprite.set(Resources.getInstance().attackButton);
+			Button.ButtonStyle moveButtonStyle = new Button.ButtonStyle();
+			moveButtonStyle.up = new SpriteDrawable(moveButtonSprite);
+			moveButtonStyle.down = new SpriteDrawable(moveButtonSprite);
+			moveButtonStyle.over = new SpriteDrawable(moveButtonSprite);
+
+			up = new Button(moveButtonStyle);
+			down = new Button(moveButtonStyle);
+			left = new Button(moveButtonStyle);
+			right = new Button(moveButtonStyle);
+
+			Sprite attackButtonSprite = new Sprite();
+			attackButtonSprite.set(Resources.getInstance().attackButton);
+			Button.ButtonStyle attackButtonStyle = new Button.ButtonStyle();
+			attackButtonStyle.up = new SpriteDrawable(attackButtonSprite);
+			attackButtonStyle.down = new SpriteDrawable(attackButtonSprite);
+			attackButtonStyle.over = new SpriteDrawable(attackButtonSprite);
+
+			attack = new Button(attackButtonStyle);
+
+			this.addActor(up);
+			this.addActor(down);
+			this.addActor(left);
+			this.addActor(right);
+			this.addActor(attack);
+			final Player human = gameInstance.human;
+			up.setPosition(144, 410);
+			up.addListener(new InputListener() {
+				@Override
+				public boolean touchDown(InputEvent event, float x, float y,int pointer, int button)
+				{
+					upTimer = human.moveBegin(0);
+					return true;
+				}
+				@Override
+				public void touchUp(InputEvent event, float x, float y, int pointer, int button)
+				{
+					human.moveEnd(upTimer);
+				}
+			});
+
+			down.setPosition(144, 156);
+			down.addListener(new InputListener() {
+				@Override
+				public boolean touchDown(InputEvent event, float x, float y,int pointer, int button)
+				{
+					downTimer = human.moveBegin(1);
+					return true;
+				}
+				@Override
+				public void touchUp(InputEvent event, float x, float y, int pointer, int button)
+				{
+					human.moveEnd(downTimer);
+				}
+			});
+
+			left.setPosition(50, 288);
+			left.addListener(new InputListener() {
+				@Override
+				public boolean touchDown(InputEvent event, float x, float y,int pointer, int button)
+				{
+					leftTimer = human.moveBegin(2);
+					return true;
+				}
+				@Override
+				public void touchUp(InputEvent event, float x, float y, int pointer, int button)
+				{
+					human.moveEnd(leftTimer);
+				}
+			});
+
+			right.setPosition(242, 288);
+			right.addListener(new InputListener() {
+				@Override
+				public boolean touchDown(InputEvent event, float x, float y,int pointer, int button)
+				{
+					rightTimer = human.moveBegin(3);
+					return true;
+				}
+				@Override
+				public void touchUp(InputEvent event, float x, float y, int pointer, int button)
+				{
+					human.moveEnd(rightTimer);
+				}
+			});
+
+			attack.setPosition(1000, 288);
+			attack.addListener(new InputListener() {
+				@Override
+				public boolean touchDown(InputEvent event, float x, float y,int pointer, int button)
+				{
+					human.occupy();
+					return true;
+				}
+			});
+		}
 	}
-	
+
 	public void stop() {
 		Player human = gameInstance.human;
 		if(upTimer != null) {
@@ -41,7 +154,7 @@ public class GameStage extends Stage{
 		if(rightTimer != null) {
 			human.moveEnd(rightTimer);
 		}
-		
+
 	}
 
 
@@ -49,7 +162,7 @@ public class GameStage extends Stage{
 	public boolean keyDown(int keycode) {
 		gameInstance = GameInstance.getInstance();
 		Player human = gameInstance.human;
-		
+
 		if(!gameInstance.stoped) {
 			if(gameInstance.mode != -1) {
 				if(keycode == Input.Keys.P) {
@@ -62,7 +175,7 @@ public class GameStage extends Stage{
 						paused = false;
 					}
 				}
-				
+
 				if(keycode == Input.Keys.W) {
 					upTimer = human.moveBegin(0);
 				}
@@ -177,7 +290,7 @@ public class GameStage extends Stage{
 					}
 					if(keycode == Input.Keys.J) {
 						human.occupy();
-					}					
+					}
 					if(keycode == Input.Keys.K) {
 						if(!human.isHidden) {
 							human.hide();
@@ -209,7 +322,7 @@ public class GameStage extends Stage{
 					}
 					if(keycode == Input.Keys.J) {
 						human.occupy();
-					}					
+					}
 					if(keycode == Input.Keys.K) {
 						if(!human.isHidden) {
 							human.hide();
@@ -221,8 +334,8 @@ public class GameStage extends Stage{
 						screen.exit();
 					}
 				}
-				
-				
+
+
 			}
 		}
 		return false;
@@ -246,6 +359,10 @@ public class GameStage extends Stage{
 		if(keycode == Input.Keys.ESCAPE) {
 			screen.exit();
 		}
+		if(keycode == Input.Keys.BACK) {
+			screen.exit();
+		}
 		return false;
 	}
+
 }

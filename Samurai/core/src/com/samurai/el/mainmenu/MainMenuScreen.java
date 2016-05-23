@@ -2,6 +2,7 @@ package com.samurai.el.mainmenu;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.Application.ApplicationType;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
@@ -120,6 +121,7 @@ public class MainMenuScreen implements Screen{
 		explosionInterval = 0f;
 		// TODO Auto-generated method stub
 		Gdx.input.setInputProcessor(stage);
+		Resources.getInstance().reInit();
 		
 		stage.addActor(button1);
 		stage.addActor(button2);
@@ -230,7 +232,12 @@ public class MainMenuScreen implements Screen{
 	           @Override
 	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) 
 	           {
-	        	 ScreenCenter.setscreen(5);
+	        	   if(Gdx.app.getType() == ApplicationType.Desktop) {	
+	        		   ScreenCenter.setscreen(5);
+	        	   }
+	        	   else if(Gdx.app.getType() == ApplicationType.Android) {
+	        		   ScreenCenter.setscreen(6);
+	        	   }
 	           }
 	           @Override
 	           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) 
@@ -247,7 +254,7 @@ public class MainMenuScreen implements Screen{
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		batch.begin();
-		batch.draw(background, 0, 0,1280,720);
+		batch.draw(background, 0, 0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 		batch.end();
 		
 		stage.act();

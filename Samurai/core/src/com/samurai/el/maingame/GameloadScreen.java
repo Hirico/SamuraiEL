@@ -34,6 +34,7 @@ public class GameloadScreen implements Screen{
 		}
 		blackFade = new Sprite();
 		blackFade.set(Resources.getInstance().blackFade);
+		background.setSize(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 		
 	}
 	@Override

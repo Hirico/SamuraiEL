@@ -41,6 +41,7 @@ public class HelpScreen implements Screen{
 	@Override
 	public void show() {
 		background = Resources.getInstance().help;
+		background.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		Gdx.input.setInputProcessor(stage);
 		
 		stage.addActor(returnbutton);
