@@ -46,6 +46,7 @@ public class GameInstance implements Disposable{
 	public AIProgramCenter aiProgram;
 	public boolean stoped;
 	public OrthographicCamera camera;
+	public float cameraLerp;
 	
 	private GameInstance(int mapid, int time, int mode) {
 		totalTime = time;
@@ -57,6 +58,7 @@ public class GameInstance implements Disposable{
 		teamScores = new int[2];
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 1280, 720);
+		cameraLerp = 0.6f;
 				
 		//setMap
 		switch(mapid) {
@@ -211,10 +213,9 @@ public class GameInstance implements Disposable{
 			aiProgram.update();
 		}
 		
-		float lerp = 0.6f;
 		Vector3 position = camera.position;
-		position.x += (human.getX()+human.getWidth()/2 - position.x) * lerp * Gdx.graphics.getDeltaTime();
-		position.y += (human.getY()+human.getHeight()/2 - position.y) * lerp * Gdx.graphics.getDeltaTime();
+		position.x += (human.getX()+human.getWidth()/2 - position.x) * cameraLerp * Gdx.graphics.getDeltaTime();
+		position.y += (human.getY()+human.getHeight()/2 - position.y) * cameraLerp * Gdx.graphics.getDeltaTime();
 			
 		camera.position.set(position.x, position.y, 0);
 		camera.update();

@@ -175,6 +175,14 @@ public class GameStage extends Stage{
 						paused = false;
 					}
 				}
+				if(keycode == Input.Keys.UP) {					
+					gameInstance.camera.zoom += 0.1;
+					gameInstance.cameraLerp -= 0.2;
+				}
+				if(keycode == Input.Keys.DOWN) {					
+					gameInstance.camera.zoom -= 0.1;
+					gameInstance.cameraLerp += 0.2;
+				}
 
 				if(keycode == Input.Keys.W) {
 					upTimer = human.moveBegin(0);

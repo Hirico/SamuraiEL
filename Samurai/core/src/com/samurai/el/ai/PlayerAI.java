@@ -50,7 +50,9 @@ public abstract class PlayerAI {
 
 	public void getRandomTarget() {
 		int targetId = (int)(Math.random()*(enemies.size-1));
-		target = enemies.get(targetId);				
+		if(targetId < enemies.size) {
+			target = enemies.get(targetId);	
+		}
 	}
 	
 	public void changeTarget() {	

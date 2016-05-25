@@ -121,7 +121,9 @@ public class MainMenuScreen implements Screen{
 		explosionInterval = 0f;
 		// TODO Auto-generated method stub
 		Gdx.input.setInputProcessor(stage);
-		Resources.getInstance().reInit();
+		if(Gdx.app.getType() == ApplicationType.Android) {
+			Resources.getInstance().reInit();
+		}
 		
 		stage.addActor(button1);
 		stage.addActor(button2);
