@@ -28,6 +28,7 @@ public class OverScreen implements Screen
 	int[][] result;
 	int winflag;
 	int[] teamScores;
+	int humanid;
 	Stage stage;
 	ImageButton returnbutton;
 	BitmapFont font;
@@ -53,12 +54,34 @@ public class OverScreen implements Screen
 	Sprite[] playername=new Sprite[6];
 	public OrthographicCamera camera;
 	
-	public OverScreen(int[][] result,int winflag, Music endMusic, int[] teamScores)
+	void SolveAchieve()
+	{
+		String[] playername={"Advancer","Tracker","Reaper"};
+		if(winflag == 1) 
+		{
+			Gdx.app.getPreferences("challenge").putInteger("winNum", Gdx.app.getPreferences("challenge").getInteger("winNum", 0)+1);
+		}
+		
+		if (result[humanid%3][0]>Gdx.app.getPreferences("challenge").getInteger(playername[humanid%3], 0))
+			Gdx.app.getPreferences("challenge").putInteger(playername[humanid%3],result[humanid%3][0]);
+		
+		Gdx.app.getPreferences("challenge").putInteger("killNum", Gdx.app.getPreferences("challenge").getInteger("killNum", 0)+result[humanid][1]);
+		
+		if (maxnum==humanid)
+		{
+			Gdx.app.getPreferences("challenge").putInteger("ACE", Gdx.app.getPreferences("challenge").getInteger("ACE", 0)+1);
+		}
+		
+		Gdx.app.getPreferences("challenge").flush();		
+	}
+	
+	public OverScreen(int human,int[][] result,int winflag, Music endMusic, int[] teamScores)
 	{
 		this.result=result;
 		this.winflag=winflag;
 		this.endMusic = endMusic;
 		this.teamScores = teamScores;
+		this.humanid=human;
 
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 1280, 720);
@@ -91,10 +114,8 @@ public class OverScreen implements Screen
 		
 		stage = new Stage(new StretchViewport(1280,720));
 		
-		if(winflag == 1) {
-			Gdx.app.getPreferences("challenge").putInteger("winNum", Gdx.app.getPreferences("challenge").getInteger("winNum", 0)+1);
-			Gdx.app.getPreferences("challenge").flush();
-		}
+		
+		SolveAchieve();
 		
 		fadeBatch = new SpriteBatch();
 		fadeBatch.getProjectionMatrix().setToOrtho2D(0, 0, 2, 2);

@@ -309,7 +309,8 @@ public class GameScreen implements Screen {
 				blackFade.draw(fadeBatch);
 				fadeBatch.end();
 				if (fade >= 1 && gameInstance.mode != -1) {
-					game.setScreen(new OverScreen(result, gameInstance.winFlag, endMusic, gameInstance.teamScores));        	
+					int temp=gameInstance.human.id;
+					game.setScreen(new OverScreen(temp,result, gameInstance.winFlag, endMusic, gameInstance.teamScores));        	
 					dispose();				
 					GameInstance.closeInstance();
 					Resources.getInstance().reInit(); 

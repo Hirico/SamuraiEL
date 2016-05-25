@@ -1,6 +1,8 @@
 
 package com.samurai.el.achievement;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
@@ -34,13 +36,33 @@ public class AchievementScreen implements Screen{
 	SpriteBatch fadeBatch;
 	public float fade;
 	
+	ArrayList<Integer> achievelist= new ArrayList(); 
+	
+	Sprite[] cup0=new Sprite[10];
+	Sprite[] cup1=new Sprite[10];
+	
 	BitmapFont font;
 	Label wintime;
+	
+	
+	public void calcachieve()
+	{
+		if (Gdx.app.getPreferences("challenge").getInteger("winNum", 0)>20) achievelist.add(0);
+		
+		String[] playername={"Advancer","Tracker","Reaper"};
+		
+		if (Gdx.app.getPreferences("challenge").getInteger("ACE", 0)>20) achievelist.add(1);
+		
+		if (Gdx.app.getPreferences("challenge").getInteger("killNum",0)>300) achievelist.add(2);
+		
+		for (int i=0;i<3;++i) if (Gdx.app.getPreferences("challenge").getInteger(playername[i],0)>30) achievelist.add(i+3);
+		for (int i=0;i<achievelist.size();++i) System.out.println(achievelist.get(i));
+	}
+	
 	public AchievementScreen() {
 		stage = new Stage(new StretchViewport(1280,720));
 		font=new BitmapFont(Gdx.files.internal("foxwel_temp/choose/1.fnt"),Gdx.files.internal("foxwel_temp/choose/1.png"), false);
-		if (Gdx.app.getPreferences("challenge").getInteger("winNum", 0)>20) background = new Sprite(new Texture(Gdx.files.internal("img/background/achieve1.png")));
-		else background = new Sprite(new Texture(Gdx.files.internal("img/background/achieve0.png")));
+		background = new Sprite(new Texture(Gdx.files.internal("img/background/achieve.png")));
 		batch = new SpriteBatch();
 		background.setSize(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 		
@@ -58,10 +80,13 @@ public class AchievementScreen implements Screen{
 		
 		returnbutton=new ImageButton(returnbuttonstyle);
 		
+		calcachieve();
 		
-		Label.LabelStyle labelstyle =new Label.LabelStyle(font, Color.YELLOW);
 		
-		wintime=new Label("Win times: "+Gdx.app.getPreferences("challenge").getInteger("winNum", 0),labelstyle);
+		for (int i=0;i<10;++i) cup0[i]=new Sprite(new Texture("img/achieve/not"+i+".png"));
+		for (int i=0;i<10;++i) cup1[i]=new Sprite(new Texture("img/achieve/is"+i+".png"));
+		
+		
 	}
 	
 	@Override
@@ -71,9 +96,24 @@ public class AchievementScreen implements Screen{
 		Gdx.input.setInputProcessor(stage);
 		stage.addActor(returnbutton);
 		returnbutton.setPosition(40,30);
+
 		
-		stage.addActor(wintime);
-		wintime.setPosition(500, 400);
+		cup0[0].setPosition(715,400);
+		cup0[1].setPosition(720,300);
+		cup0[2].setPosition(900,440);
+		cup0[3].setPosition(900,340);
+		cup0[4].setPosition(900,240);
+		cup0[5].setPosition(1090,430);
+		cup0[6].setPosition(440,340);
+		cup0[7].setPosition(550,340);
+		cup0[8].setPosition(500,100);
+		cup0[9].setPosition(200,140);
+		
+		
+		for (int i=0;i<10;++i)
+		{
+			cup1[i].setPosition(cup0[i].getX(),cup0[i].getY());
+		}
 		
 		returnbutton.addListener(new InputListener(){
 			 @Override
@@ -105,6 +145,8 @@ public class AchievementScreen implements Screen{
 		
 		batch.begin();
 		background.draw(batch);
+		for (int i=0;i<10;++i) cup0[i].draw(batch);
+		for (int i=0;i<achievelist.size();++i) cup1[achievelist.get(i)].draw(batch);
 		batch.end();
 		stage.act();
 		stage.draw();
@@ -115,6 +157,9 @@ public class AchievementScreen implements Screen{
 			fadeBatch.begin();
 			blackFade.setColor(blackFade.getColor().r, blackFade.getColor().g, blackFade.getColor().b, fade);
 			blackFade.draw(fadeBatch);
+			
+
+			
 			fadeBatch.end();
 		}
 	}
