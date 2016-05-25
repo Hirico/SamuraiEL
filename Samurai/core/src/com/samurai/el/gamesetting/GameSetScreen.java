@@ -3,7 +3,6 @@ package com.samurai.el.gamesetting;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -20,13 +19,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.List;
-import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.SelectBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.samurai.el.maingame.GameInstance;
 import com.samurai.el.mainmenu.ScreenCenter;
@@ -41,15 +38,11 @@ public class GameSetScreen implements Screen{
 	ImageButton returnbutton;
 	ImageButton enterbutton;
 	BitmapFont font;
-	Music music;
-	CheckBox[] fieldcheckbox=new CheckBox[4];
 	CheckBox[] playercheckbox=new CheckBox[6];
 	boolean flag;
 	Skin skin;
 	List list;
 	SelectBox[] playerselectbox=new SelectBox[6];
-	CheckBox mode0;
-	CheckBox mode1;
 	Object[] disitemlist={"","Player","Easy AI","Normal AI","Hard AI","Cruel AI"};
 	Object[] itemlist={"Player","Easy AI","Normal AI","Hard AI","Cruel AI"};
 	String[] name={"Advancer","Tracker","Reaper"};
@@ -61,15 +54,20 @@ public class GameSetScreen implements Screen{
 	int icon;
 	int[][] position=new int[6][2];
 	Label timeset_label;
-	Label mode_label;
 	Sprite[] playername=new Sprite[6];
+	
+	int mapid;
+	int modeid;
 	
 	Sprite blackFade;
 	SpriteBatch fadeBatch;
 	public float fade;
 	public OrthographicCamera camera;
 	
-	public GameSetScreen() {
+	public GameSetScreen(int mapid,int modeid) {
+		
+		this.mapid=mapid;
+		this.modeid=modeid;
 		
 		fadeBatch = new SpriteBatch();
 		fadeBatch.getProjectionMatrix().setToOrtho2D(0, 0, 2, 2);
@@ -83,7 +81,7 @@ public class GameSetScreen implements Screen{
 		for (int i=0;i<6;++i)
 		{
 			if (i<3) position[i][0]=260;else position[i][0]=735;
-			position[i][1]=icon-(i%3)*125;
+			position[i][1]=icon-40-(i%3)*150;
 		}
 		
 		flag=true;
@@ -135,21 +133,7 @@ public class GameSetScreen implements Screen{
 		checkstyle.checkboxOff=new SpriteDrawable(check0);
 		checkstyle.font=font;
 		checkstyle.fontColor=new Color(Color.YELLOW);
-		
-
 	
-		fieldcheckbox[0]=new CheckBox("  map0",checkstyle);
-		fieldcheckbox[1]=new CheckBox("  map1",checkstyle);
-		fieldcheckbox[2]=new CheckBox("  map2",checkstyle);
-		fieldcheckbox[3]=new CheckBox("  map3",checkstyle);
-
-		mode0=new CheckBox("  planet",checkstyle);
-		mode1=new CheckBox("  encounter",checkstyle);
-		
-
-
-
-		
 		
 		
 		for (int i=0;i<6;++i)
@@ -192,8 +176,7 @@ public class GameSetScreen implements Screen{
 		Label.LabelStyle labelstyle =new Label.LabelStyle(font, Color.YELLOW);
 		
 		timeset_label=new Label("90S",labelstyle);
-		
-		mode_label=new Label("Mode",labelstyle);
+
 	}
 		
 
@@ -212,9 +195,6 @@ public class GameSetScreen implements Screen{
 		stage.addActor(timeset_label);
 		timeset_label.setPosition(1000, 90);
 		
-		stage.addActor(mode_label);
-		mode_label.setPosition(300, 12);
-		
 		stage.addActor(timeset);
 		timeset.setBounds(640-700/2, 90,700, 35);
 		timeset.setValue(900);
@@ -224,26 +204,8 @@ public class GameSetScreen implements Screen{
 			timeset_label.setVisible(false);
 			}
 		
-		int filedstartX=160;
-		for (int i=0;i<4;++i)
-		{
-			stage.addActor(fieldcheckbox[i]);
-			fieldcheckbox[i].setY(165);
-			fieldcheckbox[i].setX(filedstartX+i*260);
-		}
 
-		stage.addActor(mode0);
-		stage.addActor(mode1);
-		
-		mode0.setX(640-mode0.getWidth()/2-150+30);
-		mode0.setY(14);
-		mode1.setX(640-mode0.getWidth()/2+150-30);
-		mode1.setY(14);
-		
-		mode0.setChecked(true);
-		//mood0.setPosition(640-mood0.getWidth()/2, 400);
-		//mood1.setPosition(640-mood0.getWidth()/2, 300);
-		
+
 		
 		for (int i=0;i<6;++i)
 		{
@@ -265,81 +227,6 @@ public class GameSetScreen implements Screen{
 			playerselectbox[i].setSize(160, 33);
 		}
 
-		for (int i=0;i<4;++i)
-		{
-			final int temp1=i;
-			fieldcheckbox[i].addListener(new InputListener()
-			{
-				 @Override                                                                                                                                                       
-			        public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-			            super.enter(event, x, y, pointer, fromActor);
-			
-			            Sound sound = Resources.getInstance().hover;
-			            sound.play(Gdx.app.getPreferences("volumePref").getFloat("soundVolume", 1f));
-			        
-			        }
-				@Override
-				public void touchUp(InputEvent event, float x, float y, int pointer, int button) 
-				{
-					for (int j=0;j<4;++j)
-	        	   	{
-	        	   		if (temp1!=j) fieldcheckbox[j].setChecked(false);
-	        	   	}
-				}
-	           @Override
-	           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) 
-	           {
-						return true;
-	           }
-			});
-		}
-		
-		mode0.addListener(new InputListener()
-		{
-			 @Override                                                                                                                                                       
-		        public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-		            super.enter(event, x, y, pointer, fromActor);
-		
-		            Sound sound = Resources.getInstance().hover;
-		            sound.play(Gdx.app.getPreferences("volumePref").getFloat("soundVolume", 1f));
-		        
-		        }
-			@Override
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) 
-			{
-				mode1.setChecked(false);
-			}
-           @Override
-           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) 
-           {
-					return true;
-           }
-		});
-		
-		
-		
-		mode1.addListener(new InputListener()
-		{
-			 @Override                                                                                                                                                       
-		        public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-		            super.enter(event, x, y, pointer, fromActor);
-		
-		            Sound sound = Resources.getInstance().hover;
-		            sound.play(Gdx.app.getPreferences("volumePref").getFloat("soundVolume", 1f));
-		        
-		        }
-			@Override
-			public void touchUp(InputEvent event, float x, float y, int pointer, int button) 
-			{
-				mode0.setChecked(false);
-			}
-           @Override
-           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) 
-           {
-					return true;
-           }
-		});
-		
 		for (int i=0;i<6;++i)
 		{
 			final int temp=i;
@@ -425,7 +312,7 @@ public class GameSetScreen implements Screen{
 		        }
 	           @Override
 	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) {
-	        	   ScreenCenter.setscreen(0);
+	        	   ScreenCenter.setscreen(2);
 	           }
 	           @Override
 	           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) {
@@ -449,9 +336,7 @@ public class GameSetScreen implements Screen{
 	        	   int time=90;
 	        	   //time=(int) (timeset.getValue()/10);
 	        	   if (Gdx.app.getPreferences("challenge").getInteger("winNum", 0)>20) time=(int) (timeset.getValue()/10);
-	        	   if (mode0.isChecked()) GameInstance.setInstance(getchoose(fieldcheckbox),getme(),getai(),time,0);
-	        	   else GameInstance.setInstance(getchoose(fieldcheckbox),getme(),getai(),time,1);
-
+	        	   GameInstance.setInstance(mapid,getme(),getai(),time,modeid);
 	        	   ScreenCenter.stopmusic();
 	        	   ScreenCenter.setscreen(4);
 	           }
@@ -476,9 +361,7 @@ public class GameSetScreen implements Screen{
 
 	boolean OK()
 	{
-		boolean temp=false;
-		for (int i=0;i<fieldcheckbox.length;++i) if (fieldcheckbox[i].isChecked()) temp=true;
-		if (temp&&(getme()!=-1))
+		if ((getme()!=-1))
 		{
 			return true;
 		}else return false;

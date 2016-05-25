@@ -5,6 +5,7 @@ import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.audio.Music;
 import com.samurai.el.achievement.AchievementScreen;
 import com.samurai.el.gamesetting.GameSetScreen;
+import com.samurai.el.gamesetting.MapSetScreen;
 import com.samurai.el.maingame.GameInstance;
 import com.samurai.el.maingame.GameScreen;
 import com.samurai.el.maingame.GameloadScreen;
@@ -54,6 +55,12 @@ public class ScreenCenter
 		music.play();
 	}
 	
+	public static void setgamesetscreen(int mapid,int modeid)
+	{
+		game.getScreen().dispose();
+		game.setScreen(new GameSetScreen(mapid,modeid));
+	}
+	
 	public static void setscreen(int screennum)
 	{
 		switch(screennum)
@@ -68,7 +75,7 @@ public class ScreenCenter
 				break;
 			case 2:
 				game.getScreen().dispose();
-				game.setScreen(new GameSetScreen());
+				game.setScreen(new MapSetScreen());
 				break;
 			case 3:
 				game.getScreen().dispose();
@@ -88,6 +95,7 @@ public class ScreenCenter
 				game.getScreen().dispose();
 				game.setScreen(new HelpScreen());
 				break;
+				
 		}
 	}
 }
