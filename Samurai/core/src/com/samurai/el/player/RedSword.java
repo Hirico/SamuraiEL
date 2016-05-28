@@ -149,6 +149,10 @@ public class RedSword extends Player {
 							field.getBottomLeftCorner().y + drawPosition.y*field.blockSize);
 					stopEffect.draw(batch);
 				}
+				if(epackNum > 0) {
+					epackContainHint.setPosition(this.getX()-4, this.getY()-4);
+					epackContainHint.draw(batch);
+				}
 			}
 		}
 		if(stopTime > 0) {
@@ -156,6 +160,9 @@ public class RedSword extends Player {
 			if(stopTime < 0) {
 				stopTime = 0;
 			}
+		}
+		if(eAmmo != null) {
+			eAmmo.draw(batch);
 		}
 	}
 	

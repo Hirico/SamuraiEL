@@ -17,7 +17,7 @@ public class DesktopLauncher {
 		if(LWJGLUtil.getPlatform() == LWJGLUtil.PLATFORM_MACOSX) {
 			config.fullscreen = false;
 		} else {
-			config.fullscreen = true;
+			//config.fullscreen = true;
 		}
 		config.addIcon("icon128.png", Files.FileType.Internal);
 		config.addIcon("icon32.png", Files.FileType.Internal);

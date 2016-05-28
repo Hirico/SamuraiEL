@@ -62,6 +62,9 @@ public class Resources {
 	public Sprite electric1 = new Sprite(new Texture(Gdx.files.internal("img/character/electric1.png")));
 	public Sprite electric0L = new Sprite(new Texture(Gdx.files.internal("img/character/electric0L.png")));
 	public Sprite electric1L = new Sprite(new Texture(Gdx.files.internal("img/character/electric1L.png")));
+	public Sprite eAmmo0 = new Sprite(new Texture(Gdx.files.internal("img/character/eAmmo0.png")));
+	public Sprite eAmmo1 = new Sprite(new Texture(Gdx.files.internal("img/character/eAmmo1.png")));
+	public Sprite epackContainHint = new Sprite(new Texture(Gdx.files.internal("img/character/epack.png")));
 	public Sprite stand0_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_0.png")));
 	public Sprite stand1_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_0.png")));
 	public Sprite stand2_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_0.png")));
@@ -148,6 +151,8 @@ public class Resources {
 	public Sound attack0 = Gdx.audio.newSound(Gdx.files.internal(("sound/attack0.wav")));
 	public Sound attack1 = Gdx.audio.newSound(Gdx.files.internal(("sound/attack1.wav")));
 	public Sound attack2 = Gdx.audio.newSound(Gdx.files.internal(("sound/attack2.wav")));
+	public Sound epackPick = Gdx.audio.newSound(Gdx.files.internal("sound/epackPick.wav"));
+	public Sound epackLaunch = Gdx.audio.newSound(Gdx.files.internal("sound/epackLaunch.wav"));
 	public Sound hover = Gdx.audio.newSound(Gdx.files.internal(("sound/hoverSound.wav")));
 
 	public Cursor cursor = Gdx.graphics.newCursor(new Pixmap(Gdx.files.internal("img/ui/cursor.png")), 0, 0);
@@ -219,6 +224,9 @@ public class Resources {
 		electric1 = new Sprite(new Texture(Gdx.files.internal("img/character/electric1.png")));
 		electric0L = new Sprite(new Texture(Gdx.files.internal("img/character/electric0L.png")));
 		electric1L = new Sprite(new Texture(Gdx.files.internal("img/character/electric1L.png")));
+		eAmmo0 = new Sprite(new Texture(Gdx.files.internal("img/character/eAmmo0.png")));
+		eAmmo1 = new Sprite(new Texture(Gdx.files.internal("img/character/eAmmo1.png")));
+		epackContainHint = new Sprite(new Texture(Gdx.files.internal("img/character/epack.png")));
 		stand0_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_0.png")));
 		stand1_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_0.png")));
 		stand2_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_0.png")));
@@ -307,6 +315,8 @@ public class Resources {
 		attack0 = Gdx.audio.newSound(Gdx.files.internal(("sound/attack0.wav")));
 		attack1 = Gdx.audio.newSound(Gdx.files.internal(("sound/attack1.wav")));
 		attack2 = Gdx.audio.newSound(Gdx.files.internal(("sound/attack2.wav")));
+		epackPick = Gdx.audio.newSound(Gdx.files.internal("sound/epackPick.wav"));
+		epackLaunch = Gdx.audio.newSound(Gdx.files.internal("sound/epackLaunch.wav"));
 		hover = Gdx.audio.newSound(Gdx.files.internal(("sound/hoverSound.wav")));
 	}
 
@@ -323,6 +333,8 @@ public class Resources {
 		attack0.dispose();
 		attack1.dispose();
 		attack2.dispose();
+		epackPick.dispose();
+		epackLaunch.dispose();
 		death.dispose();
 	}
 }

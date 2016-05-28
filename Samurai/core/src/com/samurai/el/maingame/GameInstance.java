@@ -306,8 +306,8 @@ public class GameInstance implements Disposable{
 			
 		field.render();	
 		batch.begin();		
-		for(Player p: players) {
-			p.draw(batch);
+		for(int i = 0; i < players.size; i++) {
+			players.get(i).draw(batch);
 		}						
 		batch.end();
 						

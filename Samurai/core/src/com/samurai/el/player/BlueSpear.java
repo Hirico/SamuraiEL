@@ -151,6 +151,10 @@ public class BlueSpear extends Player {
 							field.getBottomLeftCorner().y + drawPosition.y*field.blockSize);
 					stopEffect.draw(batch);
 				}
+				if(epackNum > 0) {
+					epackContainHint.setPosition(this.getX()-4, this.getY()-4);
+					epackContainHint.draw(batch);
+				}
 			}
 			
 		}
@@ -159,6 +163,9 @@ public class BlueSpear extends Player {
 			if(stopTime < 0) {
 				stopTime = 0;
 			}
+		}
+		if(eAmmo != null) {
+			eAmmo.draw(batch);
 		}
 	}
 	

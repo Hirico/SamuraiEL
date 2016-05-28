@@ -9,6 +9,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
 import com.samurai.el.field.Background;
 import com.samurai.el.maingame.GameInstance;
+import com.samurai.el.player.EAmmo;
 import com.samurai.el.player.Player;
 
 public abstract class Field implements Disposable{
@@ -417,8 +418,39 @@ public abstract class Field implements Disposable{
 			}
 			return safe;
 			
-		
-		
+				
+	}
+	
+	public void executeEAmmo(EAmmo e) { // 10x3 blocks, protect allies
+		for(int i = 0; i < 10; i++) {
+			for(int j = -1; j < 2; j++) {
+				Vector2 targetPosition = new Vector2();
+				switch(e.direction) {
+				case 0:
+					targetPosition.set(e.position.x + j, e.position.y+i);
+					break;
+				case 1:
+					targetPosition.set(e.position.x + j, e.position.y-i);
+					break;
+				case 2:
+					targetPosition.set(e.position.x - i, e.position.y+j);
+					break;
+				case 3:
+					targetPosition.set(e.position.x + i, e.position.y+j);
+					break;
+				}
+				if(targetPosition.x <= blocks.length-1 && targetPosition.x >= 0 
+					&&targetPosition.y <= blocks[0].length-1 && targetPosition.y >= 0) {
+					Array<Player> players = GameInstance.getInstance().players;
+					for(Player p: players) {
+						if(p.position.equals(targetPosition) && p.side != e.side &&!p.isRecovering && !p.isInvincible) {
+							p.attacked();
+							e.owner.getKillBonus();
+						}
+					}
+				}
+			}
+		}
 	}
 
 	public Block getSpefBlock(Vector2 position) {

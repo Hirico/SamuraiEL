@@ -187,6 +187,9 @@ public class GameStage extends Stage{
 					if(keycode == Input.Keys.H) {
 						screen.changeGuideLayer();
 					}
+					if(keycode == Input.Keys.R) {
+						human.launchEpack();
+					}
 
 				}
 				if(keycode == Input.Keys.P) {

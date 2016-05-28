@@ -31,6 +31,9 @@ public class Block extends Sprite{
 	public float conquerPointRefreshTime;
 	public Sprite plus5;
 	public float plusAlpha;
+	public float epackSpawnDelay;
+	public boolean containAEpack;
+	public Sprite epackContainHint;
 	
 	public float[] alpha;
 	public int alphaPointer;
@@ -60,6 +63,10 @@ public class Block extends Sprite{
 		alphaPointer = 0;
 		alphaDelay = 0;
 		conquerPointRefreshTime = 1f;
+		epackSpawnDelay = 5f;
+		containAEpack = false;
+		epackContainHint = new Sprite();
+		epackContainHint.set(Resources.getInstance().epackContainHint);
 	}
 	
 	/**set it to be a planet, with texture id */
@@ -86,6 +93,7 @@ public class Block extends Sprite{
 			this.setTexture(planetTexture);
 		}
 		isPlanet = true;
+		epackContainHint.setPosition(this.getX()-4, this.getY()-4);
 	}
 	
 	public void setConquerPoint() {
@@ -237,7 +245,7 @@ public class Block extends Sprite{
 		if(GameInstance.getInstance().mode != 2) {
 			occupy(p.id);
 		} else {
-			occupy(p.conquerId);
+			occupy(p.conquerId);			
 		}
 	}
 	
@@ -305,6 +313,13 @@ public class Block extends Sprite{
 				GameInstance.getInstance().teamScores[side] += 5;
 				conquerPointRefreshTime = 1f;
 			}
+			if(!containAEpack) {
+				epackSpawnDelay -= Gdx.graphics.getDeltaTime();
+				if(epackSpawnDelay <= 0) {
+					spawnEpack();
+					epackSpawnDelay = 5f;
+				}
+			}
 		}
 		
 		float temp = getNextAlpha();
@@ -323,13 +338,23 @@ public class Block extends Sprite{
 				plus5.draw(batch);
 			}
 		}
+		if(containAEpack && isVisible) {
+			epackContainHint.draw(batch);
+		}
 		
 		if(currentEffect != null) {
 			currentEffect.draw(batch);
 			currentEffect.update(Gdx.graphics.getDeltaTime());
 		}
-		
-		
+				
+	}
+	
+	public void spawnEpack() {
+		containAEpack = true;
+	}
+	
+	public void loseAEpack() {
+		containAEpack = false;
 	}
 	
 	public void dispose() {
