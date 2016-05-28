@@ -37,9 +37,16 @@ public class PlanetCruelAI extends PlanetAI {
 					occupyPlanet();
 				} else {
 					for(Player p: allies) {
-						if(p.ai.target != null) {
-							target = p.ai.target;
-							break;
+						if(!p.isHuman) {
+							if(p.ai.target != null) {
+								target = p.ai.target;
+								break;
+							}
+						} else {
+							target = gameInstance.field.checkVision(p, p.position);
+							if(target != null) {
+								break;
+							}
 						}
 					}
 					if(target != null) {

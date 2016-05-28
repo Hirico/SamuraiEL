@@ -177,6 +177,7 @@ public abstract class Player extends Sprite implements Disposable{
 		if(fightMode) {
 			fightCancel();
 		}
+		epackNum = 0;
 	}
 	
 	

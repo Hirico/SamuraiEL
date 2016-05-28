@@ -6,9 +6,11 @@ import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -16,7 +18,12 @@ import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Slider;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 import com.samurai.el.resource.Resources;
 
@@ -27,6 +34,9 @@ public class ConquerSetScreen implements Screen{
 	public Stage sideStage;
 	public Stage shipStage;
 	public Stage currentStage;
+	public BitmapFont font;
+	public Label timeset_label;
+	public Slider timeset;
 	public ImageButton republic;
 	public ImageButton union;
 	public Sprite republicFont;
@@ -140,6 +150,30 @@ public class ConquerSetScreen implements Screen{
 		
 		sideStage.addActor(republic);
 		sideStage.addActor(union);
+		
+		//time slider and time label
+		font=new BitmapFont(Gdx.files.internal("foxwel_temp/choose/1.fnt"),Gdx.files.internal("foxwel_temp/choose/1.png"), false);
+		Sprite bar=new Sprite(new Texture("img/setting/barA.png"));
+		Sprite tt=new Sprite(new Texture("img/setting/tA.png"));
+		Slider.SliderStyle timestyle=new Slider.SliderStyle(new SpriteDrawable(bar),new SpriteDrawable(tt)); 
+		timeset=new Slider(200,3000,1,false,timestyle);
+		
+		Label.LabelStyle labelstyle =new Label.LabelStyle(font, Color.WHITE);		
+		timeset_label=new Label("90S",labelstyle);
+		shipStage.addActor(timeset);
+		timeset.setBounds(640-700/2, 90,700, 35);
+		timeset.setValue(900);
+		shipStage.addActor(timeset_label);
+		timeset_label.setPosition(1000, 90);
+		timeset.addListener(new ChangeListener()
+		{
+			 public void changed (ChangeEvent event, Actor actor) 
+			 {
+				 int timetime=(int) (timeset.getValue()/10);
+				 
+				 timeset_label.setText(timetime+"s");
+			 }
+		});
 				
 	}
 	
@@ -158,7 +192,7 @@ public class ConquerSetScreen implements Screen{
 			advancerstyle.imageDown=new TextureRegionDrawable(new Sprite(new Texture(Gdx.files.internal("img/gameset/h0.png"))));
 			advancerstyle.imageOver=new TextureRegionDrawable(new Sprite(new Texture(Gdx.files.internal("img/gameset/h0.png"))));
 			advancer = new ImageButton(advancerstyle);
-			advancer.setPosition(400, 320);
+			advancer.setPosition(395, 320);
 			advancer.addListener(new InputListener()
 			{
 				    @Override
@@ -174,7 +208,7 @@ public class ConquerSetScreen implements Screen{
 		           public void touchUp(InputEvent event, float x, float y, int pointer, int button) 
 		           {
 		        	   player = 0;
-		        	   GameInstance.setInstance(player, 2, 120);
+		        	   GameInstance.setInstance(player, 2, (int) (timeset.getValue()/10));
 		        	   bgm.stop();
 		        	   bgm.dispose();
 		        	   game.setScreen(new GameScreen(game));
@@ -190,7 +224,7 @@ public class ConquerSetScreen implements Screen{
 			trackerstyle.imageDown=new TextureRegionDrawable(new Sprite(new Texture(Gdx.files.internal("img/gameset/h1.png"))));
 			trackerstyle.imageOver=new TextureRegionDrawable(new Sprite(new Texture(Gdx.files.internal("img/gameset/h1.png"))));
 			tracker = new ImageButton(trackerstyle);
-			tracker.setPosition(600, 320);
+			tracker.setPosition(595, 320);
 			tracker.addListener(new InputListener()
 			{
 				    @Override
@@ -206,7 +240,7 @@ public class ConquerSetScreen implements Screen{
 		           public void touchUp(InputEvent event, float x, float y, int pointer, int button) 
 		           {
 		        	   player = 1;
-		        	   GameInstance.setInstance(player, 2, 120);
+		        	   GameInstance.setInstance(player, 2, (int) (timeset.getValue()/10));
 		        	   bgm.stop();
 		        	   bgm.dispose();
 		        	   game.setScreen(new GameScreen(game));
@@ -222,7 +256,7 @@ public class ConquerSetScreen implements Screen{
 			reaperstyle.imageDown=new TextureRegionDrawable(new Sprite(new Texture(Gdx.files.internal("img/gameset/h2.png"))));
 			reaperstyle.imageOver=new TextureRegionDrawable(new Sprite(new Texture(Gdx.files.internal("img/gameset/h2.png"))));
 			reaper = new ImageButton(reaperstyle);
-			reaper.setPosition(800, 320);
+			reaper.setPosition(795, 320);
 			reaper.addListener(new InputListener()
 			{
 				    @Override
@@ -238,7 +272,7 @@ public class ConquerSetScreen implements Screen{
 		           public void touchUp(InputEvent event, float x, float y, int pointer, int button) 
 		           {
 		        	   player = 2;
-		        	   GameInstance.setInstance(player, 2, 120);
+		        	   GameInstance.setInstance(player, 2, (int) (timeset.getValue()/10));
 		        	   bgm.stop();
 		        	   bgm.dispose();
 		        	   game.setScreen(new GameScreen(game));
@@ -258,7 +292,7 @@ public class ConquerSetScreen implements Screen{
 			advancerstyle.imageDown=new TextureRegionDrawable(new Sprite(new Texture(Gdx.files.internal("img/gameset/h3.png"))));
 			advancerstyle.imageOver=new TextureRegionDrawable(new Sprite(new Texture(Gdx.files.internal("img/gameset/h3.png"))));
 			advancer = new ImageButton(advancerstyle);
-			advancer.setPosition(400, 320);
+			advancer.setPosition(395, 320);
 			advancer.addListener(new InputListener()
 			{
 				    @Override
@@ -274,7 +308,7 @@ public class ConquerSetScreen implements Screen{
 		           public void touchUp(InputEvent event, float x, float y, int pointer, int button) 
 		           {
 		        	   player = 3;
-		        	   GameInstance.setInstance(player, 2, 120);
+		        	   GameInstance.setInstance(player, 2, (int) (timeset.getValue()/10));
 		        	   bgm.stop();
 		        	   bgm.dispose();
 		        	   game.setScreen(new GameScreen(game));
@@ -290,7 +324,7 @@ public class ConquerSetScreen implements Screen{
 			trackerstyle.imageDown=new TextureRegionDrawable(new Sprite(new Texture(Gdx.files.internal("img/gameset/h4.png"))));
 			trackerstyle.imageOver=new TextureRegionDrawable(new Sprite(new Texture(Gdx.files.internal("img/gameset/h4.png"))));
 			tracker = new ImageButton(trackerstyle);
-			tracker.setPosition(600, 320);
+			tracker.setPosition(595, 320);
 			tracker.addListener(new InputListener()
 			{
 				    @Override
@@ -306,7 +340,7 @@ public class ConquerSetScreen implements Screen{
 		           public void touchUp(InputEvent event, float x, float y, int pointer, int button) 
 		           {
 		        	   player = 4;
-		        	   GameInstance.setInstance(player, 2, 120);
+		        	   GameInstance.setInstance(player, 2, (int) (timeset.getValue()/10));
 		        	   bgm.stop();
 		        	   bgm.dispose();
 		        	   game.setScreen(new GameScreen(game));
@@ -322,7 +356,7 @@ public class ConquerSetScreen implements Screen{
 			reaperstyle.imageDown=new TextureRegionDrawable(new Sprite(new Texture(Gdx.files.internal("img/gameset/h5.png"))));
 			reaperstyle.imageOver=new TextureRegionDrawable(new Sprite(new Texture(Gdx.files.internal("img/gameset/h5.png"))));
 			reaper = new ImageButton(reaperstyle);
-			reaper.setPosition(800, 320);
+			reaper.setPosition(795, 320);
 			reaper.addListener(new InputListener()
 			{
 				    @Override
@@ -338,7 +372,7 @@ public class ConquerSetScreen implements Screen{
 		           public void touchUp(InputEvent event, float x, float y, int pointer, int button) 
 		           {
 		        	   player = 5;
-		        	   GameInstance.setInstance(player, 2, 120);
+		        	   GameInstance.setInstance(player, 2, (int) (timeset.getValue()/10));
 		        	   bgm.stop();
 		        	   bgm.dispose();
 		        	   game.setScreen(new GameScreen(game));

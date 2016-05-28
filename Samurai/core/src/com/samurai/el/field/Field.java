@@ -413,7 +413,14 @@ public abstract class Field implements Disposable{
 							}
 						}				
 					}
-														
+					
+					//detect planet, occupy first
+					Block targetBlock = blocks[(int) targetPosition.x][(int) targetPosition.y];
+					if(targetBlock.isPlanet) {
+						if(targetBlock.side != player.side) {
+							return true;
+						} 						
+					}																
 				}
 			}
 			return safe;
