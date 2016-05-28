@@ -19,6 +19,7 @@ public class Block extends Sprite{
 	public int viewerNum;
 	public boolean isHome;
 	public boolean isPlanet;
+	public boolean isConquerPoint;
 	public Player playerOn;
 	public Texture block6; // invisible block
 	public Texture block7; // neutral block
@@ -27,6 +28,9 @@ public class Block extends Sprite{
 	public ParticleEffect currentEffect;
 	public int size;
 	public Vector2 planetPosition;// only useful when it's a planet
+	public float conquerPointRefreshTime;
+	public Sprite plus5;
+	public float plusAlpha;
 	
 	public float[] alpha;
 	public int alphaPointer;
@@ -47,6 +51,7 @@ public class Block extends Sprite{
 		this.set(new Sprite(block6));
 		isHome = false;
 		isPlanet = false;
+		isConquerPoint = false;
 		
 		alpha = new float[]{
 		0.4f, 0.45f, 0.5f, 0.55f, 0.6f, 0.65f, 0.7f, 0.75f, 0.8f, 0.85f, 0.9f,
@@ -54,6 +59,7 @@ public class Block extends Sprite{
 		};
 		alphaPointer = 0;
 		alphaDelay = 0;
+		conquerPointRefreshTime = 1f;
 	}
 	
 	/**set it to be a planet, with texture id */
@@ -82,6 +88,12 @@ public class Block extends Sprite{
 		isPlanet = true;
 	}
 	
+	public void setConquerPoint() {
+		isConquerPoint = true;
+		plus5 = new Sprite();
+		plusAlpha = 1;
+	}
+	
 	public void effectInitialize(ParticleEffect[] homeEffect) {
 		this.homeEffect = homeEffect;
 		this.homeEffect[0].setPosition(this.getX()+this.size/2, this.getY()+this.size/2);
@@ -91,7 +103,11 @@ public class Block extends Sprite{
 	
 	public void playerArrive(Player player) {
 		playerOn = player;
-		playerIdOn = playerOn.id;
+		if(GameInstance.getInstance().mode != 2) {
+			playerIdOn = playerOn.id;
+		} else {
+			playerIdOn = playerOn.conquerId;
+		}
 		if(isVisible) {
 			playerOn.isVisible = true;
 		}
@@ -139,42 +155,68 @@ public class Block extends Sprite{
 	public void occupy(int id) {
 		this.id = id;
 		GameInstance tempInstance = GameInstance.getInstance();
-		switch(id) {
-		case 0:
-			owner = tempInstance.redSpear;
-			side = 0;
-			planetTexture = Resources.getInstance().planet0;
-			break;
-		case 1:
-			owner = tempInstance.redSword;
-			side = 0;
-			planetTexture = Resources.getInstance().planet0;
-			break;
-		case 2:
-			owner = tempInstance.redAxe;
-			side = 0;
-			planetTexture = Resources.getInstance().planet0;
-			break;
-		case 3:
-			owner = tempInstance.blueSpear;
-			side = 1;
-			planetTexture = Resources.getInstance().planet1;
-			break;
-		case 4:
-			owner = tempInstance.blueSword;
-			side = 1;
-			planetTexture = Resources.getInstance().planet1;
-			break;
-		case 5:
-			owner = tempInstance.blueAxe;
-			side = 1;
-			planetTexture = Resources.getInstance().planet1;
-			break;
-		case -1:
-			owner = null;
-			side = -1;
-			planetTexture = Resources.getInstance().planet2;
-			break;
+		if(GameInstance.getInstance().mode != 2){
+			switch(id) {
+			case 0:
+				owner = tempInstance.redSpear;
+				side = 0;
+				planetTexture = Resources.getInstance().planet0;
+				break;
+			case 1:
+				owner = tempInstance.redSword;
+				side = 0;
+				planetTexture = Resources.getInstance().planet0;
+				break;
+			case 2:
+				owner = tempInstance.redAxe;
+				side = 0;
+				planetTexture = Resources.getInstance().planet0;
+				break;
+			case 3:
+				owner = tempInstance.blueSpear;
+				side = 1;
+				planetTexture = Resources.getInstance().planet1;
+				break;
+			case 4:
+				owner = tempInstance.blueSword;
+				side = 1;
+				planetTexture = Resources.getInstance().planet1;
+				break;
+			case 5:
+				owner = tempInstance.blueAxe;
+				side = 1;
+				planetTexture = Resources.getInstance().planet1;
+				break;
+			case -1:
+				owner = null;
+				side = -1;
+				planetTexture = Resources.getInstance().planet2;
+				break;
+			}
+		} else {
+			if(id == -1) {
+				owner = null;
+				side = -1;
+				planetTexture = Resources.getInstance().planet2;
+			} else {
+				if(id <= 7) {
+					owner = tempInstance.redPlayers.get(id);
+					side = 0;
+					if(isConquerPoint) {
+						plus5.set(Resources.getInstance().plus5_0);
+						plus5.setPosition(this.getX()+2, this.getY()+this.getHeight()/4);
+					}
+					planetTexture = Resources.getInstance().planet0;
+				} else {
+					owner = tempInstance.bluePlayers.get(id-8);
+					side = 1;
+					if(isConquerPoint) {
+						plus5.set(Resources.getInstance().plus5_1);
+						plus5.setPosition(this.getX()+2, this.getY()+this.getHeight()/4);
+					}
+					planetTexture = Resources.getInstance().planet1;
+				}
+			}
 		}
 		
 		
@@ -192,8 +234,13 @@ public class Block extends Sprite{
 	}
 	
 	public void occupy(Player p) {
-		occupy(p.id);
+		if(GameInstance.getInstance().mode != 2) {
+			occupy(p.id);
+		} else {
+			occupy(p.conquerId);
+		}
 	}
+	
 	
 	public void hide() {
 		viewerNum -= 1;
@@ -252,21 +299,40 @@ public class Block extends Sprite{
 	@Override
 	public void draw(Batch batch) {
 		this.setSize(size, size);
+		if(isConquerPoint && side != -1) {
+			conquerPointRefreshTime -= Gdx.graphics.getDeltaTime();
+			if(conquerPointRefreshTime <= 0) {
+				GameInstance.getInstance().teamScores[side] += 5;
+				conquerPointRefreshTime = 1f;
+			}
+		}
 		
 		float temp = getNextAlpha();
 		if(isVisible && !isPlanet) {
 			this.setColor(this.getColor().r, this.getColor().g, this.getColor().b, temp);
 		}
 		super.draw(batch);
+		if(isConquerPoint && side != -1) {
+			plus5.setAlpha(plusAlpha);
+			plus5.setPosition(this.getX()+2, this.getY()+this.getHeight()/4+(1-plusAlpha)*10);
+			plusAlpha = conquerPointRefreshTime;
+			if(plusAlpha <= 0) {
+				plusAlpha = 1;
+			}
+			if(isVisible) {
+				plus5.draw(batch);
+			}
+		}
 		
 		if(currentEffect != null) {
 			currentEffect.draw(batch);
 			currentEffect.update(Gdx.graphics.getDeltaTime());
 		}
 		
+		
 	}
 	
 	public void dispose() {
-
+		
 	}
 }

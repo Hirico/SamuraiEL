@@ -17,6 +17,7 @@ public abstract class PlayerAI {
 	public GameInstance gameInstance;
 	public int stuckState;
 	public Array<Player> enemies;
+	public Array<Player> allies;
 	public Block[] planets;
 	public Vector2 targetPlanetPosition;
 	
@@ -27,8 +28,7 @@ public abstract class PlayerAI {
 		moveCooldown = 0.2f;
 		initialTotalMoveCooldown = 0.2f;
 		totalMoveCooldown = initialTotalMoveCooldown;
-		
-		
+				
 		planets = gameInstance.field.planets;
 		targetPlanetPosition = new Vector2();
 
@@ -39,6 +39,16 @@ public abstract class PlayerAI {
 		for(Player p: gameInstance.players) {
 			if(p.side != player.side) {
 				enemies.add(p);
+			}	
+		}
+		initializeAllies();
+	}
+	
+	public void initializeAllies() {
+		allies = new Array<Player>();
+		for(Player p: gameInstance.players) {
+			if(p.side == player.side) {
+				allies.add(p);
 			}	
 		}
 	}

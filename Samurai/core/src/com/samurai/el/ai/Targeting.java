@@ -2,7 +2,6 @@ package com.samurai.el.ai;
 
 import com.badlogic.gdx.utils.Array;
 import com.samurai.el.field.Block;
-import com.samurai.el.maingame.GameInstance;
 import com.samurai.el.player.Player;
 
 public class Targeting {

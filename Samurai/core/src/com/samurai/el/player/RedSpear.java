@@ -1,9 +1,7 @@
 package com.samurai.el.player;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.samurai.el.field.Field;
 import com.samurai.el.maingame.GameInstance;
@@ -25,6 +23,12 @@ public class RedSpear extends Player {
 		GameInstance.getInstance().teamScores[0] += 1;
 		LskillTotalCooldown = 4f;
 		LskillCooldown = 0;
+		stopEffect.set(Resources.getInstance().electric1L);
+	}
+	
+	public RedSpear(int conquerId, Vector2 homePosition) {
+		this(homePosition);
+		this.conquerId = conquerId;
 	}
 	
 	@Override
@@ -70,10 +74,12 @@ public class RedSpear extends Player {
 				LskillCooldown = 0;
 			}
 		}
-		if(stopTime > 0) {
-			stopTime -= Gdx.graphics.getDeltaTime();
-			if(stopTime < 0) {
-				stopTime = 0;
+		if(explosion) {
+			batch.draw(death[0][currentDeathFrame], deathPosition.x, deathPosition.y);
+			currentDeathFrame += 2;
+			if(currentDeathFrame >= 24) {
+				explosion = false;
+				currentDeathFrame = 0;
 			}
 		}
 		
@@ -122,7 +128,6 @@ public class RedSpear extends Player {
 			}
 		}
 			
-		
 		this.setPosition(field.getBottomLeftCorner().x + drawPosition.x*field.blockSize, 
 				field.getBottomLeftCorner().y + drawPosition.y*field.blockSize);
 		this.setSize(size, size);
@@ -139,6 +144,17 @@ public class RedSpear extends Player {
 			}
 			if(!isRecovering) {
 				super.draw(batch);
+				if(stopTime > 0) {
+					stopEffect.setPosition(field.getBottomLeftCorner().x + drawPosition.x*field.blockSize, 
+							field.getBottomLeftCorner().y + drawPosition.y*field.blockSize);
+					stopEffect.draw(batch);
+				}
+			}
+		}
+		if(stopTime > 0) {
+			stopTime -= Gdx.graphics.getDeltaTime();			
+			if(stopTime < 0) {
+				stopTime = 0;
 			}
 		}
 	}

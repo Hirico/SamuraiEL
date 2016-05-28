@@ -39,6 +39,23 @@ public class PlanetHardAI extends PlanetAI {
 				if(targetPlanet != null) {
 					targetPlanetPosition.set(targetPlanet.planetPosition);
 					occupyPlanet();
+				} else {
+					for(Player p: allies) {
+						if(!p.isHuman) {
+							if(p.ai.target != null) {
+								target = p.ai.target;
+								break;
+							}
+						} else {
+							target = gameInstance.field.checkVision(p, p.position);
+							if(target != null) {
+								break;
+							}
+						}
+					}
+					if(target != null) {
+						pursue();
+					}
 				}
 			} else {
 				pursue();

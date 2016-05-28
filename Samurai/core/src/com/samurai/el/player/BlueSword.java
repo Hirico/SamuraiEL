@@ -23,6 +23,12 @@ public class BlueSword extends Player {
 		attackEffect.set(Resources.getInstance().electric1);
 		LskillTotalCooldown = 4f;
 		LskillCooldown = 0;
+		stopEffect.set(Resources.getInstance().electric0L);
+	}
+	
+	public BlueSword(int conquerId, Vector2 homePosition) {
+		this(homePosition);
+		this.conquerId = conquerId;
 	}
 	
 	@Override
@@ -68,10 +74,12 @@ public class BlueSword extends Player {
 				LskillCooldown = 0;
 			}
 		}
-		if(stopTime > 0) {
-			stopTime -= Gdx.graphics.getDeltaTime();
-			if(stopTime < 0) {
-				stopTime = 0;
+		if(explosion) {
+			batch.draw(death[0][currentDeathFrame], deathPosition.x, deathPosition.y);
+			currentDeathFrame += 2;
+			if(currentDeathFrame >= 24) {
+				explosion = false;
+				currentDeathFrame = 0;
 			}
 		}
 		
@@ -137,6 +145,18 @@ public class BlueSword extends Player {
 			}
 			if(!isRecovering) {
 				super.draw(batch);
+				if(stopTime > 0) {
+					stopEffect.setPosition(field.getBottomLeftCorner().x + drawPosition.x*field.blockSize, 
+							field.getBottomLeftCorner().y + drawPosition.y*field.blockSize);
+					stopEffect.draw(batch);
+				}
+			}
+			
+		}
+		if(stopTime > 0) {
+			stopTime -= Gdx.graphics.getDeltaTime();			
+			if(stopTime < 0) {
+				stopTime = 0;
 			}
 		}
 	}

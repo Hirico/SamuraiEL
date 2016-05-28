@@ -3,8 +3,8 @@ package com.samurai.el.player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.Disposable;
@@ -24,6 +24,7 @@ public abstract class Player extends Sprite implements Disposable{
 	public int direction;
 	public int side;
 	public int id;
+	public int conquerId;
 	public int score;
 	public int killNum;
 	public int killedNum;
@@ -36,9 +37,11 @@ public abstract class Player extends Sprite implements Disposable{
 	public double initialTotalCooldownTime;
 	public float initialMoveSpeed;
 	public float moveSpeed;
+	public int[][] humanMoveMark; // direction/leftTime
 	public float LskillCooldown;
 	public float LskillTotalCooldown;
 	public float stopTime;
+	public Sprite stopEffect;
 	public boolean fightMode;
 	public int fightLevel;
 	public boolean isAllied;
@@ -53,6 +56,10 @@ public abstract class Player extends Sprite implements Disposable{
 	public int size;
 	public Sound attackSound;
 	public Sprite playerHint;
+	public TextureRegion[][] death;
+	public int currentDeathFrame;
+	public Vector2 deathPosition;
+	public boolean explosion;
 	
 	public PlayerAI ai;
 	
@@ -66,6 +73,7 @@ public abstract class Player extends Sprite implements Disposable{
 		recoverLeftTime = 0;
 		isAllied = false;
 		isInvincible = false;
+		isHuman = false;
 		enemies = new Array<Player>();
 		this.homePosition = new Vector2();
 		this.homePosition.set(homePosition);
@@ -91,6 +99,12 @@ public abstract class Player extends Sprite implements Disposable{
 		ai = null;
 		fightMode = Gdx.app.getPreferences("Colony").getBoolean("fightMode", true);
 		stopTime = 0;
+		stopEffect = new Sprite();
+		
+		death = TextureRegion.split(Resources.getInstance().death, 48, 48);
+		currentDeathFrame = 0;
+		deathPosition = new Vector2();
+		explosion = false;
 	}
 	
 	
@@ -136,12 +150,15 @@ public abstract class Player extends Sprite implements Disposable{
 		isHidden = false;
 		isRecovering = true;
 		isMoving = false;
-		GameInstance.getInstance().field.blocks[(int) position.x][(int) position.y].playerLeave();
-		GameInstance.getInstance().field.blocks[(int) homePosition.x][(int) homePosition.y].playerArrive(this);
+		explosion = true;
+		Field field = GameInstance.getInstance().field;
+		deathPosition.set(field.getBottomLeftCorner().x + drawPosition.x*field.blockSize, 
+				field.getBottomLeftCorner().y + drawPosition.y*field.blockSize);
+		field.blocks[(int) position.x][(int) position.y].playerLeave();
+		field.blocks[(int) homePosition.x][(int) homePosition.y].playerArrive(this);
 
 
 		if(isAllied) {
-			Field field = GameInstance.getInstance().field;
 			field.closeVision(position, this);			
 			field.openVision(homePosition);
 		}

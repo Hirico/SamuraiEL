@@ -23,6 +23,14 @@ public class PlanetAI extends PlayerAI {
 				occupyPlanet();
 			} else {
 				target = gameInstance.field.checkVision(player, player.position);
+				if(target == null) {
+					for(Player p: allies) {
+						if(p.ai.target != null) {
+							target = p.ai.target;
+							break;
+						}
+					}
+				}
 				if(target != null) {
 					pursue();
 				}

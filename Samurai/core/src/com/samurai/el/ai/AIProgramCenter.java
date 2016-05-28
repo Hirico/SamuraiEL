@@ -8,7 +8,7 @@ public class AIProgramCenter {
 	public Array<PlayerAI> AIs;
 	
 	public AIProgramCenter() {
-		AIs = new Array<PlayerAI>(5);
+		AIs = new Array<PlayerAI>();
 	}
 	
      
@@ -50,6 +50,24 @@ public class AIProgramCenter {
 	    		AIs.add(player.ai = new EncounterEasyAI(player));
 	    	}
     	}
+    	else if(mode == 2) {
+    		switch(difficulty) {
+	    	case 0:
+	    		AIs.add(player.ai = new PlanetEasyAI(player));
+	    		break;
+	    	case 1:
+	    		AIs.add(player.ai = new PlanetNormalAI(player));
+	    		break;
+	    	case 2:
+	    		AIs.add(player.ai = new PlanetHardAI(player));
+	    		break;
+	    	case 3:
+	    		AIs.add(player.ai = new PlanetCruelAI(player));
+	    		break;
+	    	default:
+	    		AIs.add(player.ai = new PlanetEasyAI(player));
+	    	}
+    	}
     	
     	else if(mode == -1) {
     		AIs.add(player.ai = new GuideAI(player));
@@ -65,9 +83,16 @@ public class AIProgramCenter {
 
 	/**To avoid loop nested error, this is called later after ai's creating */
 	public void initializeEnemies() {
+		if(AIs.size > 0) {
+			for(PlayerAI ai: AIs) {
+				ai.initializeEnemy();
+			}	
+		}
+	}
+	
+	public void refreshList() {
 		for(PlayerAI ai: AIs) {
 			ai.initializeEnemy();
 		}
-		
 	}
 }

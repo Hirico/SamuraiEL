@@ -9,7 +9,7 @@ public class Background2 extends Background {
 		background = Resources.getInstance().background2;
 		background.setSize(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 		music = Resources.getInstance().bgm04;
-		music.setVolume(Gdx.app.getPreferences("volumePref").getFloat("musicVolume", 0.8f));
+		music.setVolume(Gdx.app.getPreferences("volumePref").getFloat("musicVolume", 0.5f));
 		music.setLooping(true);
 		music.play();
 	}

@@ -27,6 +27,8 @@ public class Resources {
 	public Texture planet2 = new Texture(Gdx.files.internal("img/field/planet2.png"));
 	public Texture planet3 = new Texture(Gdx.files.internal("img/field/planet3.png"));
 	public Texture planet4 = new Texture(Gdx.files.internal("img/field/planet4.png"));
+	public Sprite plus5_0 = new Sprite(new Texture(Gdx.files.internal("img/field/plus5_0.png")));
+	public Sprite plus5_1 = new Sprite(new Texture(Gdx.files.internal("img/field/plus5_1.png")));
 	
 	public Sprite redWin = new Sprite(new Texture(Gdx.files.internal("img/field/redwin.png")));
 	public Sprite redLose = new Sprite(new Texture(Gdx.files.internal("img/field/redlose.png")));
@@ -58,6 +60,8 @@ public class Resources {
 	public Sprite explosion1 = new Sprite(new Texture(Gdx.files.internal("img/character/explosion1.png")));
 	public Sprite electric0 = new Sprite(new Texture(Gdx.files.internal("img/character/electric0.png")));
 	public Sprite electric1 = new Sprite(new Texture(Gdx.files.internal("img/character/electric1.png")));
+	public Sprite electric0L = new Sprite(new Texture(Gdx.files.internal("img/character/electric0L.png")));
+	public Sprite electric1L = new Sprite(new Texture(Gdx.files.internal("img/character/electric1L.png")));
 	public Sprite stand0_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_0.png")));
 	public Sprite stand1_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_0.png")));
 	public Sprite stand2_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_0.png")));
@@ -106,6 +110,7 @@ public class Resources {
 	public Sprite move1_5 = new Sprite(new Texture(Gdx.files.internal("img/character/move1_5.png")));
 	public Sprite move2_5 = new Sprite(new Texture(Gdx.files.internal("img/character/move2_5.png")));
 	public Sprite move3_5 = new Sprite(new Texture(Gdx.files.internal("img/character/move3_5.png")));
+	public Texture death = new Texture(Gdx.files.internal("img/character/deathSheet.png"));
 	
 	public Sprite player0 = new Sprite(new Texture(Gdx.files.internal("img/ui/player0.png")));
 	public Sprite player1 = new Sprite(new Texture(Gdx.files.internal("img/ui/player1.png")));
@@ -114,8 +119,10 @@ public class Resources {
 	public Sprite background1 = new Sprite(new Texture(Gdx.files.internal("img/field/bg1.jpg")));
 	public Sprite background2 = new Sprite(new Texture(Gdx.files.internal("img/field/bg2.jpg")));
 	public Sprite background3 = new Sprite(new Texture(Gdx.files.internal("img/field/bg3.jpg")));
+	public Sprite background4 = new Sprite(new Texture(Gdx.files.internal("img/field/bg4.jpg")));
 	public Sprite gameload = new Sprite(new Texture(Gdx.files.internal("img/background/gameload.jpg")));
 	public Sprite gameload2 = new Sprite(new Texture(Gdx.files.internal("img/background/gameload2.jpg")));
+	public Sprite gameload3 = new Sprite(new Texture(Gdx.files.internal("img/background/gameload3.jpg")));
 	public Sprite help = new Sprite(new Texture(Gdx.files.internal("img/background/help.png")));
 	public Sprite guideL0 = new Sprite(new Texture(Gdx.files.internal("img/ui/guideL0.png")));
 	public Sprite guideL1 = new Sprite(new Texture(Gdx.files.internal("img/ui/guideL1.png")));
@@ -130,6 +137,7 @@ public class Resources {
 	public Music bgm05 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm05.mp3"));
 	public Music bgm06 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm06.mp3"));
 	public Music bgm07 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm07.mp3"));
+	public Music bgm08 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm08.mp3"));
 
 	public Sound attack0 = Gdx.audio.newSound(Gdx.files.internal(("sound/attack0.wav")));
 	public Sound attack1 = Gdx.audio.newSound(Gdx.files.internal(("sound/attack1.wav")));
@@ -169,6 +177,8 @@ public class Resources {
 		planet2 = new Texture(Gdx.files.internal("img/field/planet2.png"));
 		planet3 = new Texture(Gdx.files.internal("img/field/planet3.png"));
 		planet4 = new Texture(Gdx.files.internal("img/field/planet4.png"));
+		plus5_0 = new Sprite(new Texture(Gdx.files.internal("img/field/plus5_0.png")));
+		plus5_1 = new Sprite(new Texture(Gdx.files.internal("img/field/plus5_1.png")));
 		
 		redWin = new Sprite(new Texture(Gdx.files.internal("img/field/redwin.png")));
 		redLose = new Sprite(new Texture(Gdx.files.internal("img/field/redlose.png")));
@@ -201,6 +211,8 @@ public class Resources {
 		explosion1 = new Sprite(new Texture(Gdx.files.internal("img/character/explosion1.png")));
 		electric0 = new Sprite(new Texture(Gdx.files.internal("img/character/electric0.png")));
 		electric1 = new Sprite(new Texture(Gdx.files.internal("img/character/electric1.png")));
+		electric0L = new Sprite(new Texture(Gdx.files.internal("img/character/electric0L.png")));
+		electric1L = new Sprite(new Texture(Gdx.files.internal("img/character/electric1L.png")));
 		stand0_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand0_0.png")));
 		stand1_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand1_0.png")));
 		stand2_0 = new Sprite(new Texture(Gdx.files.internal("img/character/stand2_0.png")));
@@ -249,6 +261,7 @@ public class Resources {
 		move1_5 = new Sprite(new Texture(Gdx.files.internal("img/character/move1_5.png")));
 		move2_5 = new Sprite(new Texture(Gdx.files.internal("img/character/move2_5.png")));
 		move3_5 = new Sprite(new Texture(Gdx.files.internal("img/character/move3_5.png")));
+		death = new Texture(Gdx.files.internal("img/character/deathSheet.png"));
 		
 		player0 = new Sprite(new Texture(Gdx.files.internal("img/ui/player0.png")));
 		player1 = new Sprite(new Texture(Gdx.files.internal("img/ui/player1.png")));
@@ -256,6 +269,7 @@ public class Resources {
 		background1 = new Sprite(new Texture(Gdx.files.internal("img/field/bg1.jpg")));
 		background2 = new Sprite(new Texture(Gdx.files.internal("img/field/bg2.jpg")));
 		background3 = new Sprite(new Texture(Gdx.files.internal("img/field/bg3.jpg")));
+		background4 = new Sprite(new Texture(Gdx.files.internal("img/field/bg4.jpg")));
 		if(Gdx.app.getType() == ApplicationType.Desktop) {
 			help = new Sprite(new Texture(Gdx.files.internal("img/background/help.png")));
 		}
@@ -270,12 +284,14 @@ public class Resources {
 		blackFade = new Sprite(new Texture(Gdx.files.internal("img/background/blackfade.png")));
 		gameload = new Sprite(new Texture(Gdx.files.internal("img/background/gameload.jpg")));
 		gameload2 = new Sprite(new Texture(Gdx.files.internal("img/background/gameload2.jpg")));
+		gameload3 = new Sprite(new Texture(Gdx.files.internal("img/background/gameload3.jpg")));
 		bgm02 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm02.mp3"));
 		bgm03 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm03.mp3"));
 		bgm04 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm04.mp3"));
 		bgm05 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm05.mp3"));
 		bgm06 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm06.mp3"));
 		bgm07 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm07.mp3"));
+		bgm08 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm08.mp3"));
 		attack0 = Gdx.audio.newSound(Gdx.files.internal(("sound/attack0.wav")));
 		attack1 = Gdx.audio.newSound(Gdx.files.internal(("sound/attack1.wav")));
 		attack2 = Gdx.audio.newSound(Gdx.files.internal(("sound/attack2.wav")));
@@ -291,8 +307,10 @@ public class Resources {
 		bgm03.dispose();
 		bgm04.dispose();
 		bgm05.dispose();
+		bgm08.dispose();
 		attack0.dispose();
 		attack1.dispose();
 		attack2.dispose();
+		death.dispose();
 	}
 }

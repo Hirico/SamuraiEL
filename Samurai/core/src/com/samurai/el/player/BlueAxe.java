@@ -22,6 +22,12 @@ public class BlueAxe extends Player {
 		GameInstance.getInstance().teamScores[1] += 1;
 		LskillTotalCooldown = 4f;
 		LskillCooldown = 0;
+		stopEffect.set(Resources.getInstance().electric0L);
+	}
+	
+	public BlueAxe(int conquerId, Vector2 homePosition) {
+		this(homePosition);
+		this.conquerId = conquerId;
 	}
 	
 	@Override
@@ -62,12 +68,7 @@ public class BlueAxe extends Player {
 				cooldownTime = 0;
 			}
 		}
-		if(stopTime > 0) {
-			stopTime -= Gdx.graphics.getDeltaTime();
-			if(stopTime < 0) {
-				stopTime = 0;
-			}
-		}
+
 		if(LskillCooldown > 0) {
 			LskillCooldown -= Gdx.graphics.getDeltaTime();
 			if(LskillCooldown < 0) {
@@ -78,6 +79,15 @@ public class BlueAxe extends Player {
 		if(attackEffectDelay > 0) {
 			attackEffectDelay -= Gdx.graphics.getDeltaTime();
 			attackEffect.draw(batch);
+		}
+		
+		if(explosion) {
+			batch.draw(death[0][currentDeathFrame], deathPosition.x, deathPosition.y);
+			currentDeathFrame += 2;
+			if(currentDeathFrame >= 24) {
+				explosion = false;
+				currentDeathFrame = 0;
+			}
 		}
 				
 		if(isRecovering) {
@@ -138,6 +148,17 @@ public class BlueAxe extends Player {
 			}
 			if(!isRecovering) {
 				super.draw(batch);
+				if(stopTime > 0) {
+					stopEffect.setPosition(field.getBottomLeftCorner().x + drawPosition.x*field.blockSize, 
+							field.getBottomLeftCorner().y + drawPosition.y*field.blockSize);
+					stopEffect.draw(batch);
+				}
+			}
+		}
+		if(stopTime > 0) {
+			stopTime -= Gdx.graphics.getDeltaTime();			
+			if(stopTime < 0) {
+				stopTime = 0;
 			}
 		}
 	}

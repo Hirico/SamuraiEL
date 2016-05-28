@@ -165,6 +165,27 @@ public class GameStage extends Stage{
 
 		if(!gameInstance.stoped) {
 			if(gameInstance.mode != -1) {
+				if(gameInstance.mode == 2) {
+					if(keycode == Input.Keys.NUM_1) {
+						gameInstance.addAI(0);
+					}
+					if(keycode == Input.Keys.NUM_2) {
+						gameInstance.addAI(1);
+					}
+					if(keycode == Input.Keys.NUM_3) {
+						gameInstance.addAI(2);
+					}
+					if(keycode == Input.Keys.NUM_4) {
+						gameInstance.addAI(3);
+					}
+					if(keycode == Input.Keys.NUM_5) {
+						gameInstance.addAI(4);
+					}
+					if(keycode == Input.Keys.NUM_6) {
+						gameInstance.addAI(5);
+					}
+
+				}
 				if(keycode == Input.Keys.P) {
 					if(!paused) {
 						screen.pause();
@@ -182,6 +203,12 @@ public class GameStage extends Stage{
 				if(keycode == Input.Keys.DOWN) {					
 					gameInstance.camera.zoom -= 0.1;
 					gameInstance.cameraLerp += 0.2;
+				}
+				if(keycode == Input.Keys.EQUALS) {
+					gameInstance.cameraLerp += 0.2;
+				}
+				if(keycode == Input.Keys.MINUS) {
+					gameInstance.cameraLerp -= 0.2;
 				}
 
 				if(keycode == Input.Keys.W) {

@@ -22,6 +22,8 @@ public abstract class Field implements Disposable{
 	public Block[] planets;
 	public ParticleEffect[][] homeEffects;
 	public OrthographicCamera camera;
+	public int redHomeCount;
+	public int blueHomeCount;
 	
 	public Field() {
 		//this is initialized before player, so player reference is not accessible here
@@ -36,7 +38,8 @@ public abstract class Field implements Disposable{
 				{new ParticleEffect(), new ParticleEffect()},
 				{new ParticleEffect(), new ParticleEffect()}
 		};
-		
+		redHomeCount = 0;
+		blueHomeCount = 8;
 		
 	}
 	
@@ -181,11 +184,47 @@ public abstract class Field implements Disposable{
 		return null;
 	}
 	
+	/**for dynamically add AI */
+	public Vector2 nextRedHome() {
+		Vector2 result = new Vector2();
+		if(redHomeCount < 8) {			
+			result.set(homePositions[redHomeCount]);
+			redHomeCount += 1;
+		}
+		return result;
+	}
+	
+	/**for dynamically add AI */
+	public Vector2 nextBlueHome() {
+		Vector2 result = new Vector2();
+		if(blueHomeCount < 16) {			
+			result.set(homePositions[blueHomeCount]);
+			blueHomeCount += 1;
+		}
+		return result;
+	}
+	
 	public void homeInitialize(int i) {
 		blocks[(int) homePositions[i].x][(int) homePositions[i].y].isHome = true;
 		blocks[(int) homePositions[i].x][(int) homePositions[i].y].occupy(i);
 		blocks[(int) homePositions[i].x][(int) homePositions[i].y].playerArrive(i);		
 		if(i <= 2) {
+			homeEffects[i][0].load(Gdx.files.internal("img/field/red.p"), Gdx.files.internal("img/field"));
+			homeEffects[i][1].load(Gdx.files.internal("img/field/redR.p"), Gdx.files.internal("img/field"));
+		} else {
+			homeEffects[i][0].load(Gdx.files.internal("img/field/blue.p"), Gdx.files.internal("img/field"));
+			homeEffects[i][1].load(Gdx.files.internal("img/field/blueR.p"), Gdx.files.internal("img/field"));
+		}
+		blocks[(int) homePositions[i].x][(int) homePositions[i].y].effectInitialize(homeEffects[i]);
+	}
+	
+	/**for conquer mode */
+	public void homeInitialize(Player p) {
+		int i = p.conquerId;
+		blocks[(int) homePositions[i].x][(int) homePositions[i].y].isHome = true;
+		blocks[(int) homePositions[i].x][(int) homePositions[i].y].occupy(i);
+		blocks[(int) homePositions[i].x][(int) homePositions[i].y].playerArrive(p);		
+		if(i <= 7) {
 			homeEffects[i][0].load(Gdx.files.internal("img/field/red.p"), Gdx.files.internal("img/field"));
 			homeEffects[i][1].load(Gdx.files.internal("img/field/redR.p"), Gdx.files.internal("img/field"));
 		} else {
@@ -279,13 +318,13 @@ public abstract class Field implements Disposable{
 								if(targetBlock.owner != null) {						
 									targetBlock.owner.loseABlock();							
 								}
-								targetBlock.occupy(player.id);
+								targetBlock.occupy(player);
 								player.getABlock();
 							} else {
 								if(targetBlock.owner != null) {						
 									targetBlock.owner.loseAPlanet();
 								}
-								targetBlock.occupy(player.id);
+								targetBlock.occupy(player);
 								player.getPlanetBonus();
 							}
 						}
@@ -410,5 +449,7 @@ public abstract class Field implements Disposable{
 		}
 		return false;
 	}
+
+
 	
 }

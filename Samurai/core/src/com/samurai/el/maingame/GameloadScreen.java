@@ -7,6 +7,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.samurai.el.field.Field0;
 import com.samurai.el.field.Field1;
+import com.samurai.el.field.Field2;
+import com.samurai.el.field.Field3;
 import com.samurai.el.resource.Resources;
 
 
@@ -29,8 +31,12 @@ public class GameloadScreen implements Screen{
 		
 		if(GameInstance.getInstance().field instanceof Field0 || GameInstance.getInstance().field instanceof Field1) {
 			background = Resources.getInstance().gameload;
-		} else {
+		} 
+		else if(GameInstance.getInstance().field instanceof Field2 || GameInstance.getInstance().field instanceof Field3){
 			background = Resources.getInstance().gameload2;
+		}
+		else {
+			background = Resources.getInstance().gameload3;
 		}
 		blackFade = new Sprite();
 		blackFade.set(Resources.getInstance().blackFade);

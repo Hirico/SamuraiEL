@@ -1,9 +1,7 @@
 package com.samurai.el.player;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.samurai.el.field.Field;
 import com.samurai.el.maingame.GameInstance;
@@ -25,6 +23,12 @@ public class BlueSpear extends Player {
 		GameInstance.getInstance().teamScores[1] += 1;
 		LskillTotalCooldown = 4f;
 		LskillCooldown = 0;
+		stopEffect.set(Resources.getInstance().electric0L);
+	}
+	
+	public BlueSpear(int conquerId, Vector2 homePosition) {
+		this(homePosition);
+		this.conquerId = conquerId;
 	}
 	
 	@Override
@@ -65,16 +69,18 @@ public class BlueSpear extends Player {
 				cooldownTime = 0;
 			}
 		}
-		if(stopTime > 0) {
-			stopTime -= Gdx.graphics.getDeltaTime();
-			if(stopTime < 0) {
-				stopTime = 0;
-			}
-		}
 		if(LskillCooldown > 0) {
 			LskillCooldown -= Gdx.graphics.getDeltaTime();
 			if(LskillCooldown < 0) {
 				LskillCooldown = 0;
+			}
+		}
+		if(explosion) {
+			batch.draw(death[0][currentDeathFrame], deathPosition.x, deathPosition.y);
+			currentDeathFrame += 2;
+			if(currentDeathFrame >= 24) {
+				explosion = false;
+				currentDeathFrame = 0;
 			}
 		}
 		
@@ -140,6 +146,18 @@ public class BlueSpear extends Player {
 			}
 			if(!isRecovering) {
 				super.draw(batch);
+				if(stopTime > 0) {
+					stopEffect.setPosition(field.getBottomLeftCorner().x + drawPosition.x*field.blockSize, 
+							field.getBottomLeftCorner().y + drawPosition.y*field.blockSize);
+					stopEffect.draw(batch);
+				}
+			}
+			
+		}
+		if(stopTime > 0) {
+			stopTime -= Gdx.graphics.getDeltaTime();			
+			if(stopTime < 0) {
+				stopTime = 0;
 			}
 		}
 	}
