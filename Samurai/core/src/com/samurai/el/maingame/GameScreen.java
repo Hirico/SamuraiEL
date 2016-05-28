@@ -54,6 +54,9 @@ public class GameScreen implements Screen {
 	
 	public Sprite guideInfo;
 	public SpriteBatch guideBatch;
+	public boolean guideAppear;
+	
+	public Sprite conquerGuideInfo;
 
 	public OrthographicCamera camera;
 
@@ -70,6 +73,9 @@ public class GameScreen implements Screen {
 		middleScore = Resources.getInstance().middleScore;
 		help = Resources.getInstance().help;
 		helpBatch = new SpriteBatch();
+		conquerGuideInfo = Resources.getInstance().conquerGuide;
+		conquerGuideInfo.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+		guideAppear = true;
 		
 		redScore.setPosition(140f, 699f);
 		blueScore.setPosition(640f, 699f);
@@ -158,9 +164,9 @@ public class GameScreen implements Screen {
 			break;	
 			
 		}
+		guideBatch = new SpriteBatch();
 		if(gameInstance.mode == -1) {
 			gameInstance.initializeGuideLevel();
-			guideBatch = new SpriteBatch();
 		}
 		fightBack.setPosition(640 - fightBack.getWidth()/2, 78);
 		fight.setPosition(640 - fight.getWidth()/2, 78);
@@ -235,6 +241,12 @@ public class GameScreen implements Screen {
 					
 			        
 			        uiBatch.end();
+			        if(gameInstance.mode == 2 && guideAppear) {
+			        	guideBatch.setProjectionMatrix(camera.combined);
+			        	guideBatch.begin();
+			        	conquerGuideInfo.draw(guideBatch);
+			        	guideBatch.end();
+			        }
 	        	}
 	        } else {
 	        	switch(gameInstance.guideLevel) {
@@ -332,7 +344,7 @@ public class GameScreen implements Screen {
 	        	endBackground.draw(endBatch);
 	        	endBatch.end();
 	        }
-		} else {
+		} else { // paused
 			helpBatch.begin();
 			help.draw(helpBatch);
 			helpBatch.end();
@@ -349,6 +361,10 @@ public class GameScreen implements Screen {
 		else if(UILayerNum == 1) {
 			UILayerNum = 0;
 		}
+	}
+	
+	public void changeGuideLayer() {
+		guideAppear = !guideAppear;
 	}
 	
 	/**End the game and back to main menu  */

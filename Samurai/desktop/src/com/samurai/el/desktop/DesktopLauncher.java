@@ -3,7 +3,6 @@ package com.samurai.el.desktop;
 import org.lwjgl.LWJGLUtil;
 
 import com.badlogic.gdx.Files;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.samurai.el.mainmenu.Samurai;

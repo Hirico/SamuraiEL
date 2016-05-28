@@ -123,12 +123,17 @@ public class Resources {
 	public Sprite gameload = new Sprite(new Texture(Gdx.files.internal("img/background/gameload.jpg")));
 	public Sprite gameload2 = new Sprite(new Texture(Gdx.files.internal("img/background/gameload2.jpg")));
 	public Sprite gameload3 = new Sprite(new Texture(Gdx.files.internal("img/background/gameload3.jpg")));
+	public Sprite selectSide = new Sprite(new Texture(Gdx.files.internal("img/gameset/selectSide.png")));
+	public Sprite selectShip = new Sprite(new Texture(Gdx.files.internal("img/gameset/selectShip.png")));
+	public Sprite unionFont = new Sprite(new Texture(Gdx.files.internal("img/gameset/1unionFont.png")));
+	public Sprite republicFont = new Sprite(new Texture(Gdx.files.internal("img/gameset/1republicFont.png")));
 	public Sprite help = new Sprite(new Texture(Gdx.files.internal("img/background/help.png")));
 	public Sprite guideL0 = new Sprite(new Texture(Gdx.files.internal("img/ui/guideL0.png")));
 	public Sprite guideL1 = new Sprite(new Texture(Gdx.files.internal("img/ui/guideL1.png")));
 	public Sprite guideL2 = new Sprite(new Texture(Gdx.files.internal("img/ui/guideL2.png")));
 	public Sprite guideL3 = new Sprite(new Texture(Gdx.files.internal("img/ui/guideL3.png")));
 	public Sprite guideL4 = new Sprite(new Texture(Gdx.files.internal("img/ui/guideL4.png")));
+	public Sprite conquerGuide = new Sprite(new Texture(Gdx.files.internal("img/ui/conquerGuide.png")));
 	public Sprite blackFade = new Sprite(new Texture(Gdx.files.internal("img/background/blackfade.png")));
 
 	public Music bgm02 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm02.mp3"));
@@ -137,8 +142,9 @@ public class Resources {
 	public Music bgm05 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm05.mp3"));
 	public Music bgm06 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm06.mp3"));
 	public Music bgm07 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm07.mp3"));
-	public Music bgm08 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm08.mp3"));
-
+	public Music bgm08 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm08.mp3")); // conquer
+	public Music bgm09 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm09.mp3")); // conquerSet
+	
 	public Sound attack0 = Gdx.audio.newSound(Gdx.files.internal(("sound/attack0.wav")));
 	public Sound attack1 = Gdx.audio.newSound(Gdx.files.internal(("sound/attack1.wav")));
 	public Sound attack2 = Gdx.audio.newSound(Gdx.files.internal(("sound/attack2.wav")));
@@ -270,6 +276,8 @@ public class Resources {
 		background2 = new Sprite(new Texture(Gdx.files.internal("img/field/bg2.jpg")));
 		background3 = new Sprite(new Texture(Gdx.files.internal("img/field/bg3.jpg")));
 		background4 = new Sprite(new Texture(Gdx.files.internal("img/field/bg4.jpg")));
+		selectSide = new Sprite(new Texture(Gdx.files.internal("img/gameset/selectSide.png")));
+		selectShip = new Sprite(new Texture(Gdx.files.internal("img/gameset/selectShip.png")));
 		if(Gdx.app.getType() == ApplicationType.Desktop) {
 			help = new Sprite(new Texture(Gdx.files.internal("img/background/help.png")));
 		}
@@ -281,6 +289,9 @@ public class Resources {
 		guideL2 = new Sprite(new Texture(Gdx.files.internal("img/ui/guideL2.png")));
 		guideL3 = new Sprite(new Texture(Gdx.files.internal("img/ui/guideL3.png")));
 		guideL4 = new Sprite(new Texture(Gdx.files.internal("img/ui/guideL4.png")));
+		conquerGuide = new Sprite(new Texture(Gdx.files.internal("img/ui/conquerGuide.png")));
+		unionFont = new Sprite(new Texture(Gdx.files.internal("img/gameset/1unionFont.png")));
+		republicFont = new Sprite(new Texture(Gdx.files.internal("img/gameset/1republicFont.png")));
 		blackFade = new Sprite(new Texture(Gdx.files.internal("img/background/blackfade.png")));
 		gameload = new Sprite(new Texture(Gdx.files.internal("img/background/gameload.jpg")));
 		gameload2 = new Sprite(new Texture(Gdx.files.internal("img/background/gameload2.jpg")));
@@ -292,6 +303,7 @@ public class Resources {
 		bgm06 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm06.mp3"));
 		bgm07 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm07.mp3"));
 		bgm08 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm08.mp3"));
+		bgm09 = Gdx.audio.newMusic(Gdx.files.internal("music/bgm09.mp3"));
 		attack0 = Gdx.audio.newSound(Gdx.files.internal(("sound/attack0.wav")));
 		attack1 = Gdx.audio.newSound(Gdx.files.internal(("sound/attack1.wav")));
 		attack2 = Gdx.audio.newSound(Gdx.files.internal(("sound/attack2.wav")));

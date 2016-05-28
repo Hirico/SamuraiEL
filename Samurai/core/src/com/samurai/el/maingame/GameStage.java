@@ -184,6 +184,9 @@ public class GameStage extends Stage{
 					if(keycode == Input.Keys.NUM_6) {
 						gameInstance.addAI(5);
 					}
+					if(keycode == Input.Keys.H) {
+						screen.changeGuideLayer();
+					}
 
 				}
 				if(keycode == Input.Keys.P) {

@@ -22,22 +22,26 @@ public class GameloadScreen implements Screen{
 	public float countdown;
 	public float fade;
 	public boolean finished;
+	public boolean isConquerMode;
 	
-	public GameloadScreen(Game game) {
+	public GameloadScreen(Game game, boolean isConquerMode) {
 		this.game = game;
+		this.isConquerMode = isConquerMode;
 		batch = new SpriteBatch();
 		fadeBatch = new SpriteBatch();
 		fadeBatch.getProjectionMatrix().setToOrtho2D(0, 0, 2, 2);
 		
-		if(GameInstance.getInstance().field instanceof Field0 || GameInstance.getInstance().field instanceof Field1) {
-			background = Resources.getInstance().gameload;
-		} 
-		else if(GameInstance.getInstance().field instanceof Field2 || GameInstance.getInstance().field instanceof Field3){
-			background = Resources.getInstance().gameload2;
-		}
-		else {
+		if(!isConquerMode) {
+			if(GameInstance.getInstance().field instanceof Field0 || GameInstance.getInstance().field instanceof Field1) {
+				background = Resources.getInstance().gameload;
+			} 
+			else if(GameInstance.getInstance().field instanceof Field2 || GameInstance.getInstance().field instanceof Field3){
+				background = Resources.getInstance().gameload2;
+			}
+		} else {
 			background = Resources.getInstance().gameload3;
 		}
+		
 		blackFade = new Sprite();
 		blackFade.set(Resources.getInstance().blackFade);
 		background.setSize(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
@@ -75,7 +79,11 @@ public class GameloadScreen implements Screen{
 			blackFade.draw(fadeBatch);
 			fadeBatch.end();
 			if (fade >= 1) {
-				game.setScreen(new GameScreen(game));
+				if(!isConquerMode) {
+					game.setScreen(new GameScreen(game));
+				} else {
+					game.setScreen(new ConquerSetScreen(game));
+				}
 				dispose();
 			}
 		}

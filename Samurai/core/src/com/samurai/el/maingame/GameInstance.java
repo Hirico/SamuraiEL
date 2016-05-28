@@ -202,37 +202,37 @@ public class GameInstance implements Disposable{
 		} else {
 			switch(humanid) {
 			case 0:
-				players.add(redSpear = new RedSpear(field.nextRedHome()));
+				players.add(redSpear = new RedSpear(field.redHomeCount,field.nextRedHome()));
 				redSpear.isHuman = true;
 				human = redSpear;
 				redPlayers.add(human);
 				break;
 			case 1:
-				players.add(redSword = new RedSword(field.nextRedHome()));
+				players.add(redSword = new RedSword(field.redHomeCount,field.nextRedHome()));
 				redSword.isHuman = true;
 				human = redSword;
 				redPlayers.add(human);
 				break;
 			case 2:
-				players.add(redAxe = new RedAxe(field.nextRedHome()));
+				players.add(redAxe = new RedAxe(field.redHomeCount,field.nextRedHome()));
 				redAxe.isHuman = true;
 				human = redAxe;
 				redPlayers.add(human);
 				break;
 			case 3:
-				players.add(blueSpear = new BlueSpear(field.nextBlueHome()));
+				players.add(blueSpear = new BlueSpear(field.blueHomeCount,field.nextBlueHome()));
 				blueSpear.isHuman = true;
 				human = blueSpear;
 				bluePlayers.add(human);
 				break;
 			case 4:
-				players.add(blueSword = new BlueSword(field.nextBlueHome()));
+				players.add(blueSword = new BlueSword(field.blueHomeCount,field.nextBlueHome()));
 				blueSword.isHuman = true;
 				human = blueSword;
 				bluePlayers.add(human);
 				break;
 			case 5:
-				players.add(blueAxe = new BlueAxe(field.nextBlueHome()));
+				players.add(blueAxe = new BlueAxe(field.blueHomeCount,field.nextBlueHome()));
 				blueAxe.isHuman = true;
 				human = blueAxe;
 				bluePlayers.add(human);

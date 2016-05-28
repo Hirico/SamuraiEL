@@ -6,6 +6,7 @@ import com.badlogic.gdx.audio.Music;
 import com.samurai.el.achievement.AchievementScreen;
 import com.samurai.el.gamesetting.GameSetScreen;
 import com.samurai.el.gamesetting.MapSetScreen;
+import com.samurai.el.maingame.ConquerSetScreen;
 import com.samurai.el.maingame.GameInstance;
 import com.samurai.el.maingame.GameScreen;
 import com.samurai.el.maingame.GameloadScreen;
@@ -83,7 +84,7 @@ public class ScreenCenter
 				break;
 			case 4:
 				game.getScreen().dispose();
-				game.setScreen(new GameloadScreen(game));
+				game.setScreen(new GameloadScreen(game, false));
 				break;
 			case 5:
 				game.getScreen().dispose();
@@ -98,8 +99,7 @@ public class ScreenCenter
 			case 7:
 				game.getScreen().dispose();
 				stopmusic();
-				GameInstance.setInstance(0, 2, 120);
-				game.setScreen(new GameloadScreen(game));
+				game.setScreen(new ConquerSetScreen(game));
 				break;
 				
 		}
