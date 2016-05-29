@@ -24,12 +24,19 @@ import com.samurai.el.resource.Resources;
 
 public class MainMenuScreen implements Screen{
 	Stage stage;
+	Stage stage1;
+	boolean Flag;
+	
 	ImageButton button1;
 	ImageButton button2;
 	ImageButton button3;
 	ImageButton button4;
 	ImageButton button5;
-	ImageButton button6;
+	
+	ImageButton returnbutton;
+	ImageButton stdbutton;
+	ImageButton conquerbutton;
+	
 	Sprite buttonA0;
 	Sprite buttonA1;
 	Sprite buttonB0;
@@ -53,7 +60,9 @@ public class MainMenuScreen implements Screen{
 	
 	public MainMenuScreen()
 	{
+		Flag=false;
 		stage=new Stage(new StretchViewport(1280,720));
+		stage1=new Stage(new StretchViewport(1280,720));
 		
 		explosions = new Array<ParticleEffect>();
 		explosionBatch = new SpriteBatch();
@@ -72,19 +81,29 @@ public class MainMenuScreen implements Screen{
 		buttonC1=new Sprite(new Texture(Gdx.files.internal("img/button/mainmenu/buttonC1.png")));
 		
 		
-		Sprite returnbutton0=new Sprite(new Texture("img/button/mainmenu/exit0.png"));
-		Sprite returnbutton1=new Sprite(new Texture("img/button/mainmenu/exit1.png"));
+		Sprite exitbutton0=new Sprite(new Texture("img/button/mainmenu/exit0.png"));
+		Sprite exitbutton1=new Sprite(new Texture("img/button/mainmenu/exit1.png"));
 		
 		Sprite helpbutton0=new Sprite(new Texture("img/button/mainmenu/help0.png"));
 		Sprite helpbutton1=new Sprite(new Texture("img/button/mainmenu/help1.png"));
 		
+		Sprite returnbutton0=new Sprite(new Texture("img/button/mainmenu/return0.png"));
+		Sprite returnbutton1=new Sprite(new Texture("img/button/mainmenu/return1.png"));
+		
+		Sprite stdbutton0=new Sprite(new Texture("img/button/mainmenu/standard0.png"));
+		Sprite stdbutton1=new Sprite(new Texture("img/button/mainmenu/standard1.png"));
+		
+		Sprite conquerbutton0=new Sprite(new Texture("img/button/mainmenu/conquer0.png"));
+		Sprite conquerbutton1=new Sprite(new Texture("img/button/mainmenu/conquer1.png"));
 		
 		ImageButton.ImageButtonStyle button1style=new ImageButton.ImageButtonStyle();
 		ImageButton.ImageButtonStyle button2style=new ImageButton.ImageButtonStyle();
 		ImageButton.ImageButtonStyle button3style=new ImageButton.ImageButtonStyle();
 		ImageButton.ImageButtonStyle button4style=new ImageButton.ImageButtonStyle();
 		ImageButton.ImageButtonStyle button5style=new ImageButton.ImageButtonStyle();
-		ImageButton.ImageButtonStyle button6style=new ImageButton.ImageButtonStyle();
+		ImageButton.ImageButtonStyle returnbuttonstyle=new ImageButton.ImageButtonStyle();
+		ImageButton.ImageButtonStyle stdbuttonstyle=new ImageButton.ImageButtonStyle();
+		ImageButton.ImageButtonStyle conquerbuttonstyle=new ImageButton.ImageButtonStyle();
 		
 		button2style.imageUp=new TextureRegionDrawable(buttonA0);	
 		button2style.imageDown=new TextureRegionDrawable(buttonA0);
@@ -98,25 +117,35 @@ public class MainMenuScreen implements Screen{
 		button3style.imageDown=new TextureRegionDrawable(buttonC0);
 		button3style.imageOver=new TextureRegionDrawable(buttonC1);
 				
-		button4style.imageUp=new SpriteDrawable(returnbutton0);
-		button4style.imageDown=new SpriteDrawable(returnbutton0);
-		button4style.imageOver=new SpriteDrawable(returnbutton1);
+		button4style.imageUp=new SpriteDrawable(exitbutton0);
+		button4style.imageDown=new SpriteDrawable(exitbutton0);
+		button4style.imageOver=new SpriteDrawable(exitbutton1);
 		
 		button5style.imageUp=new SpriteDrawable(helpbutton0);
 		button5style.imageDown=new SpriteDrawable(helpbutton0);
 		button5style.imageOver=new SpriteDrawable(helpbutton1);
 		
-		button6style.imageUp=new SpriteDrawable(helpbutton0);
-		button6style.imageDown=new SpriteDrawable(helpbutton0);
-		button6style.imageOver=new SpriteDrawable(helpbutton1);
+		returnbuttonstyle.imageUp=new SpriteDrawable(returnbutton0);
+		returnbuttonstyle.imageDown=new SpriteDrawable(returnbutton0);
+		returnbuttonstyle.imageOver=new SpriteDrawable(returnbutton1);
+		
+		stdbuttonstyle.imageUp=new SpriteDrawable(stdbutton0);
+		stdbuttonstyle.imageDown=new SpriteDrawable(stdbutton0);
+		stdbuttonstyle.imageOver=new SpriteDrawable(stdbutton1);
+		
+		conquerbuttonstyle.imageUp=new SpriteDrawable(conquerbutton0);
+		conquerbuttonstyle.imageDown=new SpriteDrawable(conquerbutton0);
+		conquerbuttonstyle.imageOver=new SpriteDrawable(conquerbutton1);
 		
 		button1=new ImageButton(button1style);
 		button2=new ImageButton(button2style);
 		button3=new ImageButton(button3style);
 		button4=new ImageButton(button4style);
 		button5=new ImageButton(button5style);
-		button6=new ImageButton(button6style);
 		
+		returnbutton=new ImageButton(returnbuttonstyle);
+		stdbutton=new ImageButton(stdbuttonstyle);
+		conquerbutton=new ImageButton(conquerbuttonstyle);
 		
 			
 	}
@@ -136,7 +165,14 @@ public class MainMenuScreen implements Screen{
 		stage.addActor(button3);
 		stage.addActor(button4);
 		stage.addActor(button5);
-		stage.addActor(button6);
+		
+		stage1.addActor(returnbutton);
+		stage1.addActor(stdbutton);
+		stage1.addActor(conquerbutton);
+		
+		stdbutton.setPosition(850,380);
+		conquerbutton.setPosition(850,300);
+		returnbutton.setPosition(850,220);
 		
 		int std=400;
 		button2.setPosition(850,380);
@@ -144,7 +180,6 @@ public class MainMenuScreen implements Screen{
 		button3.setPosition(850,220);
 		button5.setPosition(850,140);
 		button4.setPosition(850,60);
-		button6.setPosition(850,460);
 		
 		button1.addListener(new InputListener()
 		{
@@ -180,7 +215,8 @@ public class MainMenuScreen implements Screen{
 	           @Override
 	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) 
 	           {
-	        	   ScreenCenter.setscreen(2);
+	        	  Flag=true;
+	        	  Gdx.input.setInputProcessor(stage1);
 	           }
 	           @Override
 	           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) 
@@ -254,7 +290,29 @@ public class MainMenuScreen implements Screen{
 	        	   return true;
 	           }
 		});
-		button6.addListener(new InputListener()
+		
+		stdbutton.addListener(new InputListener()
+		{
+			@Override
+	        public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+	            super.enter(event, x, y, pointer, fromActor);
+	            Sound sound = Resources.getInstance().hover;
+	            sound.play(Gdx.app.getPreferences("volumePref").getFloat("soundVolume", 1f));
+	        
+	        }
+	           @Override
+	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) 
+	           {
+	        	   ScreenCenter.setscreen(2);
+	           }
+	           @Override
+	           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) 
+	           {
+						return true;
+	           }
+		});
+		
+		conquerbutton.addListener(new InputListener()
 		{
 			@Override
 	        public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
@@ -274,6 +332,28 @@ public class MainMenuScreen implements Screen{
 	        	   return true;
 	           }
 		});
+		
+		returnbutton.addListener(new InputListener()
+		{
+			@Override
+	        public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+	            super.enter(event, x, y, pointer, fromActor);
+	            Sound sound = Resources.getInstance().hover;
+	            sound.play(Gdx.app.getPreferences("volumePref").getFloat("soundVolume", 1f));
+	        
+	        }
+	           @Override
+	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) 
+	           {
+	        	   Gdx.input.setInputProcessor(stage);
+	        		Flag=false;
+	           }
+	           @Override
+	           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) 
+	           {
+	        	   return true;
+	           }
+		});
 	}
 
 	@Override
@@ -285,9 +365,16 @@ public class MainMenuScreen implements Screen{
 		batch.begin();
 		batch.draw(background, 0, 0,Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
 		batch.end();
-		
+		if (Flag==false)
+		{
 		stage.act();
 		stage.draw();
+		}
+		else
+		{
+			stage1.act();
+			stage1.draw();
+		}
 		
 		if(explosionInterval > 0) {
 			explosionInterval -= delta;

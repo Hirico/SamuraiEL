@@ -28,6 +28,7 @@ public class OverScreen implements Screen
 	int[][] result;
 	int winflag;
 	int[] teamScores;
+	int planetoccupynum;
 	int humanid;
 	Stage stage;
 	ImageButton returnbutton;
@@ -53,12 +54,24 @@ public class OverScreen implements Screen
 	int maxmax;
 	Sprite[] playername=new Sprite[6];
 	public OrthographicCamera camera;
+
+	int max(int x,int y)
+	{
+		if (x>y) return x;else return y;
+	}
+	int min(int x,int y)
+	{
+		if (x<y) return x;else return y;
+	}
 	
 	void SolveAchieve()
 	{
 		String[] playername={"Advancer","Tracker","Reaper"};
 		if(winflag == 1) 
 		{
+			int temp0=max(teamScores[0],teamScores[1]);
+			int temp1=min(teamScores[0],teamScores[1]);
+			if (temp0>=(3*temp1)) Gdx.app.getPreferences("challenge").putInteger("highScore", Gdx.app.getPreferences("challenge").getInteger("highScore", 0)+1);
 			Gdx.app.getPreferences("challenge").putInteger("winNum", Gdx.app.getPreferences("challenge").getInteger("winNum", 0)+1);
 		}
 		
@@ -71,18 +84,23 @@ public class OverScreen implements Screen
 		{
 			Gdx.app.getPreferences("challenge").putInteger("ACE", Gdx.app.getPreferences("challenge").getInteger("ACE", 0)+1);
 		}
-		if (result[humanid][2]==0) Gdx.app.getPreferences("challenge").putInteger("NODIE", Gdx.app.getPreferences("challenge").getInteger("NODIE", 0)+1);
+		if (result[humanid][2]==0) Gdx.app.getPreferences("challenge").putInteger("noDie", Gdx.app.getPreferences("challenge").getInteger("noDie", 0)+1);
+		
+		Gdx.app.getPreferences("challenge").putInteger("planetOccupy", Gdx.app.getPreferences("challenge").getInteger("planetOccupy", 0)+planetoccupynum);
+		
+
 		Gdx.app.getPreferences("challenge").flush();		
 	}
 	
-	public OverScreen(int human,int[][] result,int winflag, Music endMusic, int[] teamScores)
+	public OverScreen(int human,int[][] result,int winflag, Music endMusic, int[] teamScores,int planetoccupynum)
 	{
 		this.result=result;
 		this.winflag=winflag;
 		this.endMusic = endMusic;
 		this.teamScores = teamScores;
 		this.humanid=human;
-
+		this.planetoccupynum=planetoccupynum;
+		
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 1280, 720);
 		camera.position.set(640,360,0);
