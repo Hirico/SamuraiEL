@@ -260,6 +260,7 @@ public class AchievementScreen implements Screen{
 		           @Override
 		           public boolean mouseMoved(InputEvent event, float x, float y){
 		        	   achieve_label.setText(cupname[temp]);
+		        	   achieveshow_label.setText(cupshow[temp]);
 		        	   achieveget_label.setText(getachieve(temp));
 		        	   return true;
 		           }

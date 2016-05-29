@@ -10,7 +10,7 @@ import com.samurai.el.mainmenu.Samurai;
 public class DesktopLauncher {
 	public static void main (String[] args) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();		
-		config.resizable=true;
+		config.resizable=false;
 		config.title = "Colony";
 		config.width = 1280;
 		config.height = 720;
