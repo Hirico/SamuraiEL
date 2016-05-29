@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.samurai.el.maingame.OverScreen;
 import com.samurai.el.resource.Resources;
 
 
@@ -258,6 +259,11 @@ public class MainMenuScreen implements Screen{
 	           public void touchUp(InputEvent event, float x, float y, int pointer, int button) 
 	           {
 	        	   Gdx.app.exit();
+	       			/*
+	        	   int[][] result={{12,30,0,1},{88,0,40,2},{77,2,2,3},{0,0,3,4},{35,2,1,5},{20,4,1,6}};
+	       			int[] score={200,233};
+	    			ScreenCenter.game.setScreen(new OverScreen(5,result,0,music,score,0));
+	    			*/
 	           }
 	           @Override
 	           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) 
@@ -446,6 +452,7 @@ public class MainMenuScreen implements Screen{
 		// TODO Auto-generated method stub
 		batch.dispose();
 		stage.dispose();
+		stage1.dispose();
 		fadeBatch.dispose();
 		for(ParticleEffect p: explosions) {
 			p.dispose();

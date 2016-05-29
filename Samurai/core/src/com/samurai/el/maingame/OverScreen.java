@@ -26,6 +26,7 @@ import com.samurai.el.resource.Resources;
 public class OverScreen implements Screen
 {
 	int[][] result;
+	int[] place=new int[6];
 	int winflag;
 	int[] teamScores;
 	int planetoccupynum;
@@ -34,14 +35,15 @@ public class OverScreen implements Screen
 	ImageButton returnbutton;
 	BitmapFont font;
 	LabelStyle labelstyle;
-	Label[] scorelabel=new Label[6];
+	Label[][] scorelabel=new Label[6][4];
+	
 	Label Rscore;
 	Label Uscore;
 	Label Mscore;
 	SpriteBatch batch;
 	Sprite background;
 	Music endMusic;
-	
+	Sprite me;
 	Sprite blackFade;
 	Sprite republic;
 	Sprite union;
@@ -52,8 +54,11 @@ public class OverScreen implements Screen
 	public float fade;
 	int maxnum;
 	int maxmax;
+	int[] rank=new int[6];
 	Sprite[] playername=new Sprite[6];
 	public OrthographicCamera camera;
+	int[][] result1;
+	boolean[] rankflag=new boolean[6];
 
 	int max(int x,int y)
 	{
@@ -67,6 +72,7 @@ public class OverScreen implements Screen
 	void SolveAchieve()
 	{
 		String[] playername={"Advancer","Tracker","Reaper"};
+		
 		if(winflag == 1) 
 		{
 			int temp0=max(teamScores[0],teamScores[1]);
@@ -100,15 +106,37 @@ public class OverScreen implements Screen
 		this.teamScores = teamScores;
 		this.humanid=human;
 		this.planetoccupynum=planetoccupynum;
+		for (int i=0;i<6;++i) rankflag[i]=false;
+		
+		
+		for (int i=0;i<6;++i)
+		{
+			int temp=0;
+			int temp1=0;
+			for (int j=0;j<6;++j)
+			{
+				if (!rankflag[j])
+				{
+					if (result[j][0]>temp)
+					{
+						temp=result[j][0];
+						temp1=j;
+					}
+				}
+			}
+			rank[temp1]=i+1;
+			rankflag[temp1]=true;
+		}
+		
 		
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, 1280, 720);
 		camera.position.set(640,360,0);
 		
-		font=new BitmapFont(Gdx.files.internal("font/over1.fnt"),Gdx.files.internal("font/over1.png"), false);
+		font=new BitmapFont(Gdx.files.internal("font/achieve.fnt"),Gdx.files.internal("font/achieve.png"), false);
 		labelstyle=new LabelStyle(font, font.getColor());
 		
-		background=new Sprite(new Texture(Gdx.files.internal("img/background/over.jpg")));
+		background=new Sprite(new Texture(Gdx.files.internal("img/background/over.png")));
 		batch=new SpriteBatch();
 		
 		republic=new Sprite(new Texture(Gdx.files.internal("img/gameset/republic.png")));
@@ -123,6 +151,7 @@ public class OverScreen implements Screen
 		win=new Sprite(new Texture("img/over/win.png"));
 		lose=new Sprite(new Texture("img/over/lose.png"));
 		kill=new Sprite(new Texture("img/over/kill.png"));
+		me=new Sprite(new Texture("img/over/me.png"));
 		
 		for (int i=0;i<6;++i)
 		{
@@ -143,11 +172,18 @@ public class OverScreen implements Screen
 		maxmax=0;
 		for (int i=0;i<6;++i)
 			{
-			scorelabel[i]=new Label(String.valueOf(result[i][0]+" / "+result[i][1]+" / "+result[i][2]),labelstyle);
-			if (result[i][1]>maxmax)
+			if (result[i][0]==0) for (int j=0;j<4;++j) scorelabel[i][j]=new Label("-",labelstyle);else
 			{
-				maxmax=result[i][1];
-				maxnum=i;
+			
+			scorelabel[i][0]=new Label(String.valueOf(rank[i]),labelstyle);
+			scorelabel[i][1]=new Label(String.valueOf(result[i][1]),labelstyle);
+			scorelabel[i][2]=new Label(String.valueOf(result[i][2]),labelstyle);
+			scorelabel[i][3]=new Label(String.valueOf(result[i][0]),labelstyle);
+			if (result[i][1]>maxmax)
+				{
+					maxmax=result[i][1];
+					maxnum=i;
+				}
 			}
 			}
 		
@@ -171,50 +207,63 @@ public class OverScreen implements Screen
 		Gdx.input.setInputProcessor(stage);
 		
 		stage.addActor(returnbutton);
-		for (int i=0;i<6;++i) stage.addActor(scorelabel[i]);
-		returnbutton.setPosition(40,30);
+		for (int i=0;i<6;++i) for (int j=0;j<4;++j) stage.addActor(scorelabel[i][j]);
+		returnbutton.setPosition(15,10);
 		
-		republic.setPosition(220, 620);
-		union.setPosition(780, 620);		
-		republic.setSize(republic.getWidth()*1.1f, republic.getHeight()*1.1f);
-		union.setSize(union.getWidth()*1.1f, union.getHeight()*1.1f);
-		
-		win.setPosition(490, 550);
-		lose.setPosition(490, 530);
-		//win.setAlpha(0.6f);
+		win.setPosition(490, 580);
+		lose.setPosition(490, 580);
 		
 		stage.addActor(Rscore);
 		stage.addActor(Uscore);
-		//stage.addActor(Mscore);
 		
-		Rscore.setPosition(350, 540);
-		Uscore.setPosition(930, 540);
-		Mscore.setPosition(640, 540);
-		Mscore.setScale(1.4f, 1.4f);
+		Rscore.setPosition(945, 564);
+		Uscore.setPosition(945, 306);
 		
 		for (int i=0;i<3;++i)
 		{
+			place[i]=484-i*56;
+		}
+		for (int i=3;i<6;++i)
+		{
+			place[i]=230-(i-3)*56;
+		}
+		
+		for (int i=0;i<6;++i)
+		{
+			if (i==maxnum)
+				{
+				kill.setPosition(270,place[i]+15);
+				
+				kill.setSize(kill.getWidth()*0.8f, kill.getHeight()*0.8f);
+				}
+			if (i==humanid)
+			{
+				me.setPosition(230,place[i]-8);
+				me.setAlpha(0.7f);
+			}
+		}
+		
+		
+		for (int i=0;i<6;++i) 
+		{
+			scorelabel[i][0].setX(632);
+			scorelabel[i][1].setX(850);
+			scorelabel[i][2].setX(923);
+			scorelabel[i][3].setX(995);
 			
-			playername[i].setPosition(300,460-130*(i));
-			if (i==maxnum) kill.setPosition(300-80,460-130*(i)-20);
-		}
-		
-		for (int i=3;i<6;++i)
-		{
-			playername[i].setPosition(877,460-130*(i-3));
-			if (i==maxnum) kill.setPosition(877-80,460-130*(i-3)-20);
 		}
 		
 		for (int i=0;i<3;++i)
 		{
-			scorelabel[i].setY(385-i*130);
-			scorelabel[i].setX(240);
+			for (int j=0;j<4;++j)
+			scorelabel[i][j].setY(484-i*56);
 		}
 		for (int i=3;i<6;++i)
 		{
-			scorelabel[i].setY(385-(i-3)*130);
-			scorelabel[i].setX(810);
+			for (int j=0;j<4;++j)
+			scorelabel[i][j].setY(230-(i-3)*56);
 		}
+		
 		returnbutton.addListener(new InputListener(){
 			
 			 @Override
@@ -250,12 +299,13 @@ public class OverScreen implements Screen
 
 		batch.draw(background,0,0);
 		
-		republic.draw(batch);
-		union.draw(batch);
+		me.draw(batch);
+		
 		if (winflag==1) win.draw(batch);
 		if (winflag==0) lose.draw(batch);
-		for (int i=0;i<6;++i) playername[i].draw(batch);
-		if (maxmax!=0) kill.draw(batch);
+		
+		//if (maxmax!=0) kill.draw(batch);
+		
 		batch.end();
 
 		stage.act();

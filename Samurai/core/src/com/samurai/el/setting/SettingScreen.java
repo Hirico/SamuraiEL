@@ -91,7 +91,7 @@ public class SettingScreen implements Screen{
 		checkstyle.font=font;
 		checkstyle.fontColor=new Color(Color.YELLOW);
 		
-		setwindowed=new CheckBox("   windowed",checkstyle);
+		setwindowed=new CheckBox("    Fight Mode On/Off",checkstyle);
 		setfullscreen=new CheckBox("   fullscreen",checkstyle);
 		
 		
@@ -121,8 +121,8 @@ public class SettingScreen implements Screen{
 		soundvolume_label.setX(100);
 		soundvolume_label.setY(300);
 		
-		/*
 		
+		/*
 		stage.addActor(setwindowed);
 		stage.addActor(setfullscreen);
 		setwindowed.setX(640-65/2-300);
@@ -135,12 +135,42 @@ public class SettingScreen implements Screen{
 		
 		*/
 		
+		stage.addActor(setwindowed);
+		setwindowed.setX(510);
+		setwindowed.setY(190);
+		setwindowed.setChecked(Gdx.app.getPreferences("Colony").getBoolean("fightMode",true));
 		
 
 		
 		stage.addActor(returnbutton);
 		returnbutton.setPosition(40,30);
 	
+		
+		setwindowed.addListener(new InputListener()
+		{
+			 @Override                                                                                                                                                       
+		        public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+		            super.enter(event, x, y, pointer, fromActor);
+		
+		            Sound sound = Resources.getInstance().hover;
+		            sound.play(Gdx.app.getPreferences("volumePref").getFloat("soundVolume", 1f));
+		        
+		        }
+			@Override
+			public void touchUp(InputEvent event, float x, float y, int pointer, int button) 
+			{
+				if (setwindowed.isChecked()==true)
+				Gdx.app.getPreferences("Colony").putBoolean("fightMode",true);else
+					Gdx.app.getPreferences("Colony").putBoolean("fightMode",false);
+				Gdx.app.getPreferences("Colony").flush();
+			}
+           @Override
+           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) 
+           {
+					return true;
+           }
+		});
+		
 		returnbutton.addListener(new InputListener(){
 			 @Override
 		        public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {

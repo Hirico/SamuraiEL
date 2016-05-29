@@ -86,7 +86,7 @@ public class GameSetScreen implements Screen{
 		
 		flag=true;
 		font=new BitmapFont(Gdx.files.internal("foxwel_temp/choose/1.fnt"),Gdx.files.internal("foxwel_temp/choose/1.png"), false);
-		// TODO Auto-generated method stub
+
 		
 		batch=new SpriteBatch();
 		background=new Sprite(new Texture(Gdx.files.internal("img/background/gameset.png")));
@@ -209,15 +209,12 @@ public class GameSetScreen implements Screen{
 		
 		for (int i=0;i<6;++i)
 		{
-			int tempx=0;
-			int tempy=0;
+			
 			stage.addActor(playercheckbox[i]);
 			stage.addActor(playerselectbox[i]);
 			
 			
 			playercheckbox[i].setPosition(position[i][0],position[i][1]);
-			
-			tempx+=120;
 			
 			playerselectbox[i].setItems(disitemlist);
 			playerselectbox[i].setSelected("");
@@ -242,7 +239,6 @@ public class GameSetScreen implements Screen{
 						 
 						 for (int j=0;j<6;++j)
 						 {
-							 final int temp1=j;
 							 if (j!=temp)
 							 {
 								 if (playerselectbox[j].getSelected()=="Player") playerselectbox[j].setSelected("Normal AI");

@@ -14,6 +14,7 @@ public class DesktopLauncher {
 		config.title = "Colony";
 		config.width = 1280;
 		config.height = 720;
+		
 		if(LWJGLUtil.getPlatform() == LWJGLUtil.PLATFORM_MACOSX) {
 			config.fullscreen = false;
 		} else {
