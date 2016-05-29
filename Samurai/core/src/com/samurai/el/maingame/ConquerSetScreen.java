@@ -2,6 +2,7 @@ package com.samurai.el.maingame;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
@@ -25,6 +26,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener.ChangeEvent;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
+import com.samurai.el.mainmenu.ScreenCenter;
 import com.samurai.el.resource.Resources;
 
 public class ConquerSetScreen implements Screen{
@@ -403,6 +405,12 @@ public class ConquerSetScreen implements Screen{
 	public void render(float delta) {
 		Gdx.gl.glClearColor(1, 1, 1, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+		if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)) {
+			bgm.stop();
+     	   bgm.dispose();
+     	   ScreenCenter.startmusic();
+     	   ScreenCenter.setscreen(0);
+		}
 		
 		batch.begin();
 		background.draw(batch);
@@ -440,7 +448,8 @@ public class ConquerSetScreen implements Screen{
 
 	@Override
 	public void dispose() {
-		
+		sideStage.dispose();
+		shipStage.dispose();
 	}
 
 }
