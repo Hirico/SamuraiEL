@@ -3,9 +3,7 @@ package com.samurai.el.player;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -645,7 +643,10 @@ public abstract class Player extends Sprite implements Disposable{
 	public void bound() {
 		if(!isRecovering) {
 			if(LskillCooldown <= 0) {
-				Targeting.getNearestEnemy(this).boundDebuff();
+				Player target = Targeting.getNearestEnemy(this);
+				if(target != null) {
+					target.boundDebuff();
+				}
 				LskillCooldown = LskillTotalCooldown;
 			}
 		}

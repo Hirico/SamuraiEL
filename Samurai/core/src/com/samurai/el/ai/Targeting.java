@@ -36,16 +36,20 @@ public class Targeting {
 	
 	public static Player getNearestEnemy(Player p) {
 		Array<Player> enemies = p.getEnemies();
-		int[] distances = new int[enemies.size];
-		int minId = 0;
-		
-		for(int i = 0; i < enemies.size; i++) {
-			distances[i] = (int) (Math.pow((enemies.get(i).position.x-p.position.x), 2) +Math.pow((enemies.get(i).position.y-p.position.y), 2));
-			if(i > 0 && distances[i] < distances[i-1]) {
-				minId = i;
-			}			
+		if(enemies.size != 0) {
+			int[] distances = new int[enemies.size];
+			int minId = 0;
+			
+			for(int i = 0; i < enemies.size; i++) {
+				distances[i] = (int) (Math.pow((enemies.get(i).position.x-p.position.x), 2) +Math.pow((enemies.get(i).position.y-p.position.y), 2));
+				if(i > 0 && distances[i] < distances[i-1]) {
+					minId = i;
+				}			
+			}
+			return enemies.get(minId);
+		} else {
+			return null;
 		}
-		return enemies.get(minId);
 				
 	}
 }
