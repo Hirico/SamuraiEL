@@ -134,8 +134,8 @@ public class GameScreen implements Screen {
 	public void show() {
 		fade = 0f;
 		finished = false;
-		Gdx.input.setCatchBackKey(true);
 		Gdx.input.setInputProcessor(stage);
+		Gdx.input.setCursorCatched(true);
 		uiBatch = new SpriteBatch();
 		switch(gameInstance.human.id) {
 		case 0:
@@ -326,6 +326,7 @@ public class GameScreen implements Screen {
 						game.setScreen(new OverScreen(temp,result, gameInstance.winFlag, endMusic, gameInstance.teamScores, gameInstance.human.planetOccupyNum)); 
 						dispose();	
 					} else {
+						Gdx.input.setCursorCatched(false);
 						endMusic.dispose();
 						ScreenCenter.setscreen(0);
 			        	ScreenCenter.startmusic();
@@ -369,6 +370,7 @@ public class GameScreen implements Screen {
 	
 	/**End the game and back to main menu  */
 	public void exit() {
+		Gdx.input.setCursorCatched(false);
 		if(endMusic != null) {
 			endMusic.stop();
 		}
