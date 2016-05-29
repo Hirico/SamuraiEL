@@ -6,8 +6,8 @@ public class EncounterCruelAI extends EncounterAI {
 
 	public EncounterCruelAI(Player player) {
 		super(player);
-		// TODO Auto-generated constructor stub
 		initialTotalMoveCooldown = 0.1f;
+		totalMoveCooldown = initialTotalMoveCooldown;
 	}
 	
 	@Override
