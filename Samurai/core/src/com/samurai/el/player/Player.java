@@ -60,6 +60,9 @@ public abstract class Player extends Sprite implements Disposable{
 	public int currentDeathFrame;
 	public Vector2 deathPosition;
 	public boolean explosion;
+	public int epackNum;
+	public EAmmo eAmmo;
+	public Sprite epackContainHint;
 	
 	public PlayerAI ai;
 	
@@ -105,6 +108,9 @@ public abstract class Player extends Sprite implements Disposable{
 		currentDeathFrame = 0;
 		deathPosition = new Vector2();
 		explosion = false;
+		epackNum = 0;
+		epackContainHint = new Sprite();
+		epackContainHint.set(Resources.getInstance().epackContainHint);
 	}
 	
 	
@@ -169,6 +175,7 @@ public abstract class Player extends Sprite implements Disposable{
 		if(fightMode) {
 			fightCancel();
 		}
+		epackNum = 0;
 	}
 	
 	
@@ -242,6 +249,12 @@ public abstract class Player extends Sprite implements Disposable{
 				targetPosition.set(position.x+1, position.y);
 			}
 			
+			//get a EPack in conquer mode
+			if(field.blocks[(int) targetPosition.x][(int) targetPosition.y].containAEpack && 
+					field.blocks[(int) targetPosition.x][(int) targetPosition.y].side == side) {
+				getAEpack();
+				field.blocks[(int) targetPosition.x][(int) targetPosition.y].loseAEpack();
+			}
 			//execute move if the move follows regulation 
 			if(((!isHidden && field.blocks[(int) targetPosition.x][(int) targetPosition.y].playerIdOn == -1) 
 					|| (isHidden && field.isOwnSide(this, targetPosition) && !targetPosition.equals(position))) 
@@ -577,7 +590,9 @@ public abstract class Player extends Sprite implements Disposable{
 				ai.totalMoveCooldown *= 0.9;
 			}
 		}
-		fightLevel += 1;
+		if(fightLevel <= 7) {
+			fightLevel += 1;
+		}
 	}
 	
 	public void fightCancel() {
@@ -628,7 +643,10 @@ public abstract class Player extends Sprite implements Disposable{
 	public void bound() {
 		if(!isRecovering) {
 			if(LskillCooldown <= 0) {
-				Targeting.getNearestEnemy(this).boundDebuff();
+				Player target = Targeting.getNearestEnemy(this);
+				if(target != null) {
+					target.boundDebuff();
+				}
 				LskillCooldown = LskillTotalCooldown;
 			}
 		}
@@ -656,8 +674,26 @@ public abstract class Player extends Sprite implements Disposable{
 			}
 		
 		}
-		
-		
+				
+	}
+	
+	public void getAEpack() {
+		Sound getSound = Resources.getInstance().epackPick;
+		getSound.play(Gdx.app.getPreferences("volumePref").getFloat("soundVolume", 1));
+		if(epackNum == 0) {						
+			epackNum += 1;
+		}
+	}
+	
+	/**launch a epack */
+	public void launchEpack() {
+		if(epackNum == 1) {
+			Sound launchSound = Resources.getInstance().epackLaunch;
+			launchSound.play(Gdx.app.getPreferences("volumePref").getFloat("soundVolume", 1));
+			eAmmo = new EAmmo(side, position, direction, this);
+			eAmmo.launch();
+			epackNum -= 1;
+		}
 	}
 	
 	

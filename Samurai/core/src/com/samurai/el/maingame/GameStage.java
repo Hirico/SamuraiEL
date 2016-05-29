@@ -187,6 +187,21 @@ public class GameStage extends Stage{
 					if(keycode == Input.Keys.H) {
 						screen.changeGuideLayer();
 					}
+					if(keycode == Input.Keys.R) {
+						human.launchEpack();
+					}
+					if(keycode == Input.Keys.NUM_7) {
+						GameInstance.conquerDifficulty = 0;						
+					}
+					if(keycode == Input.Keys.NUM_8) {
+						GameInstance.conquerDifficulty = 1;						
+					}
+					if(keycode == Input.Keys.NUM_9) {
+						GameInstance.conquerDifficulty = 2;						
+					}
+					if(keycode == Input.Keys.NUM_0) {
+						GameInstance.conquerDifficulty = 3;						
+					}
 
 				}
 				if(keycode == Input.Keys.P) {
