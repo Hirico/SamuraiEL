@@ -214,6 +214,7 @@ public class ConquerSetScreen implements Screen{
 		        	   bgm.stop();
 		        	   bgm.dispose();
 		        	   game.setScreen(new GameScreen(game));
+		        	   dispose();
 		           }
 		           @Override
 		           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) 
@@ -246,6 +247,7 @@ public class ConquerSetScreen implements Screen{
 		        	   bgm.stop();
 		        	   bgm.dispose();
 		        	   game.setScreen(new GameScreen(game));
+		        	   dispose();
 		           }
 		           @Override
 		           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) 
@@ -278,6 +280,7 @@ public class ConquerSetScreen implements Screen{
 		        	   bgm.stop();
 		        	   bgm.dispose();
 		        	   game.setScreen(new GameScreen(game));
+		        	   dispose();
 		           }
 		           @Override
 		           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) 
@@ -314,6 +317,7 @@ public class ConquerSetScreen implements Screen{
 		        	   bgm.stop();
 		        	   bgm.dispose();
 		        	   game.setScreen(new GameScreen(game));
+		        	   dispose();
 		           }
 		           @Override
 		           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) 
@@ -346,6 +350,7 @@ public class ConquerSetScreen implements Screen{
 		        	   bgm.stop();
 		        	   bgm.dispose();
 		        	   game.setScreen(new GameScreen(game));
+		        	   dispose();
 		           }
 		           @Override
 		           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) 
@@ -378,6 +383,7 @@ public class ConquerSetScreen implements Screen{
 		        	   bgm.stop();
 		        	   bgm.dispose();
 		        	   game.setScreen(new GameScreen(game));
+		        	   dispose();
 		           }
 		           @Override
 		           public boolean touchDown(InputEvent event, float x, float y,int pointer, int button) 
