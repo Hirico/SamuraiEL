@@ -38,12 +38,12 @@ public class AchievementScreen implements Screen{
 	
 	ArrayList<Integer> achievelist= new ArrayList(); 
 	
-	Sprite[] cup0=new Sprite[10];
-	Sprite[] cup1=new Sprite[10];
-	
+	ImageButton[] cup0=new ImageButton[10];
+	ImageButton[] cup1=new ImageButton[10];
+	String[] cupname={"Just defeat them!","I'm a killer!","More and More","Best Advancer","Best Tracker","Best Reaper","","","",""};
 	BitmapFont font;
-	Label wintime;
-	
+	Label achieve_label;
+	Label achieveget_label;
 	
 	public void calcachieve()
 	{
@@ -56,12 +56,45 @@ public class AchievementScreen implements Screen{
 		if (Gdx.app.getPreferences("challenge").getInteger("killNum",0)>300) achievelist.add(2);
 		
 		for (int i=0;i<3;++i) if (Gdx.app.getPreferences("challenge").getInteger(playername[i],0)>30) achievelist.add(i+3);
-		for (int i=0;i<achievelist.size();++i) System.out.println(achievelist.get(i));
+		
+	}
+	
+	public String getachieve(int n)
+	{
+		String R1="";
+		String R2="";
+		String[] playername={"Advancer","Tracker","Reaper"};
+		if (n==0)
+		{
+			R1=Integer.toString(Gdx.app.getPreferences("challenge").getInteger("winNum", 0));
+			R2="/20";
+		}
+		if (n==1)
+		{
+			R1=Integer.toString(Gdx.app.getPreferences("challenge").getInteger("ACE", 0));
+			R2="/20";
+		}
+		if (n==2)
+		{
+			R1=Integer.toString(Gdx.app.getPreferences("challenge").getInteger("killNum",0));
+			R2="/300";
+		}
+		for (int i=0;i<3;++i)
+		{
+			if ((i+3)==n)
+			{
+				R1=Integer.toString(Gdx.app.getPreferences("challenge").getInteger(playername[i],0));
+				R2="/50";
+			}
+		}
+		return "You finished "+R1+" and you need "+R2;
 	}
 	
 	public AchievementScreen() {
+		font=new BitmapFont(Gdx.files.internal("font/achieve.fnt"),Gdx.files.internal("font/achieve.png"), false);
+		
 		stage = new Stage(new StretchViewport(1280,720));
-		font=new BitmapFont(Gdx.files.internal("foxwel_temp/choose/1.fnt"),Gdx.files.internal("foxwel_temp/choose/1.png"), false);
+
 		background = new Sprite(new Texture(Gdx.files.internal("img/background/achieve.png")));
 		batch = new SpriteBatch();
 		background.setSize(Gdx.graphics.getWidth(),Gdx.graphics.getHeight());
@@ -82,10 +115,25 @@ public class AchievementScreen implements Screen{
 		
 		calcachieve();
 		
-		
-		for (int i=0;i<10;++i) cup0[i]=new Sprite(new Texture("img/achieve/not"+i+".png"));
-		for (int i=0;i<10;++i) cup1[i]=new Sprite(new Texture("img/achieve/is"+i+".png"));
-		
+		for (int i=0;i<10;++i)
+		{
+			Sprite s0=new Sprite(new Texture("img/achieve/not"+i+".png"));
+			Sprite s1=new Sprite(new Texture("img/achieve/is"+i+".png"));
+			ImageButton.ImageButtonStyle cup0style=new ImageButton.ImageButtonStyle();
+			cup0style.imageUp=new SpriteDrawable(s0);
+			cup0style.imageDown=new SpriteDrawable(s0);
+			cup0style.imageOver=new SpriteDrawable(s0);
+			ImageButton.ImageButtonStyle cup1style=new ImageButton.ImageButtonStyle();
+			cup1style.imageUp=new SpriteDrawable(s1);
+			cup1style.imageDown=new SpriteDrawable(s1);
+			cup1style.imageOver=new SpriteDrawable(s1);	
+			
+			cup0[i]=new ImageButton(cup0style);
+			cup1[i]=new ImageButton(cup1style);
+		}
+		Label.LabelStyle labelstyle =new Label.LabelStyle(font, Color.WHITE);
+		achieve_label=new Label("Move to one of the cups",labelstyle);
+		achieveget_label=new Label("to know more!",labelstyle);
 		
 	}
 	
@@ -96,7 +144,19 @@ public class AchievementScreen implements Screen{
 		Gdx.input.setInputProcessor(stage);
 		stage.addActor(returnbutton);
 		returnbutton.setPosition(40,30);
-
+		
+		stage.addActor(achieve_label);
+		stage.addActor(achieveget_label);
+		
+		achieve_label.setPosition(800,100);
+		achieveget_label.setPosition(800,50);
+		
+		for (int i=0;i<10;++i)
+		{
+			stage.addActor(cup0[i]);
+			stage.addActor(cup1[i]);
+			cup1[i].setVisible(false);
+		}
 		
 		cup0[0].setPosition(715,400);
 		cup0[1].setPosition(720,300);
@@ -134,6 +194,42 @@ public class AchievementScreen implements Screen{
 						return true;
 	           }
 		});
+		
+		for (int i=0;i<10;++i)
+		{
+			final int temp=i;
+			cup0[i].addListener(new InputListener(){
+			 @Override
+		        public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+		            super.enter(event, x, y, pointer, fromActor);
+		            Sound sound = Resources.getInstance().hover;
+		            sound.play(Gdx.app.getPreferences("volumePref").getFloat("soundVolume", 1f));
+		        
+		        }
+	           @Override
+	           public boolean mouseMoved(InputEvent event, float x, float y){
+	        	   achieve_label.setText(cupname[temp]);
+	        	   achieveget_label.setText(getachieve(temp));
+	        	   return true;
+	           }
+			});
+			cup1[i].addListener(new InputListener(){
+				 @Override
+			        public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+			            super.enter(event, x, y, pointer, fromActor);
+			            Sound sound = Resources.getInstance().hover;
+			            sound.play(Gdx.app.getPreferences("volumePref").getFloat("soundVolume", 1f));
+			        
+			        }
+		           @Override
+		           public boolean mouseMoved(InputEvent event, float x, float y){
+		        	   achieve_label.setText(cupname[temp]);
+		        	   achieveget_label.setText(getachieve(temp));
+		        	   return true;
+		           }
+				});
+		}
+		
 	}
 
 	@Override
@@ -145,8 +241,7 @@ public class AchievementScreen implements Screen{
 		
 		batch.begin();
 		background.draw(batch);
-		for (int i=0;i<10;++i) cup0[i].draw(batch);
-		for (int i=0;i<achievelist.size();++i) cup1[achievelist.get(i)].draw(batch);
+		for (int i=0;i<achievelist.size();++i) cup1[achievelist.get(i)].setVisible(true);
 		batch.end();
 		stage.act();
 		stage.draw();

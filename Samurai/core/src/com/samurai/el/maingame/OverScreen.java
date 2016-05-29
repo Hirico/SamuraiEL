@@ -62,8 +62,8 @@ public class OverScreen implements Screen
 			Gdx.app.getPreferences("challenge").putInteger("winNum", Gdx.app.getPreferences("challenge").getInteger("winNum", 0)+1);
 		}
 		
-		if (result[humanid%3][0]>Gdx.app.getPreferences("challenge").getInteger(playername[humanid%3], 0))
-			Gdx.app.getPreferences("challenge").putInteger(playername[humanid%3],result[humanid%3][0]);
+		if (result[humanid][0]>Gdx.app.getPreferences("challenge").getInteger(playername[humanid%3], 0))
+			Gdx.app.getPreferences("challenge").putInteger(playername[humanid%3],result[humanid][0]);
 		
 		Gdx.app.getPreferences("challenge").putInteger("killNum", Gdx.app.getPreferences("challenge").getInteger("killNum", 0)+result[humanid][1]);
 		
@@ -71,7 +71,7 @@ public class OverScreen implements Screen
 		{
 			Gdx.app.getPreferences("challenge").putInteger("ACE", Gdx.app.getPreferences("challenge").getInteger("ACE", 0)+1);
 		}
-		
+		if (result[humanid][2]==0) Gdx.app.getPreferences("challenge").putInteger("NODIE", Gdx.app.getPreferences("challenge").getInteger("NODIE", 0)+1);
 		Gdx.app.getPreferences("challenge").flush();		
 	}
 	
