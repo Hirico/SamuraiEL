@@ -323,6 +323,7 @@ public class GameScreen implements Screen {
 				if (fade >= 1 && gameInstance.mode != -1) {
 					int temp=gameInstance.human.id;
 					if(gameInstance.mode != 2) {
+						Gdx.input.setCursorCatched(false);
 						game.setScreen(new OverScreen(temp,result, gameInstance.winFlag, endMusic, gameInstance.teamScores, gameInstance.human.planetOccupyNum)); 
 						dispose();	
 					} else {

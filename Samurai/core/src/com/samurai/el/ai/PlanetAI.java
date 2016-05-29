@@ -25,9 +25,11 @@ public class PlanetAI extends PlayerAI {
 				target = gameInstance.field.checkVision(player, player.position);
 				if(target == null) {
 					for(Player p: allies) {
-						if(p.ai.target != null) {
-							target = p.ai.target;
-							break;
+						if(!p.isHuman) {
+							if(p.ai.target != null) {
+								target = p.ai.target;
+								break;
+							}
 						}
 					}
 				}
