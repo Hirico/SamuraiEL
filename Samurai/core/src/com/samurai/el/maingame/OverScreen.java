@@ -108,6 +108,7 @@ public class OverScreen implements Screen
 		this.planetoccupynum=planetoccupynum;
 		for (int i=0;i<6;++i) rankflag[i]=false;
 		
+		for (int i=0;i<6;++i) rank[i]=-1;
 		
 		for (int i=0;i<6;++i)
 		{
@@ -124,7 +125,7 @@ public class OverScreen implements Screen
 					}
 				}
 			}
-			rank[temp1]=i+1;
+			if (rank[temp1]==-1) rank[temp1]=i+1;
 			rankflag[temp1]=true;
 		}
 		
