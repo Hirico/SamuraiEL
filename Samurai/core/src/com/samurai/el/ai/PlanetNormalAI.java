@@ -6,6 +6,7 @@ public class PlanetNormalAI extends PlanetAI{
 
 	public PlanetNormalAI(Player player) {
 		super(player);
+		occupyDelay = 0.3f;
 		
 	}
 

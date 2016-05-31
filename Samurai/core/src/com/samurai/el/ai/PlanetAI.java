@@ -13,6 +13,10 @@ public class PlanetAI extends PlayerAI {
 
 	
 	public void update() {
+		occupyDelay -= Gdx.graphics.getDeltaTime();
+		if(occupyDelay <= 0) {
+			occupyDelay = 0;
+		}
 
 		if(!player.isRecovering) {	
 			
@@ -44,7 +48,11 @@ public class PlanetAI extends PlayerAI {
 			
 		//occupy
 			if(player.occupiableForAI()) {
-				player.occupy();
+				occupyDelay -= Gdx.graphics.getDeltaTime();
+				if(occupyDelay <= 0) {
+					occupyDelay = 0;
+					player.occupy();
+				}
 			}
 		}
 				

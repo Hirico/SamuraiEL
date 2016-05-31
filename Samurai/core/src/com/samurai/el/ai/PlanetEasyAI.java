@@ -4,9 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.samurai.el.player.Player;
 
 public class PlanetEasyAI extends PlanetAI{
+	public float occupyDelay;
 
 	public PlanetEasyAI(Player player) {
 		super(player);
+		occupyDelay = 0.5f;
 		
 	}
 	

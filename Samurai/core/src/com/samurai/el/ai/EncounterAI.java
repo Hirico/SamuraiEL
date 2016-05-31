@@ -18,7 +18,11 @@ public class EncounterAI extends PlayerAI {
 			
 		//occupy
 		if(player.occupiableForAI()) {
-			player.occupy();
+			occupyDelay -= Gdx.graphics.getDeltaTime();
+			if(occupyDelay <= 0) {
+				occupyDelay = 0;
+				player.occupy();
+			}
 		}
 	}
 				
@@ -48,6 +52,8 @@ public class EncounterAI extends PlayerAI {
 						}
 						moveCooldown = totalMoveCooldown;
 					}
+				} else {
+					wander();
 				}
 			}
 		}

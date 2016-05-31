@@ -6,7 +6,7 @@ public class EncounterNormalAI extends EncounterAI {
 
 	public EncounterNormalAI(Player player) {
 		super(player);
-		// TODO Auto-generated constructor stub
+		occupyDelay = 0.3f;
 	}
 
 }

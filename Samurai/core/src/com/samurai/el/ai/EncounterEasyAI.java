@@ -7,7 +7,7 @@ public class EncounterEasyAI extends EncounterAI {
 
 	public EncounterEasyAI(Player player) {
 		super(player);
-		// TODO Auto-generated constructor stub
+		occupyDelay = 0.5f;
 	}
 	
 	@Override

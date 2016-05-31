@@ -12,6 +12,7 @@ public abstract class PlayerAI {
 	public double moveCooldown;
 	public double initialTotalMoveCooldown;
 	public double totalMoveCooldown;
+	public float occupyDelay;
 	public Player player;
 	public Player target;
 	public GameInstance gameInstance;
@@ -26,6 +27,7 @@ public abstract class PlayerAI {
 		this.player = player;		
 		gameInstance = GameInstance.getInstance();
 		stuckState = 0;
+		occupyDelay = 0f;
 		moveCooldown = 0.2f;
 		initialTotalMoveCooldown = 0.2f;
 		totalMoveCooldown = initialTotalMoveCooldown;
@@ -68,8 +70,14 @@ public abstract class PlayerAI {
 		}
 	}
 	
-	public void changeTarget() {	
-		target = enemies.get((target.id+1)%enemies.size);
+	public void changeTarget() {
+		int index = enemies.indexOf(target, true);
+		if(index + 1 < enemies.size) {
+			target = enemies.get(index+1);
+		}
+		else if(index -1 >=0) {
+			target = enemies.get(index-1);
+		}
 	}
 	
 	/**pursue move strategy, chase a random enemy */
