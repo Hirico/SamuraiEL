@@ -456,6 +456,7 @@ public class ConquerSetScreen implements Screen{
 	public void dispose() {
 		sideStage.dispose();
 		shipStage.dispose();
+		batch.dispose();
 	}
 
 }

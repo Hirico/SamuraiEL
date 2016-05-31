@@ -56,6 +56,8 @@ public class PlanetHardAI extends PlanetAI {
 					}
 					if(target != null) {
 						pursue();
+					} else {
+						wander();
 					}
 				}
 			} else {

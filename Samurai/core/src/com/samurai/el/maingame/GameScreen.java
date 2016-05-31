@@ -405,6 +405,7 @@ public class GameScreen implements Screen {
 	@Override
 	public void dispose() {
 		uiBatch.dispose();
+		helpBatch.dispose();
 		gameInstance.dispose();
 		stage.dispose();
 		fadeBatch.dispose();

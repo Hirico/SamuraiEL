@@ -15,15 +15,15 @@ public class PlanetAI extends PlayerAI {
 	public void update() {
 
 		if(!player.isRecovering) {	
-		//move
-			Block targetPlanet = Targeting.getNearestPlanet(player, planets);
 			
-			if(targetPlanet != null) {
-				targetPlanetPosition.set(targetPlanet.planetPosition);
-				occupyPlanet();
-			} else {
-				target = gameInstance.field.checkVision(player, player.position);
-				if(target == null) {
+		//move
+			target = gameInstance.field.checkVision(player, player.position);
+			if(target == null) {
+				Block targetPlanet = Targeting.getNearestPlanet(player, planets);
+				if(targetPlanet != null) {
+					targetPlanetPosition.set(targetPlanet.planetPosition);
+					occupyPlanet();
+				} else {
 					for(Player p: allies) {
 						if(!p.isHuman) {
 							if(p.ai.target != null) {
@@ -32,10 +32,14 @@ public class PlanetAI extends PlayerAI {
 							}
 						}
 					}
+					if(target != null) {
+						pursue();
+					} else {
+						wander();
+					}
 				}
-				if(target != null) {
-					pursue();
-				}
+			} else {
+				pursue();
 			}
 			
 		//occupy

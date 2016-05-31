@@ -365,7 +365,7 @@ public abstract class Player extends Sprite implements Disposable{
 			}
 			
 			//use for AI
-			if(field.isOthersHome(this,targetPosition)) {
+			if(field.isOthersHome(this,targetPosition) || field.isPlanet(targetPosition)) {
 				isStuck = true;
 			}
 			

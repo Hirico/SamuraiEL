@@ -20,6 +20,7 @@ public abstract class PlayerAI {
 	public Array<Player> allies;
 	public Block[] planets;
 	public Vector2 targetPlanetPosition;
+	public Vector2 wanderPosition;
 	
 	public PlayerAI(Player player) {
 		this.player = player;		
@@ -31,6 +32,8 @@ public abstract class PlayerAI {
 				
 		planets = gameInstance.field.planets;
 		targetPlanetPosition = new Vector2();
+		wanderPosition = new Vector2();
+		wanderPosition.set((float)(int)(Math.random()*gameInstance.field.blocks.length), (float)(int)(Math.random()*gameInstance.field.blocks[0].length));
 
 	}
 	
@@ -89,6 +92,28 @@ public abstract class PlayerAI {
 		}
 	}
 	
+	/**wander to some random place to occupy and detect enemy */
+	public void wander() {
+		if(player.isStuck || player.position.equals(wanderPosition)) {
+			wanderPosition.set((float)(int)(Math.random()*gameInstance.field.blocks.length), (float)(int)(Math.random()*gameInstance.field.blocks[0].length));
+		}
+		if(moveCooldown >= 0) {
+			moveCooldown -= Gdx.graphics.getDeltaTime();
+		} else {
+			if(player.isStuck) {
+				resolveStuck();
+				moveCooldown = totalMoveCooldown;
+			} else {
+				if(Math.random() < 0.5f) {
+					wanderMove1();
+				} else {
+					wanderMove2();
+				}
+				moveCooldown = totalMoveCooldown;
+			}
+		}
+	}
+	
 	/** horizontal first*/
 	public void pursueMove1() {
 		if(target.position.x < player.position.x) {
@@ -117,6 +142,38 @@ public abstract class PlayerAI {
 			player.moveForAI(2);
 		}
 		else if(target.position.x > player.position.x) {
+			player.moveForAI(3);
+		}
+	}
+	
+	/** horizontal first*/
+	public void wanderMove1() {
+		if(wanderPosition.x < player.position.x) {
+			player.moveForAI(2);
+		}
+		else if(wanderPosition.x > player.position.x) {
+			player.moveForAI(3);
+		}
+		else if(wanderPosition.y < player.position.y) {
+			player.moveForAI(1);
+		}
+		else if(wanderPosition.y > player.position.y) {
+			player.moveForAI(0);
+		}
+	}
+	
+	/** vertical first*/
+	public void wanderMove2() {		
+		if(wanderPosition.y < player.position.y) {
+			player.moveForAI(1);
+		}
+		else if(wanderPosition.y > player.position.y) {
+			player.moveForAI(0);
+		}
+		else if(wanderPosition.x < player.position.x) {
+			player.moveForAI(2);
+		}
+		else if(wanderPosition.x > player.position.x) {
 			player.moveForAI(3);
 		}
 	}

@@ -51,6 +51,8 @@ public class PlanetCruelAI extends PlanetAI {
 					}
 					if(target != null) {
 						pursue();
+					} else {
+						wander();
 					}
 				}
 			} else {
